@@ -1,0 +1,299 @@
+.scroll-wrapper {
+    overflow: hidden !important;
+    position: relative !important;
+    padding: 0 !important;
+}
+
+.scroll-wrapper .scroll-content {
+    border: none !important;
+    height: 100% !important;
+    margin: 0 !important;
+    overflow: auto !important;
+    width: 100% !important;
+}
+
+.scroll-container {
+    overflow: hidden;
+    position: absolute;
+}
+
+.scroll-container.scroll-y {
+    height: 100%;
+    right: 0;
+    top: 0;
+}
+
+.scroll-container.scroll-x {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.scroll-container .scroll-arrow {
+    cursor: pointer;
+    display: none;
+}
+
+.scroll-container.show-arrows .scroll-arrow {
+    display: block;
+}
+
+.scroll-container .scroll-bar {
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Mac OS X style */
+
+.scroll-container.scroll-y {
+    width: 18px;
+}
+
+.scroll-container.scroll-y div {
+    background-image: url("macosx-y.png");
+    background-repeat: repeat-y;
+    border: 0;
+    display: block;
+    left: 0px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 10px;
+}
+
+.scroll-container.scroll-y .scroll-container_outer {
+    background-position: -23px -12px;
+    background-repeat: no-repeat;
+    height: 100% ;
+    left: 4px;
+    top: 4px;
+}
+
+.scroll-container.scroll-y .scroll-container_outer-offset {
+    background: none;
+    height: 100%;
+    left: 8px;
+    top: -6px;
+    width: 2px;
+    z-index: 10;
+}
+
+.scroll-container.scroll-y .scroll-container_inner-wrapper {
+    background: none;
+    height: 100%;
+    top: 6px;
+}
+
+.scroll-container.scroll-y .scroll-container_inner {
+    background-position: 0px 0px;
+    height: 100%;
+    overflow: visible;
+    top: -18px;
+}
+
+.scroll-container.scroll-y .scroll-container_inner-bottom {
+    background-position: -23px -16px;
+    bottom: -6px;
+    height: 6px;
+}
+
+.scroll-container.scroll-y .scroll-bar {
+    background-position: -23px 0px;
+    background-repeat: no-repeat;
+    height: 40px;
+    min-height: 10px;
+    top: 20px;
+    z-index: 9;
+}
+
+.scroll-container.scroll-y .scroll-bar_center {
+    display: none;
+}
+
+.scroll-container.scroll-y .scroll-bar_bottom {
+    background-position: -23px -4px;
+    bottom: 0;
+    height: 6px;
+}
+
+.scroll-container.scroll-y .scroll-bar_body {
+    background: none;
+    height: 100%;
+    top: 6px;
+}
+
+.scroll-container.scroll-y .scroll-bar_body-inner {
+    background-position: -12px -0px;
+    height: 100%;
+    top: -12px;
+}
+
+
+/* show arrows */
+
+.scroll-container.scroll-y .scroll-arrow_less {
+    background-position: -34px 0px;
+    height: 10px;
+    left: 4px;
+    top: 3px;
+}
+
+.scroll-container.scroll-y .scroll-arrow_more {
+    background-position: -34px -12px;
+    bottom: 3px;
+    height: 10px;
+    left: 4px;
+}
+
+/* offset if arrows */
+.scroll-container.scroll-y.show-arrows .scroll-container_outer {top: 16px;}
+.scroll-container.scroll-y.show-arrows .scroll-container_inner {top: -44px;}
+.scroll-container.scroll-y.show-arrows .scroll-container_outer-offset {top: -32px;}
+
+/* offset if scroll x */
+.scroll-container.scroll-y.show-x .scroll-container_inner {top: -34px;}
+.scroll-container.scroll-y.show-x .scroll-container_outer-offset {top: -22px;}
+
+/* offset if scroll x & show arrows */
+.scroll-container.scroll-y.show-arrows.show-x .scroll-arrow_more {bottom: 17px;}
+.scroll-container.scroll-y.show-arrows.show-x .scroll-container_inner {top: -58px;}
+.scroll-container.scroll-y.show-arrows.show-x .scroll-container_outer-offset {top: -46px;}
+
+
+
+
+
+
+
+
+
+.scroll-container.scroll-x {
+    height: 18px;
+}
+
+.scroll-container.scroll-x div {
+    background-image: url("macosx-x.png");
+    background-repeat: repeat-x;
+    border: 0;
+    display: block;
+    height: 10px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    top: 0px;
+}
+
+.scroll-container.scroll-x .scroll-container_outer {
+    background-position: -7px -23px;
+    background-repeat: no-repeat;
+    left: 4px;
+    top: 4px;
+    width: 100%;
+}
+
+.scroll-container.scroll-x .scroll-container_outer-offset {
+    background: none;
+    height: 2px;
+    left: -6px;
+    top: 8px;
+    width: 100%;
+    z-index: -1;
+}
+
+.scroll-container.scroll-x .scroll-container_inner-wrapper {
+    background: none;
+    left: 6px;
+    width: 100%;
+}
+
+.scroll-container.scroll-x .scroll-container_inner {
+    background-position: 0px 0px;
+    overflow: visible;
+    left: -18px;
+    width: 100%;
+}
+
+.scroll-container.scroll-x .scroll-container_inner-bottom {
+    background-position: -11px -23px;
+    right: -6px;
+    width: 6px;
+}
+
+.scroll-container.scroll-x .scroll-bar {
+    background-position: -19px -23px;
+    background-repeat: no-repeat;
+    min-width: 10px;
+    left: 20px;
+    width: 40px;
+    z-index: 9;
+}
+
+.scroll-container.scroll-x .scroll-bar_center {
+    display: none;
+}
+
+.scroll-container.scroll-x .scroll-bar_bottom {
+    background-position: -23px -23px;
+    right: 0;
+    width: 6px;
+}
+
+.scroll-container.scroll-x .scroll-bar_body {
+    background: none;
+    left: 6px;
+    width: 100%;
+}
+
+.scroll-container.scroll-x .scroll-bar_body-inner {
+    background-position: 0px -13px;
+    left: -12px;
+    width: 100%;
+}
+
+
+/* show arrows */
+
+.scroll-container.scroll-x .scroll-arrow_less {
+    background-position: 24px -34px;
+    left: 3px;
+    top: 4px;
+    width: 10px;
+}
+
+.scroll-container.scroll-x .scroll-arrow_more {
+    background-position: 8px -34px;
+    right: 3px;
+    top: 4px;
+    width: 10px;
+}
+
+/* offset if arrows */
+.scroll-container.scroll-x.show-arrows .scroll-container_outer {left: 16px;}
+.scroll-container.scroll-x.show-arrows .scroll-container_inner {left: -44px;}
+.scroll-container.scroll-x.show-arrows .scroll-container_outer-offset {left: -32px;}
+
+/* offset if scroll x */
+.scroll-container.scroll-x.show-y .scroll-container_inner {left: -34px;}
+.scroll-container.scroll-x.show-y .scroll-container_outer-offset {left: -22px;}
+
+/* offset if scroll x & show arrows */
+.scroll-container.scroll-x.show-arrows.show-y .scroll-arrow_more {right: 17px;}
+.scroll-container.scroll-x.show-arrows.show-y .scroll-container_inner {left: -58px;}
+.scroll-container.scroll-x.show-arrows.show-y .scroll-container_outer-offset {left: -46px;}

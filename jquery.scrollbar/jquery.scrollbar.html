@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>jQuery ScrollBar plugin</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <link type="text/css" href="jquery.scrollbar.css" rel="stylesheet" media="all" />
+
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="jquery.scrollbar.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.container').scrollbar();
+            });
+        </script>
+
+        <style type="text/css">
+            html, body {
+                height: 100%;
+                padding: 0;
+                margin: 0;
+            }
+
+            div, p, img, h1, h2, h3 {
+                border: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            img {
+                vertical-align: top;
+            }
+
+            .container {
+                border: solid 1px #ccc;
+                /*height: 300px;*/
+                margin: 20px;
+                max-height: 400px;
+                /*max-width: 600px;*/
+                overflow: auto;
+                width: 50%;
+            }
+
+            .container .content {
+                padding: 20px;
+            }
+
+/*            #container {
+                left: -40px;
+                position: relative;
+                top: -40px;
+            }*/
+        </style>
+    </head>
+    <body>
+        <div class="panel" style="padding: 20px 100px;">
+            <input type="button" value="INIT" onclick="$('.container').scrollbar();" />
+            <input type="button" value="DESTROY" onclick="$('.container').scrollbar('destroy');" />
+        </div>
+
+        <div id="container" class="container">
+            <div class="content">
+                <h2>Дамам посвящается</h2>
+                <p>На мадамском форуме две не в меру рьяные девицы активно и даже несколько агрессивно поучают остальных,
+                    как и что им делать - советы от воспитания детей и сроков высадки рассады до вегетарианства и поучений
+                    по поводу курящих в общественных местах, религиозных и политических взглядов, и т.д.</p>
+                <p>xxx: Девочки, если не секрет, вы кем работаете?</p>
+                <p>girl №1 и girl №2, едва ли не хором: "А какое это имеет значение?" "В интернете есть анонимность", и
+                    т.д.</p>
+
+                <p>xxx: Я же не спросила "где", я спросила "кем". Поясню: я раньше тоже была твердо уверена, что лучше всех
+                    все знаю, во всем разбираюсь, и всех вправе поучать, и недоумевала, почему же к моим бесценным советам
+                    не прислушиваются, а со мной самой все постоянно ругаются. А потом уволилась с работы, на которой мне
+                    приходилось выслушивать по 100-150 жаждущих справедливости граждан в день, подлечила нервы, и из
+                    озлобленной психованной хмурой тетки превратилась буквально в добрую фею. Та-а-а-а-ак попустило!</p>
+
+                <h2>К вопросу о легальности</h2>
+                <p>xxx: Я вот подумал. У меня есть госномера и я их люблю. Мне нравится сочетание цифр и букв на них. В то
+                    же время есть вероятность эти номера протерять (или их могут даже украсть с целью продать их мне же
+                    обратно за деньги). Дык почему бы не сделать через вполне официальные каналы в ГИБДД копию этих номеров
+                    и хранить ее в сухом темном месте на всякий случай. Что характерно, даже при случае замены машины копия
+                    номеров остается вполне себе рабочей.<br/>
+                    Остается вопрос насколько это законно.</p>
+                <p>УУУ: У меня есть пачка купюр номиналом в 1000 рублей и я их люблю. Мне нравится сочетание цифр и букв на
+                    них. В то же время есть вероятность эти купюры протерять (или их могут даже украсть с целью поставить
+                    меня на деньги). Дык почему бы не сделать через вполне официальные каналы в ГУП "ГОСЗнак" копию этих
+                    купюр и хранить их в сухом темном месте на всякий случай. Что характерно, даже при случае траты купюр в
+                    магазинах, копии истраченых купюр остаются вполне себе рабочими.<br/>
+                    Остается вопрос насколько это законно.</p>
+<!--
+
+                            <h2>Textarea</h2>
+                            <p><textarea></textarea></p>
+
+                            <h2>Image</h2>-->
+<!--                <p><img src="data/image.jpg" width="1024" height="768" /></p>-->
+            </div>
+        </div>
+
+        <div class="container scroll-wrapper" style="display:none;">
+            <div class="scroll-container scroll-y show-arrows show-x">
+                <div class="scroll-arrow scroll-arrow_less"></div>
+                <div class="scroll-container_outer">
+                    <div class="scroll-container_outer-offset"></div>
+                    <div class="scroll-container_inner-wrapper">
+                        <div class="scroll-container_inner">
+                            <div class="scroll-container_inner-bottom"></div>
+                        </div>
+                    </div>
+                    <div class="scroll-bar">
+                        <div class="scroll-bar_body">
+                            <div class="scroll-bar_body-inner"></div>
+                        </div>
+                        <div class="scroll-bar_bottom"></div>
+                    </div>
+                </div>
+                <div class="scroll-arrow scroll-arrow_more"></div>
+            </div>
+        </div>
+
+        <div id="test_outer" style="position:relative; height:200px; width:200px; padding:20px; border:solid 1px blue;zoom:1;display:none;">
+            <div id="test_inner" style="position:absolute; height:100%; width:10px; background:#f00;zoom:1;"></div>
+        </div>
+
+        <div style="padding: 20px;">
+            <input type="button" value="clear debug" onclick="$('#debug').empty();" />
+            <div id="debug" style="margin-top: 10px; padding: 10px; border: solid 1px blue;"></div>
+        </div>
+
+    </body>
+</html>
