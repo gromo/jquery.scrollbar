@@ -19,7 +19,7 @@
         "onDestroy": null,      // callback function called before destroy
         "onInit": null,         // callback function called after init
         "scrollSize": "auto",   // [auto|fixed] scroll size
-        "showArrows": false,    // [true|false] show scroll arrows
+        "showArrows": true,    // [true|false] show scroll arrows
         "wrapperClass": null    // css class to apply to wrapper to set height/width/position values
     };
 
