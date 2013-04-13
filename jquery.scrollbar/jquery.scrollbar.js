@@ -1,9 +1,10 @@
 /**
  * jQuery Custom Scrollbar plugin
  *
- * @author Yuriy Khabarov
- * @author Timur Yerzin
+ * Copyright 2013, Yuriy Khabarov
+ * Dual licensed under the MIT or GPL Version 2 licenses.
  *
+ * @author Yuriy Khabarov [13real008@gmail.com]
  * @version 0.0.2
  */
 ;
