@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>jQuery ScrollBar plugin</title>
+        <title>jQuery Custom Scrollbar</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <link type="text/css" href="jquery.scrollbar.css" rel="stylesheet" media="all" />
@@ -9,130 +9,149 @@
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="jquery.scrollbar.js"></script>
         <script type="text/javascript">
+
+            function initCustomScrollbar(){
+                $('.scroll-standard').dscrollbar();
+
+                $('.scroll-simple').dscrollbar({
+                    "type": "simple"
+                });
+
+                $('.external-scroll').dscrollbar({
+                    "autoScrollSize": false,
+                    "scrollx": $('.external-scroll_x'),
+                    "scrolly": $('.external-scroll_y')
+                });
+            }
+
+            function destroyCustomScrollbar(){
+                $('.scroll-content').dscrollbar('destroy');
+            }
+
             $(document).ready(function(){
-                $('.container').scrollbar();
+                initCustomScrollbar();
+
+                $('.buttons').each(function(){
+                    $(this).find('input.default').attr('checked', true);
+                }).find('input:radio').change(function(){
+                    $(this).closest('form').next().find('img').attr($(this).attr('name'), $(this).val());
+                });
+
             });
         </script>
-
-        <style type="text/css">
-            html, body {
-                height: 100%;
-                padding: 0;
-                margin: 0;
-            }
-
-            div, p, img, h1, h2, h3 {
-                border: none;
-                margin: 0;
-                padding: 0;
-            }
-
-            img {
-                vertical-align: top;
-            }
-
-            .container {
-                border: solid 1px #ccc;
-                /*height: 300px;*/
-                margin: 20px;
-                max-height: 400px;
-                /*max-width: 600px;*/
-                overflow: auto;
-                width: 50%;
-            }
-
-            .container .content {
-                padding: 20px;
-            }
-
-/*            #container {
-                left: -40px;
-                position: relative;
-                top: -40px;
-            }*/
-        </style>
     </head>
     <body>
-        <div class="panel" style="padding: 20px 100px;">
-            <input type="button" value="INIT" onclick="$('.container').scrollbar();" />
-            <input type="button" value="DESTROY" onclick="$('.container').scrollbar('destroy');" />
-        </div>
-
-        <div id="container" class="container">
-            <div class="content">
-                <h2>Lorem ipsum dolor sit amet</h2>
-                <p>Lorem ipsum dolor sit amet, propriae fabellas probatus pro ad, esse salutandi nec ei, pri clita
-                    soleat option at. Te nec nibh intellegam. Per dolor gloriatur ne. Pro inermis dissentiunt ei, ea
-                    harum saepe ceteros usu, no mei principes gloriatur.Quod omnes cu eos, ea vel elit epicuri
-                    scribentur. Pri falli exerci ut. Mazim quando ea mei, pro te ancillae electram comprehensam, eros
-                    facer vitae nam at. Nostrud contentiones disputationi est te, in his fuisset adipiscing. Pri cu
-                    harum oratio.Te sea tritani verterem. Integre iracundia quo ut, an eos eros admodum, sed ea suas
-                    nemore. Usu et lorem vocent atomorum, te eam wisi soluta tincidunt, in sit purto quaerendum. An duo
-                    fastidii appetere patrioque, magna nonumes omnesque mei eu. No sed postea phaedrum comprehensam.
-                    Habemus nusquam sit in. An qui nobis legimus adolescens, vix fugit ponderum ad. An vim vidisse
-                    eruditi singulis, no nostro option accusata mea. Aperiam honestatis no usu, ei sea cetero fabellas.
-                    Pro graece sententiae voluptatum at, pertinax salutandi imperdiet ei mei, cum ut lorem regione. Nec
-                    eu inermis nominavi.Quodsi signiferumque qui in, eu congue cotidieque vituperatoribus cum. Qui
-                    option molestie in. Vidit petentium sit ad, eu possim numquam nec. Ex postulant persequeris vel. Ad
-                    eos fugit phaedrum, commune consequuntur id pri.</p>
-                <p>An duo fastidii appetere patrioque, magna nonumes omnesque mei eu.</p>
-                <p>Usu et lorem vocent atomorum, te eam wisi soluta tincidunt, in sit purto quaerendum. An duo fastidii
-                    fastidii appetere patrioque, magna nonumes omnesque mei eu. No sed postea phaedrum comprehensam.
-                    Habemus nusquam sit in. An qui nobis legimus adolescens, vix fugit ponderum ad. An vim vidisse
-                    eruditi singulis, no nostro option accusata mea. Aperiam honestatis no usu, ei sea cetero fabellas.
-                    Pro graece sententiae voluptatum at, pertinax salutandi imperdiet ei mei, cum ut lorem regione.</p>
-
-                <h2>Nostrud contentiones disputationi est te</h2>
-                <p>Usu et lorem vocent atomorum, te eam wisi soluta tincidunt, in sit purto quaerendum. An duo fastidii
-                    fastidii appetere patrioque, magna nonumes omnesque mei eu. No sed postea phaedrum comprehensam.
-                    Habemus nusquam sit in. An qui nobis legimus adolescens, vix fugit ponderum ad. An vim vidisse
-                    eruditi singulis, no nostro option accusata mea. Aperiam honestatis no usu, ei sea cetero fabellas.
-                    Pro graece sententiae voluptatum at, pertinax salutandi imperdiet ei mei, cum ut lorem regione.<br/>
-                    Vidit petentium sit ad, eu possim numquam nec.</p>
-                <p>Usu et lorem vocent atomorum, te eam wisi soluta tincidunt, in sit purto quaerendum. An duo fastidii
-                    fastidii appetere patrioque, magna nonumes omnesque mei eu. No sed postea phaedrum comprehensam.
-                    Habemus nusquam sit in. An qui nobis legimus adolescens, vix fugit ponderum ad. An vim vidisse
-                    eruditi singulis, no nostro option accusata mea. Aperiam honestatis no usu, ei sea cetero fabellas.
-                    Pro graece sententiae voluptatum at, pertinax salutandi imperdiet ei mei, cum ut lorem regione.</p>
-<!--
-
-                            <h2>Textarea</h2>
-                            <p><textarea></textarea></p>
-
-                            <h2>Image</h2>-->
-<!--                <p><img src="data/image.jpg" width="1024" height="768" /></p>-->
-            </div>
-        </div>
-
-        <div class="container scroll-wrapper" style="display:none;">
-            <div class="scroll-container scroll-y show-arrows show-x">
-                <div class="scroll-arrow scroll-arrow_less"></div>
-                <div class="scroll-container_outer">
-                    <div class="scroll-container_outer-offset"></div>
-                    <div class="scroll-container_inner-wrapper">
-                        <div class="scroll-container_inner">
-                            <div class="scroll-container_inner-bottom"></div>
-                        </div>
-                    </div>
-                    <div class="scroll-bar">
-                        <div class="scroll-bar_body">
-                            <div class="scroll-bar_body-inner"></div>
-                        </div>
-                        <div class="scroll-bar_bottom"></div>
-                    </div>
-                </div>
-                <div class="scroll-arrow scroll-arrow_more"></div>
-            </div>
-        </div>
-
-        <div id="test_outer" style="position:relative; height:200px; width:200px; padding:20px; border:solid 1px blue;zoom:1;display:none;">
-            <div id="test_inner" style="position:absolute; height:100%; width:10px; background:#f00;zoom:1;"></div>
+        <div class="panel">
+            <input type="button" value="INIT" onclick="initCustomScrollbar();" />
+            <input type="button" value="DESTROY" onclick="destroyCustomScrollbar();" />
         </div>
 
         <div style="padding: 20px;">
-            <input type="button" value="clear debug" onclick="$('#debug').empty();" />
-            <div id="debug" style="margin-top: 10px; padding: 10px; border: solid 1px blue;"></div>
-        </div>
+            <h2>Standard MS Windows Vista scrollbar</h2>
+            <form class="buttons">
+                <div>
+                    <strong>Width:</strong>
+                    <label><input name="width" type="radio" value="400" />400</label>
+                    <label><input name="width" type="radio" value="600" />600 (100%)</label>
+                    <label><input name="width" type="radio" value="610" />610</label>
+                    <label><input name="width" type="radio" value="800" class="default" />800 (original)</label>
+                </div>
+                <div>
+                    <strong>Height:</strong>
+                    <label><input name="height" type="radio" value="300" />300</label>
+                    <label><input name="height" type="radio" value="400" />400 (100%)</label>
+                    <label><input name="height" type="radio" value="410" />410</label>
+                    <label><input name="height" type="radio" value="600" class="default" />600 (original)</label>
+                </div>
+            </form>
+            <div class="content scroll-standard">
+                <img src="image.jpg" width="800" height="600" />
+            </div>
 
+
+            <h2>Simple outer scrollbar</h2>
+            <form class="buttons">
+                <div>
+                    <strong>Width:</strong>
+                    <label><input name="width" type="radio" value="400" />400</label>
+                    <label><input name="width" type="radio" value="600" />600 (100%)</label>
+                    <label><input name="width" type="radio" value="610" />610</label>
+                    <label><input name="width" type="radio" value="800" class="default" />800 (original)</label>
+                </div>
+                <div>
+                    <strong>Height:</strong>
+                    <label><input name="height" type="radio" value="300" />300</label>
+                    <label><input name="height" type="radio" value="400" />400 (100%)</label>
+                    <label><input name="height" type="radio" value="410" />410</label>
+                    <label><input name="height" type="radio" value="600" class="default" />600 (original)</label>
+                </div>
+            </form>
+            <div class="content scroll-simple scroll-simple_outer">
+                <img src="image.jpg" width="800" height="600" />
+            </div>
+
+
+
+
+            <h2>Simple inner scrollbar (with hover effect)</h2>
+            <form class="buttons">
+                <div>
+                    <strong>Width:</strong>
+                    <label><input name="width" type="radio" value="400" />400</label>
+                    <label><input name="width" type="radio" value="600" />600 (100%)</label>
+                    <label><input name="width" type="radio" value="610" />610</label>
+                    <label><input name="width" type="radio" value="800" class="default" />800 (original)</label>
+                </div>
+                <div>
+                    <strong>Height:</strong>
+                    <label><input name="height" type="radio" value="300" />300</label>
+                    <label><input name="height" type="radio" value="400" />400 (100%)</label>
+                    <label><input name="height" type="radio" value="410" />410</label>
+                    <label><input name="height" type="radio" value="600" class="default" />600 (original)</label>
+                </div>
+            </form>
+            <div class="content scroll-simple scroll-simple_inner">
+                <img src="image.jpg" width="800" height="600" />
+            </div>
+
+            <h2>Simple external scrollbar (with fixed scrollbar sizes)</h2>
+            <form class="buttons">
+                <div>
+                    <strong>Width:</strong>
+                    <label><input name="width" type="radio" value="400" />400</label>
+                    <label><input name="width" type="radio" value="600" />600 (100%)</label>
+                    <label><input name="width" type="radio" value="610" />610</label>
+                    <label><input name="width" type="radio" value="800" class="default" />800 (original)</label>
+                </div>
+                <div>
+                    <strong>Height:</strong>
+                    <label><input name="height" type="radio" value="300" />300</label>
+                    <label><input name="height" type="radio" value="400" />400 (100%)</label>
+                    <label><input name="height" type="radio" value="410" />410</label>
+                    <label><input name="height" type="radio" value="600" class="default" />600 (original)</label>
+                </div>
+            </form>
+            <div class="content-container">
+                <div class="content external-scroll">
+                    <img src="image.jpg" width="800" height="600" />
+                </div>
+
+                <div class="external-scroll_x">
+                    <div class="scroll-element_outer">
+                        <div class="scroll-element_size"></div>
+                        <div class="scroll-element_inner"></div>
+                        <div class="scroll-bar"></div>
+                    </div>
+                </div>
+
+                <div class="external-scroll_y">
+                    <div class="scroll-element_outer">
+                        <div class="scroll-element_size"></div>
+                        <div class="scroll-element_inner"></div>
+                        <div class="scroll-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
