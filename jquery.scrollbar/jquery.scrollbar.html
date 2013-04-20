@@ -7,17 +7,17 @@
         <link type="text/css" href="jquery.scrollbar.css" rel="stylesheet" media="all" />
 
         <script type="text/javascript" src="jquery.js"></script>
-        <script type="text/javascript" src="jquery.scrollbar.js"></script>
+        <script type="text/javascript" src="jquery.scrollbar.min.js"></script>
         <script type="text/javascript">
 
             function initCustomScrollbar(){
-                $('.scroll-standard').dscrollbar();
+                $('.scroll-standard').scrollbar();
 
-                $('.scroll-simple').dscrollbar({
+                $('.scroll-simple').scrollbar({
                     "type": "simple"
                 });
 
-                $('.external-scroll').dscrollbar({
+                $('.external-scroll').scrollbar({
                     "autoScrollSize": false,
                     "scrollx": $('.external-scroll_x'),
                     "scrolly": $('.external-scroll_y')
@@ -25,13 +25,13 @@
 
 //                $('.content').add('h2').add('.buttons').add('.content-container').hide();
 //
-//                $('.scroll-simple_outer').not('#test-webkit').prev().show().end().show().dscrollbar({
+//                $('.scroll-simple_outer').not('#test-webkit').prev().show().end().show().scrollbar({
 //                    "type": "simple"
 //                });
             }
 
             function destroyCustomScrollbar(){
-                $('.scroll-content').dscrollbar('destroy');
+                $('.scroll-content').scrollbar('destroy');
             }
 
             $(document).ready(function(){
