@@ -4,12 +4,11 @@
  * Copyright 2013, Yuriy Khabarov
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * https://github.com/gromo/dslib/tree/master/jquery.scrollbar
- *
  * If you found bug, please contact me via email [13real008@gmail.com]
  *
  * @author Yuriy Khabarov aka Gromo
  * @version 1.0
+ * @url https://github.com/gromo/dslib/tree/master/jquery.scrollbar
  *
  * TODO:
  *  - refactor scroll emulate on scrollbar mousewheel
