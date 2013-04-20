@@ -14,17 +14,12 @@
  *  - refactor scroll emulate on scrollbar mousewheel
  */
 ;
-(function($, doc){
+(function($, doc, win){
 
     // INIT FLAGS & VARIABLES
     var browser = {
         "mobile": /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent),
-        "ie":  (doc.documentMode) ? true :false,
-        "webkit": window.WebKitPoint ? true : false,
-
-        "ie7": (doc.documentMode && doc.documentMode == 7) ? true : false,
-        "ie8": (doc.documentMode && doc.documentMode == 8) ? true : false,
-        "ie9": (doc.documentMode && doc.documentMode == 9) ? true : false,
+        "webkit": win.WebKitPoint ? true : false,
 
         "log": function(data, toString){
             var output = data;
@@ -35,8 +30,8 @@
                 });
                 output = output.join(", ");
             }
-            if(window.console && window.console.log){
-                window.console.log(output);
+            if(win.console && win.console.log){
+                win.console.log(output);
             }
         },
         "scroll": null
@@ -168,6 +163,8 @@
         init: function(options){
 
             // INIT VARIABLES
+            var S = this;
+
             var c = this.container;
             var o = $.extend(this.options, options);
             var s = {
@@ -203,17 +200,17 @@
             }
 
             // INIT SCROLLBARS & RECALCULATE SIZES
-            $.each(s, this.proxy(function(d, scrollx){
+            $.each(s, function(d, scrollx){
 
                 if(!scrollx.scrollbar){
 
-                    scrollx.scrollbar = this.getScrollbar(d);
+                    scrollx.scrollbar = S.getScrollbar(d);
                     scrollx.scroller = scrollx.scrollbar.find(".scroll-bar");
 
                     var onmousewheel = function(event){
-                        var scroll = (d == "x") ? "scrollLeft" : "scrollTop";
+                        var scrollOffset = (d == "x") ? "scrollLeft" : "scrollTop";
                         var delta = event.originalEvent.wheelDelta || -event.originalEvent.detail;
-                        c[scroll](c[scroll]() - delta).scroll();
+                        c[scrollOffset](c[scrollOffset]() - delta).scroll();
                         event.preventDefault();
                     };
                     scrollx.scrollbar.on({
@@ -223,27 +220,27 @@
 
                     scrollx.scrollbar.find(".scroll-arrow").on("click.scrollbar", function(){
                         var offset = $(this).hasClass("scroll-arrow_more") ? 30 : -30;
-                        var direction = (d == "x") ? "scrollLeft" : "scrollTop";
+                        var scrollOffset = (d == "x") ? "scrollLeft" : "scrollTop";
                         var animateTo = {};
-                        animateTo[direction] = c[direction]() + offset;
+                        animateTo[scrollOffset] = c[scrollOffset]() + offset;
                         c.animate(animateTo, o.duration);
                     });
 
                     scrollx.scrollbar.find(".scroll-element_inner").on("click.scrollbar", function(event){
-                        var direction = (d == "x") ? "scrollLeft" : "scrollTop";
+                        var scrollOffset = (d == "x") ? "scrollLeft" : "scrollTop";
                         var kx = event[(d == "x") ? "pageX" : "pageY"] <
                         scrollx.scroller.offset()[(d == "x") ? "left" : "top"] ? -1 : 1;
 
                         var animateTo = {};
-                        animateTo[direction] = c[direction]() + (scrollx.visible * kx);
+                        animateTo[scrollOffset] = c[scrollOffset]() + (scrollx.visible * kx);
                         c.animate(animateTo, o.duration);
                     });
 
                     scrollx.scroller.on("mousedown.scrollbar", function(event){
 
-                        var direction = (d == "x") ? "scrollLeft" : "scrollTop";
+                        var scrollOffset = (d == "x") ? "scrollLeft" : "scrollTop";
                         var eventPosition = event[(d == "x")? "pageX" : "pageY"];
-                        var initOffset = c[direction]();
+                        var initOffset = c[scrollOffset]();
                         scrollx.scrollbar.addClass("scroll-draggable");
 
                         var preventDefault = function(event){
@@ -260,7 +257,7 @@
                             "dragstart.scrollbar": preventDefault,
                             "mousemove.scrollbar": function(event){
                                 var diff = parseInt((event[(d == "x")? "pageX" : "pageY"] - eventPosition) / scrollx.kx);
-                                c[direction](initOffset + (diff));
+                                c[scrollOffset](initOffset + (diff));
                             },
                             "mouseup.scrollbar": removeDragHandlers
                         });
@@ -272,7 +269,7 @@
                         return false;
                     });
                 }
-            }));
+            });
 
             // remove classes & reset applied styles
             $.each(s, function(d, scrollx){
@@ -375,27 +372,6 @@
                 o.onInit.apply(this, [c]);
 
             c.scrollLeft(initScroll.scrollLeft).scrollTop(initScroll.scrollTop).trigger("scroll");
-        },
-
-
-        /**
-         * Proxy to call function in context of current object
-         * @param {mixed} function or string
-         * @param {array} function arguments; use null to define incoming arguments
-         * @param {object} context
-         */
-        proxy: function(func, args, context){
-            context = context || this;
-            args = args || [];
-            if(typeof func == "string")
-                func = context[func];
-            return function(){
-                var a = args.slice();
-                for(var i=0; i<arguments.length; i++)
-                    if(typeof a[i]=="undefined" || a[i]===null)
-                        a[i] = arguments[i];
-                return func.apply(context, a);
-            };
         }
     };
 
@@ -404,7 +380,7 @@
      * @param {object|string} options or command to execute
      * @param {object|array} additional arguments as array []
      */
-    $.fn.dscrollbar = function(options, args){
+    $.fn.scrollbar = function(options, args){
 
         var toReturn = this;
 
@@ -450,29 +426,31 @@
     /* CHECK IF SCROLL CONTENT IS UPDATED */
     var timerCounter = 0;
     var timer = setInterval(function(){
-        var i, c, s, w;
+        var i, c, s, w, x, y;
         for(i=0; i<scrolls.length; i++){
             s = scrolls[i];
-            c = s.container;
-            w = s.wrapper;
-            if(w.is(":visible") && (c.prop("scrollWidth") != s.scrollx.size
-                || c.prop("scrollHeight") != s.scrolly.size
-                || w.width()  != s.scrollx.visible
-                || w.height() != s.scrolly.visible
+            c = s.container; w = s.wrapper;
+            x = s.scrollx; y = s.scrolly;
+            if(w.is(":visible") &&
+                (c.prop("scrollWidth") != x.size
+                || c.prop("scrollHeight") != y.size
+                || w.width()  != x.visible
+                || w.height() != y.visible
                 )){
-
                 s.init();
 
-                browser.log({
-                    "scrollHeight": c.prop("scrollHeight") + ":" + s.scrolly.size,
-                    "scrollWidth": c.prop("scrollWidth") + ":" + s.scrollx.size,
-                    "visibleHeight": w.height() + ":" + s.scrolly.visible,
-                    "visibleWidth": w.width() + ":" + s.scrollx.visible
-                }, true);
+                if(debug){
+                    browser.log({
+                        "scrollHeight": c.prop("scrollHeight") + ":" + s.scrolly.size,
+                        "scrollWidth": c.prop("scrollWidth") + ":" + s.scrollx.size,
+                        "visibleHeight": w.height() + ":" + s.scrolly.visible,
+                        "visibleWidth": w.width() + ":" + s.scrollx.visible
+                    }, true);
 
-                if(debug && timerCounter++ > 1000){
-                    browser.log("Scroll udpates exceed 1000");
-                    clearInterval(timer);
+                    if(timerCounter++ > 100){
+                        browser.log("Scroll udpates exceed 100");
+                        clearInterval(timer);
+                    }
                 }
             }
         }
@@ -515,4 +493,4 @@
         return scrollSize;
     }
 
-})(jQuery, document);
+})(jQuery, document, window);
