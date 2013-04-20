@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>jQuery Custom Scrollbar</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <link type="text/css" href="jquery.scrollbar.css" rel="stylesheet" media="all" />
+
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="jquery.scrollbar.js"></script>
+        <script type="text/javascript">
+
+            function initCustomScrollbar(){
+                $('.scroll-standard').dscrollbar();
+
+                $('.scroll-simple').dscrollbar({
+                    "type": "simple"
+                });
+
+                $('.external-scroll').dscrollbar({
+                    "autoScrollSize": false,
+                    "scrollx": $('.external-scroll_x'),
+                    "scrolly": $('.external-scroll_y')
+                });
+
+//                $('.content').add('h2').add('.buttons').add('.content-container').hide();
+//
+//                $('.scroll-simple_outer').not('#test-webkit').prev().show().end().show().dscrollbar({
+//                    "type": "simple"
+//                });
+            }
+
+            function destroyCustomScrollbar(){
+                $('.scroll-content').dscrollbar('destroy');
+            }
+
+            $(document).ready(function(){
+                initCustomScrollbar();
+
+                $('.buttons').each(function(){
+                    $(this).find('input.default').attr('checked', true);
+                }).find('input:radio').change(function(){
+                    $(this).closest('form').next().find('.resizable').css($(this).attr('name'), $(this).val());
+                });
+
+            });
+        </script>
+    </head>
+    <body>
+        <div class="panel">
+            <input type="button" value="INIT" onclick="initCustomScrollbar();" />
+            <input type="button" value="DESTROY" onclick="destroyCustomScrollbar();" />
+        </div>
+
+        <div style="padding: 20px;">
+            <h2>Standard MS Windows Vista scrollbar</h2>
+            <form class="buttons">
+                <div>
+                    <strong>Width:</strong>
+                    <label><input name="width" type="radio" value="400px" />400</label>
+                    <label><input name="width" type="radio" value="600px" />600 (100%)</label>
+                    <label><input name="width" type="radio" value="610px" />610</label>
+                    <label><input name="width" type="radio" value="800px" class="default" />800 (original)</label>
+                </div>
+                <div>
+                    <strong>Height:</strong>
+                    <label><input name="height" type="radio" value="300px" />300</label>
+                    <label><input name="height" type="radio" value="400px" />400 (100%)</label>
+                    <label><input name="height" type="radio" value="410px" />410</label>
+                    <label><input name="height" type="radio" value="600px" class="default" />600 (original)</label>
+                </div>
+            </form>
+            <div class="content scroll-standard">
+                <img src="image.jpg" class="resizable" style="width:800px;height:600px;" />
+            </div>
+
+
+            <h2>Simple outer scrollbar</h2>
+            <form class="buttons">
+                <div>
+                    <strong>Width:</strong>
+                    <label><input name="width" type="radio" value="400px" />400</label>
+                    <label><input name="width" type="radio" value="600px" />600 (100%)</label>
+                    <label><input name="width" type="radio" value="610px" />610</label>
+                    <label><input name="width" type="radio" value="800px" class="default" />800 (original)</label>
+                </div>
+                <div>
+                    <strong>Height:</strong>
+                    <label><input name="height" type="radio" value="300px" />300</label>
+                    <label><input name="height" type="radio" value="400px" />400 (100%)</label>
+                    <label><input name="height" type="radio" value="410px" />410</label>
+                    <label><input name="height" type="radio" value="600px" class="default" />600 (original)</label>
+                </div>
+            </form>
+            <div class="content scroll-simple scroll-simple_outer">
+                <img src="image.jpg" class="resizable" style="width:800px;height:600px;" />
+            </div>
+
+
+            <h2>Simple outer scrollbar with text & padding</h2>
+            <form class="buttons">
+                <div>
+                    <strong>Width:</strong>
+                    <label><input name="width" type="radio" value="650px" />650</label>
+                    <label><input name="width" type="radio" value="800px" />800</label>
+                    <label><input name="width" type="radio" value="" class="default" />AUTO (100%)</label>
+                </div>
+            </form>
+            <div id="test-webkit" class="content scroll-simple scroll-simple_outer">
+                <div class="resizable" style="padding: 10px;">
+                    <p style="background-color:#fecccc;">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                        scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus
+                        pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit
+                        interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae
+                        dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus
+                        quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae
+                        consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent
+                        sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in
+                        interdum massa nibh nec erat.</p>
+                    <p style="background-color:#ccccfe;">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                        scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus
+                        pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit
+                        interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae
+                        dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus
+                        quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae
+                        consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent
+                        sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in
+                        interdum massa nibh nec erat.</p>
+                    <p style="background-color:#ccfecc;">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                        scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus
+                        pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit
+                        interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae
+                        dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus
+                        quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae
+                        consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent
+                        sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in
+                        interdum massa nibh nec erat.</p>
+                </div>
+            </div>
+
+
+            <h2>Simple inner scrollbar (with hover effect)</h2>
+            <form class="buttons">
+                <div>
+                    <strong>Width:</strong>
+                    <label><input name="width" type="radio" value="400px" />400</label>
+                    <label><input name="width" type="radio" value="600px" />600 (100%)</label>
+                    <label><input name="width" type="radio" value="610px" />610</label>
+                    <label><input name="width" type="radio" value="800px" class="default" />800 (original)</label>
+                </div>
+                <div>
+                    <strong>Height:</strong>
+                    <label><input name="height" type="radio" value="300px" />300</label>
+                    <label><input name="height" type="radio" value="400px" />400 (100%)</label>
+                    <label><input name="height" type="radio" value="410px" />410</label>
+                    <label><input name="height" type="radio" value="600px" class="default" />600 (original)</label>
+                </div>
+            </form>
+            <div class="content scroll-simple scroll-simple_inner">
+                <img src="image.jpg" class="resizable" style="width:800px;height:600px;" />
+            </div>
+
+            <h2>Simple external scrollbar (with fixed scrollbar sizes)</h2>
+            <form class="buttons">
+                <div>
+                    <strong>Width:</strong>
+                    <label><input name="width" type="radio" value="400px" />400</label>
+                    <label><input name="width" type="radio" value="600px" />600 (100%)</label>
+                    <label><input name="width" type="radio" value="610px" />610</label>
+                    <label><input name="width" type="radio" value="800px" class="default" />800 (original)</label>
+                </div>
+                <div>
+                    <strong>Height:</strong>
+                    <label><input name="height" type="radio" value="300px" />300</label>
+                    <label><input name="height" type="radio" value="400px" />400 (100%)</label>
+                    <label><input name="height" type="radio" value="410px" />410</label>
+                    <label><input name="height" type="radio" value="600px" class="default" />600 (original)</label>
+                </div>
+            </form>
+            <div class="content-container">
+                <div class="content external-scroll">
+                    <img src="image.jpg" class="resizable" style="width:800px;height:600px;" />
+                </div>
+
+                <div class="external-scroll_x">
+                    <div class="scroll-element_outer">
+                        <div class="scroll-element_size"></div>
+                        <div class="scroll-element_inner"></div>
+                        <div class="scroll-bar"></div>
+                    </div>
+                </div>
+
+                <div class="external-scroll_y">
+                    <div class="scroll-element_outer">
+                        <div class="scroll-element_size"></div>
+                        <div class="scroll-element_inner"></div>
+                        <div class="scroll-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
