@@ -10,6 +10,10 @@
  *
  * @author Yuriy Khabarov aka Gromo
  * @version 1.0
+ *
+ * TODO:
+ *  - disable scroll on mobile devices
+ *  - emulate content scroll on mousewheel over scrollbar
  */
 ;
 (function($, doc){
@@ -17,9 +21,12 @@
     // INIT FLAGS & VARIABLES
     var browser = {
         "ie":  (doc.documentMode) ? true :false,
+        "webkit": window.WebKitPoint ? true : false,
+
         "ie7": (doc.documentMode && doc.documentMode == 7) ? true : false,
         "ie8": (doc.documentMode && doc.documentMode == 8) ? true : false,
         "ie9": (doc.documentMode && doc.documentMode == 9) ? true : false,
+
         "log": function(data, toString){
             var output = data;
             if(toString && typeof data != 'string'){
@@ -84,7 +91,7 @@
             .removeClass('scroll-content')
             .removeClass('scroll-scrollx_show')
             .removeClass('scroll-scrolly_show')
-            .unbind('.scrollbar')
+            .off('.scrollbar')
             .scrollLeft(scrollLeft)
             .scrollTop(scrollTop);
 
@@ -92,7 +99,7 @@
             this.scrolly.scrollbar.hide();
             this.wrapper.remove();
 
-            $(doc).add('body').unbind('.scrollbar');
+            $(doc).add('body').off('.scrollbar');
 
             if($.isFunction(this.options.onDestroy))
                 this.options.onDestroy.apply(this, [this.container]);
@@ -105,31 +112,31 @@
             var scrollbar = this.options['scroll' + d];
             var html = {
                 "advanced":
-                    '<div class="scroll-arrow scroll-arrow_less"></div>' +
-                    '<div class="scroll-arrow scroll-arrow_more"></div>' +
-                    '<div class="scroll-element_outer">' +
-                    '    <div class="scroll-element_size"></div>' + // required! used for scrollbar size calculation !
-                    '    <div class="scroll-element_inner-wrapper">' +
-                    '        <div class="scroll-element_inner">'  + // used for handling scrollbar click
-                    '            <div class="scroll-element_inner-bottom"></div>' +
-                    '        </div>' +
-                    '    </div>' +
-                    '    <div class="scroll-bar">' +
-                    '        <div class="scroll-bar_body">' +
-                    '            <div class="scroll-bar_body-inner"></div>' +
-                    '        </div>' +
-                    '        <div class="scroll-bar_bottom"></div>' +
-                    '        <div class="scroll-bar_center"></div>' +
-                    '    </div>' +
-                    '</div>',
+                '<div class="scroll-arrow scroll-arrow_less"></div>' +
+                '<div class="scroll-arrow scroll-arrow_more"></div>' +
+                '<div class="scroll-element_outer">' +
+                '    <div class="scroll-element_size"></div>' + // required! used for scrollbar size calculation !
+                '    <div class="scroll-element_inner-wrapper">' +
+                '        <div class="scroll-element_inner">'  + // used for handling scrollbar click
+                '            <div class="scroll-element_inner-bottom"></div>' +
+                '        </div>' +
+                '    </div>' +
+                '    <div class="scroll-bar">' +
+                '        <div class="scroll-bar_body">' +
+                '            <div class="scroll-bar_body-inner"></div>' +
+                '        </div>' +
+                '        <div class="scroll-bar_bottom"></div>' +
+                '        <div class="scroll-bar_center"></div>' +
+                '    </div>' +
+                '</div>',
 
                 "simple":
-                    '<div class="scroll-element_outer">' +
-                    '    <div class="scroll-element_size"></div>'  + // required! used for scrollbar size calculation !
-                    '    <div class="scroll-element_inner"></div>' + // used for handling scrollbar click
-                    '    <div class="scroll-bar">' +
-                    '    </div>' +
-                    '</div>'
+                '<div class="scroll-element_outer">' +
+            '    <div class="scroll-element_size"></div>'  + // required! used for scrollbar size calculation !
+            '    <div class="scroll-element_inner"></div>' + // used for handling scrollbar click
+            '    <div class="scroll-bar">' +
+            '    </div>' +
+            '</div>'
             };
             var type = html[this.options.type] ? this.options.type : 'advanced';
 
@@ -173,21 +180,14 @@
                 this.wrapper = w = c.wrap($('<div>').addClass('scroll-wrapper')
                     .addClass(c.attr('class'))).parent();
 
-                c.addClass('scroll-content')
-                .bind('scroll.scrollbar', this.proxy(function(){
-                    $.each(s, this.proxy(function(i, scroll){
-                        var offset  = (i=='x') ? c.scrollLeft() : c.scrollTop();
-                        if(scroll.isVisible){
-                            scroll.scroller.css((i=='x') ? 'left' : 'top', offset * scroll.kx + px);
-                        }
-                    }));
-                }))
-                .css({
+                c.addClass('scroll-content').css({
                     "height":"auto",
-                    "margin": 0,
                     "margin-bottom": browser.scroll['height'] * -1 + px,
                     "margin-right":  browser.scroll['width'] * -1 + px
 
+                }).on('scroll.scrollbar', function(){
+                    s.x.isVisible && s.x.scroller.css('left', c.scrollLeft() * s.x.kx + px);
+                    s.y.isVisible && s.y.scroller.css('top',  c.scrollTop()  * s.y.kx + px);
                 });
             } else {
                 c.css({
@@ -203,7 +203,18 @@
                     scrollx.scrollbar = this.getScrollbar(d);
                     scrollx.scroller = scrollx.scrollbar.find('.scroll-bar');
 
-                    scrollx.scrollbar.find('.scroll-arrow').click(function(){
+                    scrollx.scrollbar.on({
+                        "DOMMouseScroll.scrollbar": function(event){
+                            event.preventDefault();
+                            return false;
+                        },
+                        "mousewheel.scrollbar": function(event){
+                            event.preventDefault();
+                            return false;
+                        }
+                    });
+
+                    scrollx.scrollbar.find('.scroll-arrow').on('click', function(){
                         var offset = $(this).hasClass('scroll-arrow_more') ? 30 : -30;
                         var direction = (d == 'x') ? 'scrollLeft' : 'scrollTop';
                         var animateTo = {};
@@ -211,7 +222,7 @@
                         c.animate(animateTo, o.duration);
                     });
 
-                    scrollx.scrollbar.find('.scroll-element_inner').click(function(event){
+                    scrollx.scrollbar.find('.scroll-element_inner').on('click', function(event){
                         var direction = (d == 'x') ? 'scrollLeft' : 'scrollTop';
                         var kx = event[(d == 'x') ? 'pageX' : 'pageY'] <
                         scrollx.scroller.offset()[(d == 'x') ? 'left' : 'top'] ? -1 : 1;
@@ -221,34 +232,33 @@
                         c.animate(animateTo, o.duration);
                     });
 
-                    scrollx.scroller.bind('mousedown', function(event){
+                    scrollx.scroller.on('mousedown', function(event){
 
                         var direction = (d == 'x') ? 'scrollLeft' : 'scrollTop';
                         var eventPosition = event[(d == 'x')? 'pageX' : 'pageY'];
                         var initOffset = c[direction]();
                         scrollx.scrollbar.addClass('scroll-draggable');
 
+                        var preventDefault = function(event){
+                            event.preventDefault();
+                            return false;
+                        };
                         var removeDragHandlers = function(){
-                            $(doc).add('body').unbind('.scrollbar');
+                            $(doc).add('body').off('.scrollbar');
                             scrollx.scrollbar.removeClass('scroll-draggable');
                         };
 
-                        $(doc).bind({
-                            "dragstart.scrollbar": function(event){
-                                event.preventDefault();
-                                return false;
-                            },
+                        $(doc).on({
+                            "blur.scrollbar": removeDragHandlers,
+                            "dragstart.scrollbar": preventDefault,
                             "mousemove.scrollbar": function(event){
                                 var diff = parseInt((event[(d == 'x')? 'pageX' : 'pageY'] - eventPosition) / scrollx.kx);
                                 c[direction](initOffset + (diff));
                             },
                             "mouseup.scrollbar": removeDragHandlers
                         });
-                        $('body').bind({
-                            "selectstart.scrollbar": function(){
-                                return false;
-                            },
-                            "mouseleave.scrollbar": removeDragHandlers
+                        $('body').on({
+                            "selectstart.scrollbar": preventDefault
                         });
 
                         event.preventDefault();
@@ -265,17 +275,16 @@
                 scrollx.scrollbar.hide();
                 scrolly.scrollbar.removeClass(scrollClass);
                 c.removeClass(scrollClass);
-
-                // hack for webkit-based browsers (chrome/safari) correct width calculation
-                c.css('float', 'left');
             });
 
             // calculate init sizes
             $.each(s, function(d, scrollx){
                 $.extend(scrollx, (d == 'x') ? {
+                    "offset": parseInt(c.css('left')) || 0,
                     "size": c.prop('scrollWidth'),
                     "visible": w.width()
                 } : {
+                    "offset": parseInt(c.css('top')) || 0,
                     "size": c.prop('scrollHeight'),
                     "visible": w.height()
                 });
@@ -284,18 +293,16 @@
 
             function updateScroll(d, scrollx){
 
-                var cssOffset = (d == 'x') ? 'left' : 'top';
                 var scrollClass = 'scroll-scroll' + d + '_show';
                 var scrolly = (d == 'x') ? s.y : s.x;
-                var offset = parseInt(c.css(cssOffset)) || 0;
+                var offset = parseInt(c.css((d == 'x') ? 'left' : 'top')) || 0;
 
-                var AreaSize = scrollx.size + offset;
+                var AreaSize = scrollx.size;
                 var AreaVisible = scrollx.visible + offset;
 
                 scrollx.isVisible = AreaSize > AreaVisible;
-
                 if(scrollx.isVisible){
-                    scrollx.scrollbar.hide().show(); // .hide().show() - IE7 hack to recalculate size
+                    scrollx.scrollbar.show();
                     scrolly.scrollbar.addClass(scrollClass);
                     c.addClass(scrollClass);
                 } else {
@@ -311,13 +318,17 @@
                 if(s.x.size != c.prop('scrollWidth')
                     || s.y.size != c.prop('scrollHeight')
                     || s.x.visible != w.width()
-                    || s.y.visible != w.height())
-                    {
+                    || s.y.visible != w.height()
+                    || s.x.offset  != (parseInt(c.css('left')) || 0)
+                    || s.y.offset  != (parseInt(c.css('top')) || 0)
+                    ){
                     $.each(s, function(d, scrollx){
                         $.extend(scrollx, (d == 'x') ? {
+                            "offset": parseInt(c.css('left')) || 0,
                             "size": c.prop('scrollWidth'),
                             "visible": w.width()
                         } : {
+                            "offset": parseInt(c.css('top')) || 0,
                             "size": c.prop('scrollHeight'),
                             "visible": w.height()
                         });
@@ -325,9 +336,7 @@
                     updateScroll(d == 'x' ? 'y' : 'x', scrolly);
                 }
             }
-
             $.each(s, updateScroll);
-            s.x.size = c.css('float', '').prop('scrollWidth'); // remove webkit hack & recalculate sizes
 
 
             // calculate scroll size
@@ -337,7 +346,7 @@
                 var cssSize = (d == 'x') ? "width" : "height";
                 var offset = parseInt(c.css(cssOffset)) || 0;
 
-                var AreaSize = scrollx.size + offset;
+                var AreaSize = scrollx.size;
                 var AreaVisible = scrollx.visible + offset;
 
                 // set scroll size to wrapper height/width
@@ -489,6 +498,11 @@
             "height": (outer.offset().top - inner.offset().top) || 0,
             "width": (outer.offset().left - inner.offset().left) || 0
         };
+
+        if(browser.webkit){
+            scrollSize.height = 0;
+            scrollSize.width = 0;
+        }
 
         outer.remove();
         return scrollSize;

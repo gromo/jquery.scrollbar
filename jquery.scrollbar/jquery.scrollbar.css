@@ -137,12 +137,18 @@ h2 {
 .scroll-wrapper > .scroll-content {
     border: none !important;
     height: auto;
+    margin: 0;
     max-height: none !important;
     max-width: none !important;
     overflow: scroll !important;
     padding: 0;
     position: relative !important;
     width: auto !important;
+}
+
+.scroll-wrapper > .scroll-content::-webkit-scrollbar {
+    height: 0;
+    width: 0;
 }
 
 .scroll-element .scroll-bar,
@@ -168,8 +174,8 @@ h2 {
 
 /******************* STANDARD SCROLL *******************/
 
-.scroll-standard > .scroll-content.scroll-scrolly_show { left: -17px; padding-left: 17px; }
-.scroll-standard > .scroll-content.scroll-scrollx_show { top:  -17px; padding-top:  17px; }
+.scroll-standard > .scroll-content.scroll-scrolly_show { left: -17px; margin-left: 17px; }
+.scroll-standard > .scroll-content.scroll-scrollx_show { top:  -17px; margin-top:  17px; }
 
 
 .scroll-standard > .scroll-element {
@@ -313,8 +319,8 @@ h2 {
 
 /******************* SIMPLE OUTER SCROLL *******************/
 
-.scroll-simple_outer > .scroll-content.scroll-scrolly_show { left: -12px; padding-left: 12px; }
-.scroll-simple_outer > .scroll-content.scroll-scrollx_show { top:  -12px; padding-top:  12px; }
+.scroll-simple_outer > .scroll-content.scroll-scrolly_show { left: -12px; margin-left: 12px; }
+.scroll-simple_outer > .scroll-content.scroll-scrollx_show { top:  -12px; margin-top:  12px; }
 
 .scroll-simple_outer > .scroll-element,
 .scroll-simple_outer > .scroll-element div
