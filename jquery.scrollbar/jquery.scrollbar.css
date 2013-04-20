@@ -136,6 +136,7 @@ h2 {
 
 .scroll-wrapper > .scroll-content {
     border: none !important;
+    box-sizing: content-box !important;
     height: auto;
     margin: 0;
     max-height: none !important;

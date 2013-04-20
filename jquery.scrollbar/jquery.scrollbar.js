@@ -1,5 +1,5 @@
 /**
- * jQuery dScrollbar plugin
+ * jQuery Custom Scrollbar plugin
  *
  * Copyright 2013, Yuriy Khabarov
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -12,14 +12,14 @@
  * @version 1.0
  *
  * TODO:
- *  - disable scroll on mobile devices
- *  - emulate content scroll on mousewheel over scrollbar
+ *  - refactor scroll emulate on scrollbar mousewheel
  */
 ;
 (function($, doc){
 
     // INIT FLAGS & VARIABLES
     var browser = {
+        "mobile": /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent),
         "ie":  (doc.documentMode) ? true :false,
         "webkit": window.WebKitPoint ? true : false,
 
@@ -50,6 +50,7 @@
     var defaults = {
         "autoScrollSize": true, // automatically calculate scrollsize
         "duration": 200,        // scroll animate duration in ms
+        "ignoreMobile": true,   // ignore mobile devices
         "showArrows": true,     // add class to show arrows
         "type":"advanced",      // [advanced|simple] scroll html type
 
@@ -61,11 +62,11 @@
     };
 
 
-    function customScrollbar(container, options){
+    var customScrollbar = function(container, options){
 
         if(!browser.scroll){
             browser.scroll = getBrowserScrollSize();
-            browser.log('Custom Scrollbar v1.0');
+            browser.log('Custom Scrollbar v1.1');
         }
 
         this.container = container;
@@ -73,12 +74,17 @@
         this.scrollx = {};
         this.scrolly = {};
 
-        this.init(options);
+        if(!(browser.mobile && this.options.ignoreMobile))
+            this.init(options);
     }
 
     customScrollbar.prototype = {
 
         destroy: function(){
+
+            if(!this.wrapper){
+                return;
+            }
 
             // INIT VARIABLES
             var scrollLeft = this.container.scrollLeft();
@@ -95,8 +101,9 @@
             .scrollLeft(scrollLeft)
             .scrollTop(scrollTop);
 
-            this.scrollx.scrollbar.hide();
-            this.scrolly.scrollbar.hide();
+            this.scrollx.scrollbar.hide().find('div').andSelf().off('.scrollbar');
+            this.scrolly.scrollbar.hide().find('div').andSelf().off('.scrollbar');
+
             this.wrapper.remove();
 
             $(doc).add('body').off('.scrollbar');
@@ -203,18 +210,18 @@
                     scrollx.scrollbar = this.getScrollbar(d);
                     scrollx.scroller = scrollx.scrollbar.find('.scroll-bar');
 
+                    var onmousewheel = function(event){
+                        var scroll = (d == 'x') ? 'scrollLeft' : 'scrollTop';
+                        var delta = event.originalEvent.wheelDelta || -event.originalEvent.detail;
+                        c[scroll](c[scroll]() - delta).scroll();
+                        event.preventDefault();
+                    };
                     scrollx.scrollbar.on({
-                        "DOMMouseScroll.scrollbar": function(event){
-                            event.preventDefault();
-                            return false;
-                        },
-                        "mousewheel.scrollbar": function(event){
-                            event.preventDefault();
-                            return false;
-                        }
+                        "DOMMouseScroll.scrollbar": onmousewheel,
+                        "mousewheel.scrollbar": onmousewheel
                     });
 
-                    scrollx.scrollbar.find('.scroll-arrow').on('click', function(){
+                    scrollx.scrollbar.find('.scroll-arrow').on('click.scrollbar', function(){
                         var offset = $(this).hasClass('scroll-arrow_more') ? 30 : -30;
                         var direction = (d == 'x') ? 'scrollLeft' : 'scrollTop';
                         var animateTo = {};
@@ -222,7 +229,7 @@
                         c.animate(animateTo, o.duration);
                     });
 
-                    scrollx.scrollbar.find('.scroll-element_inner').on('click', function(event){
+                    scrollx.scrollbar.find('.scroll-element_inner').on('click.scrollbar', function(event){
                         var direction = (d == 'x') ? 'scrollLeft' : 'scrollTop';
                         var kx = event[(d == 'x') ? 'pageX' : 'pageY'] <
                         scrollx.scroller.offset()[(d == 'x') ? 'left' : 'top'] ? -1 : 1;
@@ -232,7 +239,7 @@
                         c.animate(animateTo, o.duration);
                     });
 
-                    scrollx.scroller.on('mousedown', function(event){
+                    scrollx.scroller.on('mousedown.scrollbar', function(event){
 
                         var direction = (d == 'x') ? 'scrollLeft' : 'scrollTop';
                         var eventPosition = event[(d == 'x')? 'pageX' : 'pageY'];
@@ -509,4 +516,3 @@
     }
 
 })(jQuery, document);
-
