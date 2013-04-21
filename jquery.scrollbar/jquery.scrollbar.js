@@ -218,7 +218,7 @@
                         "mousewheel.scrollbar": onmousewheel
                     });
 
-                    scrollx.scrollbar.find(".scroll-arrow").on("click.scrollbar", function(){
+                    scrollx.scrollbar.find(".scroll-arrow").on("mousedown.scrollbar", function(){
                         var offset = $(this).hasClass("scroll-arrow_more") ? 30 : -30;
                         var scrollOffset = (d == "x") ? "scrollLeft" : "scrollTop";
                         var animateTo = {};
