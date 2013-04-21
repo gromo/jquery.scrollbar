@@ -15,7 +15,7 @@ img {
     display: block;
 }
 
-h2 {
+h1, h2, h3, h4 {
     padding: 0 20px
 }
 
@@ -138,12 +138,14 @@ h2 {
     border: none !important;
     box-sizing: content-box !important;
     height: auto;
+    left: 0;
     margin: 0;
     max-height: none !important;
     max-width: none !important;
     overflow: scroll !important;
     padding: 0;
     position: relative !important;
+    top: 0;
     width: auto !important;
 }
 
@@ -378,6 +380,12 @@ h2 {
 
 .scroll-simple_outer > .scroll-element.scroll-x.scroll-scrolly_show .scroll-element_inner { left: -12px; }
 .scroll-simple_outer > .scroll-element.scroll-y.scroll-scrollx_show .scroll-element_inner { top: -12px; }
+
+
+
+/* HOVER & DRAG STYLES */
+.scroll-simple_outer > .scroll-element .scroll-bar:hover { background-color: #03a4d8; }
+.scroll-simple_outer > .scroll-element.scroll-draggable .scroll-bar { background-color: #FFa2ff; }
 
 
 
