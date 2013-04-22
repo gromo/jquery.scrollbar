@@ -40,6 +40,7 @@
     var debug = false;
     var px = "px";
     var scrolls = [];
+    var hasOverflowEvent = false;
 
 
     var defaults = {
@@ -70,9 +71,13 @@
         this.scrollx = {};
         this.scrolly = {};
 
-        if(!(browser.mobile && this.options.ignoreMobile))
-            this.init(options);
-    }
+        if(!(browser.mobile && this.options.ignoreMobile)){
+            var _this = this;
+            setTimeout(function  () {// for handle if hasOverflowEvent
+                _this.init(options);
+            },10);
+        }
+    };
 
     customScrollbar.prototype = {
 
@@ -106,6 +111,10 @@
 
             if($.isFunction(this.options.onDestroy))
                 this.options.onDestroy.apply(this, [this.container]);
+
+            if (hasOverflowEvent) {
+                removeResizeListenerFacade(this.resizeListener);
+            }
         },
 
 
@@ -185,6 +194,8 @@
                 this.wrapper = w = c.wrap($("<div>").css({
                     "position": (c.css("position") == "absolute") ? "absolute" : "relative"
                 }).addClass("scroll-wrapper").addClass(c.attr("class"))).parent();
+
+                this.resizeListener = c.wrapInner($('<div class="resize-listener"></div>')).children();
 
                 c.addClass("scroll-content").css({
                     "height":"auto",
@@ -385,6 +396,12 @@
             if($.isFunction(o.onInit))
                 o.onInit.apply(this, [c]);
 
+            if (hasOverflowEvent) {
+                addResizeListenerFacade(this.resizeListener, function () {
+                    onResize(S);
+                });
+            }
+
             c.scrollLeft(initScroll.scrollLeft).scrollTop(initScroll.scrollTop).trigger("scroll");
         }
     };
@@ -436,42 +453,6 @@
 
         return toReturn;
     };
-
-    /* CHECK IF SCROLL CONTENT IS UPDATED */
-    var timerCounter = 0;
-    var timer = setInterval(function(){
-        var i, c, s, w, x, y;
-        for(i=0; i<scrolls.length; i++){
-            s = scrolls[i];
-            c = s.container;
-            w = s.wrapper;
-            x = s.scrollx;
-            y = s.scrolly;
-            if(w.is(":visible") &&
-                (c.prop("scrollWidth") != x.size
-                    || c.prop("scrollHeight") != y.size
-                    || w.width()  != x.visible
-                    || w.height() != y.visible
-                    )){
-                s.init();
-
-                if(debug){
-                    browser.log({
-                        "scrollHeight": c.prop("scrollHeight") + ":" + s.scrolly.size,
-                        "scrollWidth": c.prop("scrollWidth") + ":" + s.scrollx.size,
-                        "visibleHeight": w.height() + ":" + s.scrolly.visible,
-                        "visibleWidth": w.width() + ":" + s.scrollx.visible
-                    }, true);
-
-                    if(timerCounter++ > 100){
-                        browser.log("Scroll udpates exceed 100");
-                        clearInterval(timer);
-                    }
-                }
-            }
-        }
-    }, 300);
-
 
     /* ADDITIONAL FUNCTIONS */
     function getBrowserScrollSize(){
@@ -533,5 +514,183 @@
         event && event.preventDefault();
         return false;
     }
+
+    /* RESIZE LISTENERS */
+    function addFlowListener(element, type, fn) {
+        var flow = type == 'over';
+        element.addEventListener('OverflowEvent' in window ? 'overflowchanged' : type + 'flow', function (e) {
+            if (e.type == (type + 'flow') ||
+                ((e.orient == 0 && e.horizontalOverflow == flow) ||
+                    (e.orient == 1 && e.verticalOverflow == flow) ||
+                    (e.orient == 2 && e.horizontalOverflow == flow && e.verticalOverflow == flow))) {
+                e.flow = type;
+                return fn.call(this, e);
+            }
+        }, false);
+    }
+
+    function fireEvent(element, type, data, options) {
+        options = options || {};
+        var event = document.createEvent('Event');
+        event.initEvent(type, 'bubbles' in options ? options.bubbles : true, 'cancelable' in options ? options.cancelable : true);
+        for (var z in data) event[z] = data[z];
+        element.dispatchEvent(event);
+    }
+
+    function addResizeListener(element, fn) {
+        var resize = 'onresize' in element;
+        if (!resize && !element._resizeSensor) {
+            var sensor = element._resizeSensor = document.createElement('div');
+            sensor.className = 'resize-sensor';
+            sensor.innerHTML = '<div class="resize-overflow"><div></div></div><div class="resize-underflow"><div></div></div>';
+
+            var x = 0, y = 0,
+                first = sensor.firstElementChild.firstChild,
+                last = sensor.lastElementChild.firstChild,
+                matchFlow = function (event) {
+                    var change = false,
+                        width = element.offsetWidth;
+                    if (x != width) {
+                        first.style.width = width - 1 + 'px';
+                        last.style.width = width + 1 + 'px';
+                        change = true;
+                        x = width;
+                    }
+                    var height = element.offsetHeight;
+                    if (y != height) {
+                        first.style.height = height - 1 + 'px';
+                        last.style.height = height + 1 + 'px';
+                        change = true;
+                        y = height;
+                    }
+                    if (change && event.currentTarget != element) fireEvent(element, 'resize');
+                };
+
+            if (getComputedStyle(element).position == 'static') {
+                element.style.position = 'relative';
+                element._resizeSensor._resetPosition = true;
+            }
+            addFlowListener(sensor, 'over', matchFlow);
+            addFlowListener(sensor, 'under', matchFlow);
+            addFlowListener(sensor.firstElementChild, 'over', matchFlow);
+            addFlowListener(sensor.lastElementChild, 'under', matchFlow);
+            element.appendChild(sensor);
+            matchFlow({});
+        }
+        var events = element._flowEvents || (element._flowEvents = []);
+        if (events.indexOf(fn) == -1) events.push(fn);
+        if (!resize) element.addEventListener('resize', fn, false);
+        element.onresize = function (e) {
+            events.forEach(function (fn) {
+                fn.call(element, e);
+            });
+        };
+    }
+
+    function removeResizeListener(element, fn) {
+        var index = element._flowEvents.indexOf(fn);
+        if (index > -1) element._flowEvents.splice(index, 1);
+        if (!element._flowEvents.length) {
+            var sensor = element._resizeSensor;
+            if (sensor) {
+                element.removeChild(sensor);
+                if (sensor._resetPosition) element.style.position = 'static';
+                delete element._resizeSensor;
+            }
+            if ('onresize' in element) element.onresize = null;
+            delete element._flowEvents;
+        }
+        element.removeEventListener('resize', fn);
+    }
+
+    function addResizeListenerFacade($el, fn) {
+        $el.data('resizeListener', fn);
+        addResizeListener($el[0], fn);
+    }
+
+    function removeResizeListenerFacade($el) {
+        var resizeListener = $el.data('resizeListener');
+        if (!resizeListener) return;
+        addResizeListener($el[0], resizeListener);
+    }
+
+
+    /* CHECK IF SCROLL CONTENT IS UPDATED */
+    var onSizeChanged = function (c, w, s) {
+        s.init();
+
+        if (debug) {
+            browser.log({
+                "scrollHeight": c.prop("scrollHeight") + ":" + s.scrolly.size,
+                "scrollWidth": c.prop("scrollWidth") + ":" + s.scrollx.size,
+                "visibleHeight": w.height() + ":" + s.scrolly.visible,
+                "visibleWidth": w.width() + ":" + s.scrollx.visible
+            }, true);
+
+            if (timerCounter++ > 100) {
+                browser.log("Scroll udpates exceed 100");
+                clearInterval(timer);
+            }
+        }
+    };
+
+    function onResize(s) {
+        onSizeChanged(s.container, s.wrapper, s);
+    }
+
+    /* INTERVAL */
+    var timerCounter = 0;
+    var timer = setInterval(function () {
+        var i, c, s, w, x, y;
+        for (i = 0; i < scrolls.length; i++) {
+            s = scrolls[i];
+            c = s.container;
+            w = s.wrapper;
+            x = s.scrollx;
+            y = s.scrolly;
+            if (w.is(":visible") &&
+                (c.prop("scrollWidth") != x.size
+                    || c.prop("scrollHeight") != y.size
+                    || w.width() != x.visible
+                    || w.height() != y.visible
+                    )) {
+                onSizeChanged(c, w, s);
+            }
+        }
+    }, 300);
+
+    window.ert = addResizeListenerFacade;
+
+    /* CHECK hasOverflowEvent */
+    $(function () {
+        var absoluteBox = $('<div>test</div>')
+                .css({
+                    'position': 'relative',
+                    'top': -9999,
+                    'left': -9999
+                }),
+            $el = $('<div class="overflow-event-test">test</div>'),
+            overflowEventCounter = 0;
+        $(document.body).append(absoluteBox);
+        $el.appendTo(absoluteBox);
+        addResizeListenerFacade($el, function () {
+            overflowEventCounter++;
+        });
+        // double setTimeout for stupid IE
+        setTimeout(function () {
+            $el.css({
+                'width': 25,
+                'height': 250
+            });
+            setTimeout(function () {
+                if (overflowEventCounter !== 0) {
+                    hasOverflowEvent = true;
+                    clearInterval(timer);// stop interval check
+                }
+                removeResizeListener($el[0]);
+                absoluteBox.remove();
+            }, 0);
+        }.bind(this), 0);
+    });
 
 })(jQuery, document, window);
