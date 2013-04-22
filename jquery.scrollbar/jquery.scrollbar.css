@@ -475,3 +475,19 @@ h1, h2, h3, h4 {
 
 .scroll-simple_inner > .scroll-element.scroll-x.scroll-scrolly_show .scroll-element_size { left: -22px; }
 .scroll-simple_inner > .scroll-element.scroll-y.scroll-scrollx_show .scroll-element_size { top: -22px; }
+
+/* FOR CATCH OVERFLOW EVENTS */
+.scroll-wrapper .resize-listener {
+	float: left;
+}
+
+.scroll-wrapper .resize-sensor,
+.scroll-wrapper .resize-sensor > div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	z-index: -1;
+}
