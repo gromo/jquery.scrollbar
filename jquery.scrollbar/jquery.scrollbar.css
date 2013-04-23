@@ -444,20 +444,35 @@ h1, h2, h3, h4 {
     display: block;
 }
 
+.scroll-simple_inner > .scroll-element.scroll-draggable .scroll-bar {
+    display: block;
+}
+
 
 .scroll-simple_inner > .scroll-element.scroll-x {
-    bottom: -10px;
-    height: 10px;
+    bottom: 0px;
+    height: 0px;
     left: 0;
     min-width: 100%;
+    overflow: visible;
     width: 100%;
 }
 
 .scroll-simple_inner > .scroll-element.scroll-y {
     height: 100%;
     min-height: 100%;
-    right: -10px;
+    right: 0px;
     top: 0;
+    width: 0px;
+}
+
+.scroll-simple_inner > .scroll-element.scroll-x .scroll-bar {
+    height: 10px;
+    top: -14px;
+}
+
+.scroll-simple_inner > .scroll-element.scroll-y .scroll-bar {
+    left: -14px;
     width: 10px;
 }
 
@@ -475,3 +490,15 @@ h1, h2, h3, h4 {
 
 .scroll-simple_inner > .scroll-element.scroll-x.scroll-scrolly_show .scroll-element_size { left: -22px; }
 .scroll-simple_inner > .scroll-element.scroll-y.scroll-scrollx_show .scroll-element_size { top: -22px; }
+
+
+
+
+
+
+
+
+
+
+
+

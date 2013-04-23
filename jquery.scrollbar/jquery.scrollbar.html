@@ -25,7 +25,7 @@
 
 //                $('.content').add('h2').add('.buttons').add('.content-container').hide();
 //
-//                $('.scroll-simple_outer').not('#test-webkit').prev().show().end().show().scrollbar({
+//                $('#test-webkit-2, #test-webkit').prev().show().end().show().scrollbar({
 //                    "type": "simple"
 //                });
             }
@@ -73,7 +73,6 @@
             <div class="content scroll-standard">
                 <img src="image.jpg" class="resizable" style="width:800px;height:600px;" />
             </div>
-
 
             <h2>Simple outer scrollbar</h2>
             <form class="buttons">
@@ -142,8 +141,7 @@
             </div>
 
 
-            <h2>Simple inner scrollbar with text & padding</h2>
-            <h4>(bug on text selecton in webkit browsers: chrome & safari)</h4>
+            <h2>Simple inner scrollbar with text, padding & hover effect</h2>
             <form class="buttons">
                 <div>
                     <strong>Width:</strong>
@@ -185,27 +183,6 @@
                         sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in
                         interdum massa nibh nec erat.</p>
                 </div>
-            </div>
-
-            <h2>Simple inner scrollbar (with hover effect)</h2>
-            <form class="buttons">
-                <div>
-                    <strong>Width:</strong>
-                    <label><input name="width" type="radio" value="400px" />400</label>
-                    <label><input name="width" type="radio" value="600px" />600 (100%)</label>
-                    <label><input name="width" type="radio" value="610px" />610</label>
-                    <label><input name="width" type="radio" value="800px" class="default" />800 (original)</label>
-                </div>
-                <div>
-                    <strong>Height:</strong>
-                    <label><input name="height" type="radio" value="300px" />300</label>
-                    <label><input name="height" type="radio" value="400px" />400 (100%)</label>
-                    <label><input name="height" type="radio" value="410px" />410</label>
-                    <label><input name="height" type="radio" value="600px" class="default" />600 (original)</label>
-                </div>
-            </form>
-            <div class="content scroll-simple scroll-simple_inner">
-                <img src="image.jpg" class="resizable" style="width:800px;height:600px;" />
             </div>
 
             <h2>Simple external scrollbar (with fixed scrollbar sizes)</h2>
