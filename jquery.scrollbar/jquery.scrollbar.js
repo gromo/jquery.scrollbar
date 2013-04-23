@@ -7,12 +7,11 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 1.2
+ * @version 1.3
  * @url https://github.com/gromo/dslib/tree/master/jquery.scrollbar
  *
  * TODO:
- *  - refactor scroll emulate on scrollbar mousewheel
- *  - fix content scrolling on text selection in webkit-based browser
+ *
  */
 ;
 (function($, doc, win){
@@ -62,7 +61,7 @@
 
         if(!browser.scroll){
             browser.scroll = getBrowserScrollSize();
-            browser.log("Custom Scrollbar v1.2");
+            browser.log("Custom Scrollbar v1.3");
         }
 
         this.container = container;
@@ -205,15 +204,21 @@
             $.each(s, function(d, scrollx){
 
                 var scrollCallback = null;
+                var scrollForward = true;
                 var scrollOffset = (d == "x") ? "scrollLeft" : "scrollTop";
                 var scrollStep = o.scrollStep;
                 var scrollTo = function(){
                     var currentOffset = c[scrollOffset]();
                     c[scrollOffset](currentOffset + scrollStep);
+                    if(scrollForward == true && (currentOffset + scrollStep) >= scrollToValue)
+                        currentOffset = c[scrollOffset]();
+                    if(scrollForward == false && (currentOffset + scrollStep) <= scrollToValue)
+                        currentOffset = c[scrollOffset]();
                     if(c[scrollOffset]() == currentOffset && scrollCallback){
                         scrollCallback();
                     }
                 }
+                var scrollToValue = 0;
 
                 if(!scrollx.scrollbar){
 
@@ -221,33 +226,61 @@
                     scrollx.scroller = scrollx.scrollbar.find(".scroll-bar");
 
                     var onmousewheel = function(event){
-                        var delta = event.originalEvent.wheelDelta || event.originalEvent.detail * -20;
-                        c[scrollOffset](c[scrollOffset]() - delta).scroll();
+                        var delta = event.originalEvent.wheelDelta * -1 || event.originalEvent.detail * 20;
+                        var maxScrollValue = scrollx.size - scrollx.visible - scrollx.offset;
+
+                        if(!((scrollToValue <= 0 && delta < 0) || (scrollToValue >= maxScrollValue && delta > 0))){
+                            scrollToValue = scrollToValue + delta;
+                            if(scrollToValue < 0)
+                                scrollToValue = 0;
+                            if(scrollToValue > maxScrollValue)
+                                scrollToValue = maxScrollValue;
+                            var animateTo = {};
+                            animateTo[scrollOffset] = scrollToValue;
+                            c.stop().animate(animateTo, 240, 'linear', function(){
+                                scrollToValue = c[scrollOffset]();
+                            });
+                        }
+
                         event.preventDefault();
+                        return false;
                     };
-                    if(d == 'y')
+
+                    if(d == 'y'){
                         scrollx.scrollbar.on({
                             "DOMMouseScroll.scrollbar": onmousewheel,
-                            "mousewheel.scrollbar": onmousewheel
+                            "mousewheel.scrollbar": onmousewheel,
+                            "mouseenter.scrollbar": function(){
+                                scrollToValue = c[scrollOffset]();
+                            }
                         });
+                    }
 
                     // HANDLE ARROWS & SCROLLBAR MOUSEDOWN EVENT
                     scrollx.scrollbar.find(".scroll-arrow, .scroll-element_inner")
                     .on("mousedown.scrollbar", function(event){
 
-                        var isForward = true;
+                        scrollForward = true;
+                        var maxScrollValue = scrollx.size - scrollx.visible - scrollx.offset;
 
                         if($(this).hasClass('scroll-arrow')){
-                            isForward = $(this).hasClass("scroll-arrow_more");
-                            scrollStep = isForward ? o.scrollStep : o.scrollStep * -1;
+                            scrollForward = $(this).hasClass("scroll-arrow_more");
+                            scrollStep = scrollForward ? o.scrollStep : o.scrollStep * -1;
+                            scrollToValue = scrollForward ? maxScrollValue : 0;
                         } else {
-                            isForward = event[(d == "x") ? "pageX" : "pageY"] >
-                                scrollx.scroller.offset()[(d == "x") ? "left" : "top"];
-                            scrollStep = isForward ? scrollx.visible : scrollx.visible * -1;
+                            scrollForward = event[(d == "x") ? "pageX" : "pageY"] >
+                            scrollx.scroller.offset()[(d == "x") ? "left" : "top"];
+                            scrollStep = scrollForward ? scrollx.visible : scrollx.visible * -1;
+                            scrollToValue = (event[(d == "x") ? "pageX" : "pageY"] -
+                                scrollx.scroller.offset()[(d == "x") ? "left" : "top"]);
+                            if(scrollForward)
+                                scrollToValue = scrollToValue - scrollx.scroller[(d == "x") ? "width" : "height"]();
+                            scrollToValue = c[scrollOffset]() + (scrollToValue / scrollx.kx);
                         }
 
                         var timeout = 0, timer = 0;
                         scrollCallback = function(){
+                            scrollToValue = c[scrollOffset]();
                             clearInterval(timer);
                             clearTimeout(timeout);
                             timeout = 0;
@@ -280,6 +313,7 @@
 
                         return handleMouseDown(function(){
                             scrollx.scrollbar.removeClass("scroll-draggable");
+                            scrollToValue = c[scrollOffset]();
                         }, event);
                     });
                 }

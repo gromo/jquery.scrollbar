@@ -29,5 +29,10 @@ Limits & Recommendations:
         if you need internal space, insert another element with padding inside your element
     - do not use max-height in IE8 - it crashes browser renderer (official bug)
  
- TODO:
-    - sync scrolling with mouse wheel over content & over scrollbar
+
+ 
+ Versions updates:
+ 
+ 1.3
+  - improved scroll simulation when mouse is over scrollbar
+  - fix bug with WebKit-based (Chrome, Safari) browsers text selection
