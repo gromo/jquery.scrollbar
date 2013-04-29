@@ -7,10 +7,11 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 1.3
+ * @version 0.1.3
  * @url https://github.com/gromo/dslib/tree/master/jquery.scrollbar
  *
  * TODO:
+ *  - handle horizontal mouse scroll when mouse is over scrollbars
  *
  */
 ;
@@ -61,7 +62,7 @@
 
         if(!browser.scroll){
             browser.scroll = getBrowserScrollSize();
-            browser.log("Custom Scrollbar v1.3");
+            browser.log("Custom Scrollbar v0.1.3");
         }
 
         this.container = container;
