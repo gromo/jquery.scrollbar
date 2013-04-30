@@ -11,8 +11,6 @@
  * @url https://github.com/gromo/dslib/tree/master/jquery.scrollbar
  *
  * TODO:
- *  - refactor horizontal mouse scroll handle when mouse is over scrollbars
- *  - optionally disable body scroll if mouse over scrollable container
  *
  */
 ;
@@ -45,7 +43,7 @@
 
     var defaults = {
         "autoScrollSize": true,     // automatically calculate scrollsize
-        "disableBodyScroll": false, // disable body scroll if mouse over container (not implemented)
+        "disableBodyScroll": false, // disable body scroll if mouse over container
         "duration": 200,            // scroll animate duration in ms
         "ignoreMobile": true,       // ignore mobile devices
         "scrollStep": 30,           // scroll step for scrollbar arrows
@@ -137,10 +135,10 @@
 
                 "simple":
                 '<div class="scroll-element_outer">' +
-            '    <div class="scroll-element_size"></div>'  + // required! used for scrollbar size calculation !
-            '    <div class="scroll-element_inner"></div>' + // used for handling scrollbar click
-            '    <div class="scroll-bar"></div>' +
-            '</div>'
+                '    <div class="scroll-element_size"></div>'  + // required! used for scrollbar size calculation !
+                '    <div class="scroll-element_inner"></div>' + // used for handling scrollbar click
+                '    <div class="scroll-bar"></div>' +
+                '</div>'
             };
             var type = html[this.options.type] ? this.options.type : "advanced";
 
@@ -196,6 +194,19 @@
                     s.x.isVisible && s.x.scroller.css("left", c.scrollLeft() * s.x.kx + px);
                     s.y.isVisible && s.y.scroller.css("top",  c.scrollTop()  * s.y.kx + px);
                 });
+
+                if(o.disableBodyScroll){
+                    var handleMouseScroll = function(event){
+                        isVerticalScroll(event) ?
+                            s.y.isVisible && s.y.mousewheel(event) :
+                            s.x.isVisible && s.x.mousewheel(event);
+                    };
+                    w.on({
+                        "MozMousePixelScroll.scrollbar": handleMouseScroll,
+                        "mousewheel.scrollbar": handleMouseScroll
+                    });
+                }
+
             } else {
                 c.css({
                     "height":"auto"
@@ -229,8 +240,7 @@
 
                     scrollx.mousewheel = function(event){
 
-                        // handle horizontal mouse scroll over scrollbars
-                        if(d == 'x' && isVerticalScroll(event)){
+                        if(!scrollx.isVisible || (d == 'x' && isVerticalScroll(event))){
                             return;
                         }
                         if(d == 'y' && !isVerticalScroll(event)){

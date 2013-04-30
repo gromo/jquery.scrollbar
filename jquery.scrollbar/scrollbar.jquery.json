@@ -3,9 +3,10 @@
     "title": "jQuery Custom Scrollbar plugin",
     "description": "Cross-browser fully CSS customizable scrollbar. This plugin is the wrapper for standard scroll mechanism. It means that it supports all native scroll events plus allows you to customize scroll with CSS",
     "keywords": [
+        "scroll",
         "scrollbar"
     ],
-    "version": "0.1.3",
+    "version": "0.1.4",
     "author": {
         "name": "Yuriy Khabarov",
         "email": "13real008@gmail.com"
@@ -20,6 +21,8 @@
             "url": "https://github.com/gromo/dslib/blob/master/jquery.scrollbar/license-gpl.txt"
         }
     ],
+    "homepage": "http://gromo.github.io/dslib/jquery.scrollbar/",
+    "download": "http://gromo.github.io/dslib/jquery.scrollbar/jquery.scrollbar.v0.1.4.zip",
     "demo": "http://gromo.github.io/dslib/jquery.scrollbar/jquery.scrollbar.html",
     "dependencies": {
         "jquery": ">=1.7"
