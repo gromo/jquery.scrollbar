@@ -1,5 +1,5 @@
 /**
- * jQuery Custom Scrollbar plugin
+ * jQuery CSS Customizable Scrollbar
  *
  * Copyright 2013, Yuriy Khabarov
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -7,11 +7,12 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.1.3
+ * @version 0.1.4
  * @url https://github.com/gromo/dslib/tree/master/jquery.scrollbar
  *
  * TODO:
- *  - handle horizontal mouse scroll when mouse is over scrollbars
+ *  - refactor horizontal mouse scroll handle when mouse is over scrollbars
+ *  - optionally disable body scroll if mouse over scrollable container
  *
  */
 ;
@@ -38,17 +39,18 @@
         "scroll": null
     };
     var debug = false;
-    var px = "px";
+    var lmb = 1, px = "px";
     var scrolls = [];
 
 
     var defaults = {
         "autoScrollSize": true,     // automatically calculate scrollsize
+        "disableBodyScroll": false, // disable body scroll if mouse over container (not implemented)
         "duration": 200,            // scroll animate duration in ms
         "ignoreMobile": true,       // ignore mobile devices
         "scrollStep": 30,           // scroll step for scrollbar arrows
         "showArrows": true,         // add class to show arrows
-        "type":"advanced",          // [advanced|simple] scroll html type
+        "type":"advanced",          // [advanced|simple] scrollbar html type
 
         "scrollx": null,            // horizontal scroll element
         "scrolly": null,            // vertical scroll element
@@ -62,7 +64,7 @@
 
         if(!browser.scroll){
             browser.scroll = getBrowserScrollSize();
-            browser.log("Custom Scrollbar v0.1.3");
+            browser.log("Init jQuery CSS Customizable Scrollbar v0.1.4");
         }
 
         this.container = container;
@@ -137,8 +139,7 @@
                 '<div class="scroll-element_outer">' +
             '    <div class="scroll-element_size"></div>'  + // required! used for scrollbar size calculation !
             '    <div class="scroll-element_inner"></div>' + // used for handling scrollbar click
-            '    <div class="scroll-bar">' +
-            '    </div>' +
+            '    <div class="scroll-bar"></div>' +
             '</div>'
             };
             var type = html[this.options.type] ? this.options.type : "advanced";
@@ -226,8 +227,18 @@
                     scrollx.scrollbar = S.getScrollbar(d);
                     scrollx.scroller = scrollx.scrollbar.find(".scroll-bar");
 
-                    var onmousewheel = function(event){
-                        var delta = event.originalEvent.wheelDelta * -1 || event.originalEvent.detail * 20;
+                    scrollx.mousewheel = function(event){
+
+                        // handle horizontal mouse scroll over scrollbars
+                        if(d == 'x' && isVerticalScroll(event)){
+                            return;
+                        }
+                        if(d == 'y' && !isVerticalScroll(event)){
+                            s.x.mousewheel(event);
+                            return;
+                        }
+
+                        var delta = event.originalEvent.wheelDelta * -1 || event.originalEvent.detail;
                         var maxScrollValue = scrollx.size - scrollx.visible - scrollx.offset;
 
                         if(!((scrollToValue <= 0 && delta < 0) || (scrollToValue >= maxScrollValue && delta > 0))){
@@ -247,19 +258,20 @@
                         return false;
                     };
 
-                    if(d == 'y'){
-                        scrollx.scrollbar.on({
-                            "DOMMouseScroll.scrollbar": onmousewheel,
-                            "mousewheel.scrollbar": onmousewheel,
-                            "mouseenter.scrollbar": function(){
-                                scrollToValue = c[scrollOffset]();
-                            }
-                        });
-                    }
+                    scrollx.scrollbar.on({
+                        "MozMousePixelScroll.scrollbar": scrollx.mousewheel,
+                        "mousewheel.scrollbar": scrollx.mousewheel,
+                        "mouseenter.scrollbar": function(){
+                            scrollToValue = c[scrollOffset]();
+                        }
+                    });
 
                     // HANDLE ARROWS & SCROLLBAR MOUSEDOWN EVENT
                     scrollx.scrollbar.find(".scroll-arrow, .scroll-element_inner")
                     .on("mousedown.scrollbar", function(event){
+
+                        if(event.which != lmb)
+                            return;
 
                         scrollForward = true;
                         var maxScrollValue = scrollx.size - scrollx.visible - scrollx.offset;
@@ -301,6 +313,9 @@
 
                     // HANDLE SCROLLBAR DRAG & DROP
                     scrollx.scroller.on("mousedown.scrollbar", function(event){
+
+                        if(event.which != lmb)
+                            return;
 
                         var eventPosition = event[(d == "x")? "pageX" : "pageY"];
                         var initOffset = c[scrollOffset]();
@@ -567,6 +582,15 @@
         });
         event && event.preventDefault();
         return false;
+    }
+
+    function isVerticalScroll(event){
+        var e = event.originalEvent;
+        if (e.axis && e.axis === e.HORIZONTAL_AXIS)
+            return false;
+        if (e.wheelDeltaX)
+            return false;
+        return true;
     }
 
 })(jQuery, document, window);

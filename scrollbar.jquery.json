@@ -1,8 +1,9 @@
 {
     "name": "scrollbar",
-    "title": "jQuery Custom Scrollbar plugin",
+    "title": "jQuery CSS Customizable Scrollbar",
     "description": "Cross-browser fully CSS customizable scrollbar. This plugin is the wrapper for standard scroll mechanism. It means that it supports all native scroll events plus allows you to customize scroll with CSS",
     "keywords": [
+        "css",
         "scrollbar"
     ],
     "version": "0.1.3",
