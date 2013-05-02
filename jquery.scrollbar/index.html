@@ -21,6 +21,7 @@
             body {
                 background-color: #EEE;
                 color: #333;
+                font-family: Arial, serif;
                 font-size: 16px;
             }
 
@@ -31,6 +32,10 @@
 
             h2 {
                 font-size: 24px;
+            }
+
+            h3 {
+                font-size: 18px;
             }
 
             li {
@@ -57,6 +62,7 @@
 
             .features {
                 font-size: 16px;
+                font-weight: bold;
             }
 
             .options {
@@ -96,10 +102,23 @@
                     <li>Browser support: IE7+, FF, Opera, Chrome, Safari</li>
                     <li>Scroll size auto calculation or fixed with CSS</li>
                     <li>Auto update scrolls if content changed or resized</li>
-                    <li>Scrolls can be located in any place inside or outside of container</li>
                     <li>Custom scrollbar HTML/CSS support</li>
                     <li>Ignore scrollbar initialization on mobile devices</li>
                     <li>Same behaviour in all supported browsers</li>
+                </ul>
+                <h3>Comparing with other scrollbar plugins</h3>
+                <ul>
+                    <li>Auto show scrollbar if needed / hide if no need</li>
+                    <li>Container height is not fixed</li>
+                    <li>No static HTML structure <em>(div inside div inside div...)</em></li>
+                    <li>Scrollbar controls + same behaviour as native scrollbar</li>
+                    <li>Scrolls can be located:
+                        <ul style="margin-top: 10px;">
+                            <li>over container (MacOS style)</li>
+                            <li>inside of container, but not cover content (Windows style)</li>
+                            <li>outside of container - in any place of your page</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
 
