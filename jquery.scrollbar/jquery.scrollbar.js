@@ -7,7 +7,7 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.1.4
+ * @version 0.1.5
  * @url https://github.com/gromo/dslib/tree/master/jquery.scrollbar
  *
  * TODO:
@@ -48,7 +48,7 @@
         "ignoreMobile": true,       // ignore mobile devices
         "scrollStep": 30,           // scroll step for scrollbar arrows
         "showArrows": true,         // add class to show arrows
-        "type":"advanced",          // [advanced|simple] scrollbar html type
+        "type":"simple",            // [advanced|simple] scrollbar html type
 
         "scrollx": null,            // horizontal scroll element
         "scrolly": null,            // vertical scroll element
@@ -62,7 +62,7 @@
 
         if(!browser.scroll){
             browser.scroll = getBrowserScrollSize();
-            browser.log("Init jQuery CSS Customizable Scrollbar v0.1.4");
+            browser.log("Init jQuery CSS Customizable Scrollbar v0.1.5");
         }
 
         this.container = container;
@@ -70,8 +70,9 @@
         this.scrollx = {};
         this.scrolly = {};
 
-        if(!(browser.mobile && this.options.ignoreMobile))
+        if(!(browser.mobile && this.options.ignoreMobile)){
             this.init(options);
+        }
     }
 
     customScrollbar.prototype = {
@@ -198,8 +199,8 @@
                 if(o.disableBodyScroll){
                     var handleMouseScroll = function(event){
                         isVerticalScroll(event) ?
-                            s.y.isVisible && s.y.mousewheel(event) :
-                            s.x.isVisible && s.x.mousewheel(event);
+                        s.y.isVisible && s.y.mousewheel(event) :
+                        s.x.isVisible && s.x.mousewheel(event);
                     };
                     w.on({
                         "MozMousePixelScroll.scrollbar": handleMouseScroll,
@@ -241,11 +242,11 @@
                     scrollx.mousewheel = function(event){
 
                         if(!scrollx.isVisible || (d == 'x' && isVerticalScroll(event))){
-                            return;
+                            return true;
                         }
                         if(d == 'y' && !isVerticalScroll(event)){
                             s.x.mousewheel(event);
-                            return;
+                            return true;
                         }
 
                         var delta = event.originalEvent.wheelDelta * -1 || event.originalEvent.detail;
@@ -281,7 +282,7 @@
                     .on("mousedown.scrollbar", function(event){
 
                         if(event.which != lmb)
-                            return;
+                            return true;
 
                         scrollForward = true;
                         var maxScrollValue = scrollx.size - scrollx.visible - scrollx.offset;
@@ -325,7 +326,7 @@
                     scrollx.scroller.on("mousedown.scrollbar", function(event){
 
                         if(event.which != lmb)
-                            return;
+                            return true;
 
                         var eventPosition = event[(d == "x")? "pageX" : "pageY"];
                         var initOffset = c[scrollOffset]();
@@ -369,7 +370,7 @@
             });
 
 
-            function updateScroll(d, scrollx){
+            var updateScroll = function(d, scrollx){
 
                 var scrollClass = "scroll-scroll" + d + "_show";
                 var scrolly = (d == "x") ? s.y : s.x;
@@ -413,7 +414,7 @@
                     });
                     updateScroll(d == "x" ? "y" : "x", scrolly);
                 }
-            }
+            };
             $.each(s, updateScroll);
 
 
@@ -452,7 +453,7 @@
     /*
      * Extend jQuery as plugin
      * @param {object|string} options or command to execute
-     * @param {object|array} additional arguments as array []
+     * @param {object|array} args additional arguments as array []
      */
     $.fn.scrollbar = function(options, args){
 
@@ -467,7 +468,7 @@
 
             if(container.hasClass("scroll-wrapper")
                 || container.get(0).nodeName == "body"){
-                return;
+                return true;
             }
 
             var instance = container.data("scrollbar");
@@ -492,6 +493,7 @@
                     scrolls.push(instance);
                 }
             }
+            return true;
         });
 
         return toReturn;
@@ -517,10 +519,10 @@
 
                 if(debug){
                     browser.log({
-                        "scrollHeight": c.prop("scrollHeight") + ":" + s.scrolly.size,
-                        "scrollWidth": c.prop("scrollWidth") + ":" + s.scrollx.size,
+                        "scrollHeight":  c.prop("scrollHeight") + ":" + s.scrolly.size,
+                        "scrollWidth":   c.prop("scrollWidth") + ":" + s.scrollx.size,
                         "visibleHeight": w.height() + ":" + s.scrolly.visible,
-                        "visibleWidth": w.width() + ":" + s.scrollx.visible
+                        "visibleWidth":  w.width() + ":" + s.scrollx.visible
                     }, true);
 
                     if(timerCounter++ > 100){
@@ -537,20 +539,20 @@
     function getBrowserScrollSize(){
 
         var css = {
-            "border":"none",
-            "height":"100px",
-            "margin":"0",
-            "padding":"0",
-            "width":"100px"
+            "border":  "none",
+            "height":  "100px",
+            "margin":  "0",
+            "padding": "0",
+            "width":   "100px"
         };
 
         var inner = $("<div>").css($.extend({}, css));
         var outer = $("<div>").css($.extend({
-            "background":"#F00",
-            "left":"-200px",
-            "overflow":"scroll",
-            "position":"absolute",
-            "top":"-200px"
+            "background": "#F00",
+            "left":       "-200px",
+            "overflow":   "scroll",
+            "position":   "absolute",
+            "top":        "-200px"
         }, css)).append(inner).appendTo("body")
         .scrollLeft(inner.width())
         .scrollTop(inner.height());
