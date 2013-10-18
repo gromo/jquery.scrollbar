@@ -11,23 +11,18 @@
         <script type="text/javascript">
 
             function initCustomScrollbar(){
-                $('.scroll-standard').scrollbar();
 
-                $('.scroll-simple').scrollbar({
-                    "type": "simple"
+                $('.scroll-standard').scrollbar({
+                    "type": "advanced"
                 });
+
+                $('.scroll-simple').scrollbar();
 
                 $('.external-scroll').scrollbar({
                     "autoScrollSize": false,
                     "scrollx": $('.external-scroll_x'),
                     "scrolly": $('.external-scroll_y')
                 });
-
-//                $('.content').add('h2').add('.buttons').add('.content-container').hide();
-//
-//                $('#test-webkit-2, #test-webkit').prev().show().end().show().scrollbar({
-//                    "type": "simple"
-//                });
             }
 
             function destroyCustomScrollbar(){
@@ -50,6 +45,7 @@
         <div class="panel">
             <input type="button" value="INIT" onclick="initCustomScrollbar();" />
             <input type="button" value="DESTROY" onclick="destroyCustomScrollbar();" />
+            <div id="debug"></div>
         </div>
 
         <div style="padding: 20px;">

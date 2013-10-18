@@ -7,7 +7,7 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.1.5
+ * @version 0.1.6
  * @url https://github.com/gromo/dslib/tree/master/jquery.scrollbar
  *
  * TODO:
@@ -45,7 +45,7 @@
         "autoScrollSize": true,     // automatically calculate scrollsize
         "disableBodyScroll": false, // disable body scroll if mouse over container
         "duration": 200,            // scroll animate duration in ms
-        "ignoreMobile": true,       // ignore mobile devices
+        "ignoreMobile": true,      // ignore mobile devices
         "scrollStep": 30,           // scroll step for scrollbar arrows
         "showArrows": true,         // add class to show arrows
         "type":"simple",            // [advanced|simple] scrollbar html type
@@ -70,9 +70,7 @@
         this.scrollx = {};
         this.scrolly = {};
 
-        if(!(browser.mobile && this.options.ignoreMobile)){
-            this.init(options);
-        }
+        this.init(options);
     }
 
     customScrollbar.prototype = {
@@ -180,6 +178,11 @@
                 "scrollTop": c.scrollTop()
             };
 
+            // ignore mobile
+            if(browser.mobile && o.ignoreMobile){
+                return false;
+            }
+
             // INIT SCROLL CONTAINER
             if(!w){
                 this.wrapper = w = c.wrap($("<div>").css({
@@ -206,8 +209,32 @@
                         "MozMousePixelScroll.scrollbar": handleMouseScroll,
                         "mousewheel.scrollbar": handleMouseScroll
                     });
-                }
 
+                    if(browser.mobile){
+                        w.on('touchstart.scrollbar', function(event){
+                            var touch = event.originalEvent.touches && event.originalEvent.touches[0] || event;
+                            var originalTouch = {
+                                "pageX": touch.pageX,
+                                "pageY": touch.pageY
+                            };
+                            var originalScroll = {
+                                "left": c.scrollLeft(),
+                                "top": c.scrollTop()
+                            };
+                            $(doc).on({
+                                "touchmove.scrollbar": function(event){
+                                    var touch = event.originalEvent.targetTouches && event.originalEvent.targetTouches[0] || event;
+                                    c.scrollLeft(originalScroll.left + originalTouch.pageX - touch.pageX);
+                                    c.scrollTop(originalScroll.top + originalTouch.pageY - touch.pageY);
+                                    event.preventDefault();
+                                },
+                                "touchend.scrollbar": function(){
+                                    $(doc).off(".scrollbar");
+                                }
+                            });
+                        });
+                    }
+                }
             } else {
                 c.css({
                     "height":"auto"
@@ -509,7 +536,7 @@
             w = s.wrapper;
             x = s.scrollx;
             y = s.scrolly;
-            if(w.is(":visible") &&
+            if(w && w.is(":visible") &&
                 (c.prop("scrollWidth") != x.size
                     || c.prop("scrollHeight") != y.size
                     || w.width()  != x.visible
