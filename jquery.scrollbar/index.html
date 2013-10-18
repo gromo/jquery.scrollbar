@@ -87,38 +87,25 @@
             <h1>jQuery CSS Customizable Scrollbar</h1>
 
             <p class="plugin-description">
-                This plugin is the wrapper for standard scroll mechanism. It means that it supports all native scroll
-                events plus allows you to customize scroll with CSS.
+                Cross-browser CSS customizable scrollbar. Mobile devices compatible.
+                Supports all native scroll events - mouse and touch.
+                Easy to install, use & configure.
             </p>
 
             <h3 class="demo"><a href="jquery.scrollbar.html">DEMO</a></h3>
-            <h3 class="demo"><a href="jquery.scrollbar.v0.1.4.zip">DOWNLOAD</a></h3>
+            <h3 class="demo"><a href="jquery.scrollbar.v0.1.6.zip">DOWNLOAD</a></h3>
 
             <h2>Features</h2>
             <div class="features">
                 <ul>
-                    <li>All native scroll events supported</li>
-                    <li>Fully CSS customizable</li>
-                    <li>Browser support: IE7+, FF, Opera, Chrome, Safari</li>
-                    <li>Scroll size auto calculation or fixed with CSS</li>
-                    <li>Auto update scrolls if content changed or resized</li>
-                    <li>Custom scrollbar HTML/CSS support</li>
-                    <li>Ignore scrollbar initialization on mobile devices</li>
-                    <li>Same behaviour in all supported browsers</li>
-                </ul>
-                <h3>Comparing with other scrollbar plugins</h3>
-                <ul>
-                    <li>Auto show scrollbar if needed / hide if no need</li>
-                    <li>Container height is not fixed</li>
-                    <li>No static HTML structure <em>(div inside div inside div...)</em></li>
-                    <li>Scrollbar controls + same behaviour as native scrollbar</li>
-                    <li>Scrolls can be located:
-                        <ul style="margin-top: 10px;">
-                            <li>over container (MacOS style)</li>
-                            <li>inside of container, but not cover content (Windows style)</li>
-                            <li>outside of container - in any place of your page</li>
-                        </ul>
-                    </li>
+                    <li>CSS customizable</li>
+                    <li>Supports all native scroll events</li>
+                    <li>Cross-browser: IE7+, FF, Opera, Chrome, Safari, iPad/iPhone/Android devices</li>
+                    <li>Option to automatically calculate scrollbar size</li>
+                    <li>Update scrollbar size/position if content size changed or window resized</li>
+                    <li>Hide scrollbar if content is fully visible</li>
+                    <li>Container size is not fixed</li>
+                    <li>Minimal changes in HTML structure</li>
                 </ul>
             </div>
 
@@ -127,16 +114,25 @@
                 It's quite simple:
                 <ol>
                     <li>Include <strong>jquery.scrollbar.js</strong> into your page</li>
-                    <li>Include styles for scrollbar <strong>jquery.scrollbar.css</strong></li>
-                    <li>Initialize scrollbars</li>
+                    <li>Include styles for scrollbar <a href="jquery.scrollbar.css"><strong>jquery.scrollbar.css</strong></a></li>
+                    <li>Add one of standard classes to your container for predefined scroll type:<br/><br/>
+                        <ul>
+                            <li><strong>scroll-standard</strong> (do not forget to add sprites)</li>
+                            <li><strong>scroll-simple_inner</strong></li>
+                            <li><strong>scroll-simple_outer</strong></li>
+                        </ul>
+                        or use jquery.scrollbar.css as example to write your own CSS
+                    </li>
+                    <li>Initialize scrollbars:
+<pre>
+$(document).ready(function(){
+    $('.scrollable').scrollbar(options);
+});
+</pre>
+                    </li>
                 </ol>
             </div>
 
-            <pre>
-            $(document).ready(function(){
-                $('.scrollable').scrollbar(options);
-            });
-            </pre>
 
             <h2>Options</h2>
             <div class="options">

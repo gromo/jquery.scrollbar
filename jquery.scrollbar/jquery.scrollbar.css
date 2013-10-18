@@ -1,130 +1,3 @@
-html, body {
-    height: 100%;
-    border: none;
-    padding: 0;
-    margin: 0;
-}
-
-div, p, img, h1, h2, h3 {
-    border: none;
-    margin: 0;
-    padding: 0;
-}
-
-img {
-    display: block;
-}
-
-h1, h2, h3, h4 {
-    padding: 0 20px
-}
-
-.panel {
-    background: #FFF;
-    border: solid 1px #CCC;
-    display: block;
-    padding: 10px;
-    position: fixed;
-    right: 20px;
-    text-align: center;
-    top: 30px;
-    width: 220px;
-    z-index: 999;
-}
-
-.content {
-    border: solid 1px #ccc;
-    margin: 20px;
-    max-height: 400px;
-    max-width: 600px;
-    overflow: auto;
-}
-
-.content-container {
-    margin: 20px;
-    max-width: 602px;
-    padding: 0;
-    position: relative;
-    overflow: visible;
-}
-
-.content-container .content {
-    margin: 0;
-}
-
-.buttons {
-    padding: 10px 20px;
-}
-
-.buttons strong {
-    display: inline-block;
-    float: left;
-    width: 60px;
-}
-
-.buttons label {
-    display: inline-block;
-    padding-right: 10px;
-}
-
-
-
-/* EXTERNAL SCROLLS */
-
-.external-scroll_x, .external-scroll_y {
-    border: solid 1px #9999fc;
-    cursor: pointer;
-    display: block;
-    position: absolute;
-}
-
-.external-scroll_x {
-    bottom: -15px;
-    height: 10px;
-    left: 0;
-    max-width: 200px;
-}
-
-.external-scroll_y {
-    right: -15px;
-    max-height: 200px;
-    top: 0;
-    width: 10px;
-}
-
-.external-scroll_x div,
-.external-scroll_y div
-{
-    height: 100%;
-    left: 0;
-    top: 0;
-    position: absolute;
-    width: 100%;
-}
-
-.external-scroll_x .scroll-bar,
-.external-scroll_y .scroll-bar {
-    background: #9999fc;
-    z-index: 12;
-}
-
-.external-scroll_x .scroll-bar {
-    width: 100px;
-}
-.external-scroll_y .scroll-bar {
-    height: 100px;
-}
-
-
-
-
-
-
-
-
-
-
-
 
 /*************** SCROLLBAR DEFAULTS ***************/
 
@@ -502,3 +375,48 @@ h1, h2, h3, h4 {
 
 
 
+/* EXTERNAL SCROLLS */
+
+.external-scroll_x, .external-scroll_y {
+    border: solid 1px #9999fc;
+    cursor: pointer;
+    display: block;
+    position: absolute;
+}
+
+.external-scroll_x {
+    bottom: -15px;
+    height: 10px;
+    left: 0;
+    max-width: 200px;
+}
+
+.external-scroll_y {
+    right: -15px;
+    max-height: 200px;
+    top: 0;
+    width: 10px;
+}
+
+.external-scroll_x div,
+.external-scroll_y div
+{
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.external-scroll_x .scroll-bar,
+.external-scroll_y .scroll-bar {
+    background: #9999fc;
+    z-index: 12;
+}
+
+.external-scroll_x .scroll-bar {
+    width: 100px;
+}
+.external-scroll_y .scroll-bar {
+    height: 100px;
+}

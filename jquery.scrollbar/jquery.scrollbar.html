@@ -6,6 +6,77 @@
 
         <link type="text/css" href="jquery.scrollbar.css" rel="stylesheet" media="all" />
 
+        <style type="text/css">
+            html, body {
+                height: 100%;
+                border: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            div, p, img, h1, h2, h3 {
+                border: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            img {
+                display: block;
+            }
+
+            h1, h2, h3, h4 {
+                padding: 0 20px
+            }
+
+            .panel {
+                background: #FFF;
+                border: solid 1px #CCC;
+                display: block;
+                padding: 10px;
+                position: fixed;
+                right: 20px;
+                text-align: center;
+                top: 30px;
+                width: 220px;
+                z-index: 999;
+            }
+
+            .content {
+                border: solid 1px #ccc;
+                margin: 20px;
+                max-height: 400px;
+                max-width: 600px;
+                overflow: auto;
+            }
+
+            .content-container {
+                margin: 20px;
+                max-width: 602px;
+                padding: 0;
+                position: relative;
+                overflow: visible;
+            }
+
+            .content-container .content {
+                margin: 0;
+            }
+
+            .buttons {
+                padding: 10px 20px;
+            }
+
+            .buttons strong {
+                display: inline-block;
+                float: left;
+                width: 60px;
+            }
+
+            .buttons label {
+                display: inline-block;
+                padding-right: 10px;
+            }
+        </style>
+
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="jquery.scrollbar.min.js"></script>
         <script type="text/javascript">
