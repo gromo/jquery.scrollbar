@@ -394,7 +394,6 @@
                     "size": c.prop("scrollHeight"),
                     "visible": w.height()
                 });
-                browser.log(scrollx.size + ':' + scrollx.visible);
             });
 
 
