@@ -1,7 +1,7 @@
 /**
  * jQuery CSS Customizable Scrollbar
  *
- * Copyright 2013, Yuriy Khabarov
+ * Copyright 2014, Yuriy Khabarov
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
  * If you found bug, please contact me via email <13real008@gmail.com>
@@ -11,7 +11,7 @@
  * @url https://github.com/gromo/dslib/tree/master/jquery.scrollbar
  *
  * TODO:
- *
+ *	- research on bug with 1px diff between visible/scrollable height in IE9-11
  */
 ;
 (function($, doc, win){
@@ -62,7 +62,7 @@
 
         if(!browser.scroll){
             browser.scroll = getBrowserScrollSize();
-            browser.log("Init jQuery CSS Customizable Scrollbar v0.1.5");
+            browser.log("Init jQuery CSS Customizable Scrollbar v0.1.6");
         }
 
         this.container = container;
@@ -394,6 +394,7 @@
                     "size": c.prop("scrollHeight"),
                     "visible": w.height()
                 });
+                browser.log(scrollx.size + ':' + scrollx.visible);
             });
 
 
@@ -406,7 +407,7 @@
                 var AreaSize = scrollx.size;
                 var AreaVisible = scrollx.visible + offset;
 
-                scrollx.isVisible = AreaSize > AreaVisible;
+                scrollx.isVisible = (AreaSize - AreaVisible) > 1; // bug in IE9/11 with 1px diff
                 if(scrollx.isVisible){
                     scrollx.scrollbar.show();
                     scrolly.scrollbar.addClass(scrollClass);
