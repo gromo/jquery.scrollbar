@@ -6,7 +6,7 @@
         "scroll",
         "scrollbar"
     ],
-    "version": "0.1.4",
+    "version": "0.1.6",
     "author": {
         "name": "Yuriy Khabarov",
         "email": "13real008@gmail.com"
@@ -14,16 +14,16 @@
     "licenses": [
         {
             "type": "MIT",
-            "url": "https://github.com/gromo/dslib/blob/master/jquery.scrollbar/license-mit.txt"
+            "url": "https://github.com/gromo/jquery.scrollbar/blob/master/jquery.scrollbar/license-mit.txt"
         },
         {
             "type": "GPLv2",
-            "url": "https://github.com/gromo/dslib/blob/master/jquery.scrollbar/license-gpl.txt"
+            "url": "https://github.com/gromo/jquery.scrollbar/blob/master/jquery.scrollbar/license-gpl.txt"
         }
     ],
-    "homepage": "http://gromo.github.io/dslib/jquery.scrollbar/",
-    "download": "http://gromo.github.io/dslib/jquery.scrollbar/jquery.scrollbar.v0.1.4.zip",
-    "demo": "http://gromo.github.io/dslib/jquery.scrollbar/jquery.scrollbar.html",
+    "homepage": "http://gromo.github.io/jquery.scrollbar/jquery.scrollbar/",
+    "download": "http://gromo.github.io/jquery.scrollbar/jquery.scrollbar/jquery.scrollbar.v0.1.4.zip",
+    "demo": "http://gromo.github.io/jquery.scrollbar/jquery.scrollbar/jquery.scrollbar.html",
     "dependencies": {
         "jquery": ">=1.7"
     }
