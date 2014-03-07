@@ -1,17 +1,17 @@
 /**
  * jQuery CSS Customizable Scrollbar
  *
- * Copyright 2013, Yuriy Khabarov
+ * Copyright 2014, Yuriy Khabarov
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.1.4
- * @url https://github.com/gromo/dslib/tree/master/jquery.scrollbar
+ * @version 0.1.7
+ * @url https://github.com/gromo/jquery.scrollbar/tree/master/jquery.scrollbar
  *
  * TODO:
- *
+ *	- research on bug with 1px diff between visible/scrollable height in IE9-11
  */
 ;
 (function($, doc, win){
@@ -45,10 +45,10 @@
         "autoScrollSize": true,     // automatically calculate scrollsize
         "disableBodyScroll": false, // disable body scroll if mouse over container
         "duration": 200,            // scroll animate duration in ms
-        "ignoreMobile": true,       // ignore mobile devices
+        "ignoreMobile": false,      // ignore mobile devices
         "scrollStep": 30,           // scroll step for scrollbar arrows
-        "showArrows": true,         // add class to show arrows
-        "type":"advanced",          // [advanced|simple] scrollbar html type
+        "showArrows": false,        // add class to show arrows
+        "type":"simple",            // [advanced|simple] scrollbar html type
 
         "scrollx": null,            // horizontal scroll element
         "scrolly": null,            // vertical scroll element
@@ -62,7 +62,7 @@
 
         if(!browser.scroll){
             browser.scroll = getBrowserScrollSize();
-            browser.log("Init jQuery CSS Customizable Scrollbar v0.1.4");
+            browser.log("Init jQuery CSS Customizable Scrollbar v0.1.7");
         }
 
         this.container = container;
@@ -70,9 +70,8 @@
         this.scrollx = {};
         this.scrolly = {};
 
-        if(!(browser.mobile && this.options.ignoreMobile))
-            this.init(options);
-    }
+        this.init(options);
+    };
 
     customScrollbar.prototype = {
 
@@ -91,8 +90,8 @@
                 "margin":""
             })
             .removeClass("scroll-content")
-            .removeClass("scroll-scrollx_show")
-            .removeClass("scroll-scrolly_show")
+            .removeClass("scroll-scrollx_visible")
+            .removeClass("scroll-scrolly_visible")
             .off(".scrollbar")
             .scrollLeft(scrollLeft)
             .scrollTop(scrollTop);
@@ -153,7 +152,7 @@
             }
 
             if(this.options.showArrows){
-                scrollbar.addClass("scroll-element_show-arrows");
+                scrollbar.addClass("scroll-element_arrows_visible");
             }
 
             return scrollbar.addClass("scroll-" + d);
@@ -179,6 +178,11 @@
                 "scrollTop": c.scrollTop()
             };
 
+            // ignore mobile
+            if(browser.mobile && o.ignoreMobile){
+                return false;
+            }
+
             // INIT SCROLL CONTAINER
             if(!w){
                 this.wrapper = w = c.wrap($("<div>").css({
@@ -198,15 +202,39 @@
                 if(o.disableBodyScroll){
                     var handleMouseScroll = function(event){
                         isVerticalScroll(event) ?
-                            s.y.isVisible && s.y.mousewheel(event) :
-                            s.x.isVisible && s.x.mousewheel(event);
+                        s.y.isVisible && s.y.mousewheel(event) :
+                        s.x.isVisible && s.x.mousewheel(event);
                     };
                     w.on({
                         "MozMousePixelScroll.scrollbar": handleMouseScroll,
                         "mousewheel.scrollbar": handleMouseScroll
                     });
-                }
 
+                    if(browser.mobile){
+                        w.on('touchstart.scrollbar', function(event){
+                            var touch = event.originalEvent.touches && event.originalEvent.touches[0] || event;
+                            var originalTouch = {
+                                "pageX": touch.pageX,
+                                "pageY": touch.pageY
+                            };
+                            var originalScroll = {
+                                "left": c.scrollLeft(),
+                                "top": c.scrollTop()
+                            };
+                            $(doc).on({
+                                "touchmove.scrollbar": function(event){
+                                    var touch = event.originalEvent.targetTouches && event.originalEvent.targetTouches[0] || event;
+                                    c.scrollLeft(originalScroll.left + originalTouch.pageX - touch.pageX);
+                                    c.scrollTop(originalScroll.top + originalTouch.pageY - touch.pageY);
+                                    event.preventDefault();
+                                },
+                                "touchend.scrollbar": function(){
+                                    $(doc).off(".scrollbar");
+                                }
+                            });
+                        });
+                    }
+                }
             } else {
                 c.css({
                     "height":"auto"
@@ -241,11 +269,11 @@
                     scrollx.mousewheel = function(event){
 
                         if(!scrollx.isVisible || (d == 'x' && isVerticalScroll(event))){
-                            return;
+                            return true;
                         }
                         if(d == 'y' && !isVerticalScroll(event)){
                             s.x.mousewheel(event);
-                            return;
+                            return true;
                         }
 
                         var delta = event.originalEvent.wheelDelta * -1 || event.originalEvent.detail;
@@ -281,7 +309,7 @@
                     .on("mousedown.scrollbar", function(event){
 
                         if(event.which != lmb)
-                            return;
+                            return true;
 
                         scrollForward = true;
                         var maxScrollValue = scrollx.size - scrollx.visible - scrollx.offset;
@@ -325,7 +353,7 @@
                     scrollx.scroller.on("mousedown.scrollbar", function(event){
 
                         if(event.which != lmb)
-                            return;
+                            return true;
 
                         var eventPosition = event[(d == "x")? "pageX" : "pageY"];
                         var initOffset = c[scrollOffset]();
@@ -347,7 +375,7 @@
 
             // remove classes & reset applied styles
             $.each(s, function(d, scrollx){
-                var scrollClass = "scroll-scroll" + d + "_show";
+                var scrollClass = "scroll-scroll" + d + "_visible";
                 var scrolly = (d == "x") ? s.y : s.x;
 
                 scrollx.scrollbar.hide();
@@ -369,16 +397,16 @@
             });
 
 
-            function updateScroll(d, scrollx){
+            var updateScroll = function(d, scrollx){
 
-                var scrollClass = "scroll-scroll" + d + "_show";
+                var scrollClass = "scroll-scroll" + d + "_visible";
                 var scrolly = (d == "x") ? s.y : s.x;
                 var offset = parseInt(c.css((d == "x") ? "left" : "top"), 10) || 0;
 
                 var AreaSize = scrollx.size;
                 var AreaVisible = scrollx.visible + offset;
 
-                scrollx.isVisible = AreaSize > AreaVisible;
+                scrollx.isVisible = (AreaSize - AreaVisible) > 1; // bug in IE9/11 with 1px diff
                 if(scrollx.isVisible){
                     scrollx.scrollbar.show();
                     scrolly.scrollbar.addClass(scrollClass);
@@ -413,7 +441,7 @@
                     });
                     updateScroll(d == "x" ? "y" : "x", scrolly);
                 }
-            }
+            };
             $.each(s, updateScroll);
 
 
@@ -421,6 +449,7 @@
             $.each(s, function(d, scrollx){
 
                 var cssOffset = (d == "x") ? "left" : "top";
+                var cssFullSize = (d == "x") ? "outerWidth" : "outerHeight";
                 var cssSize = (d == "x") ? "width" : "height";
                 var offset = parseInt(c.css(cssOffset), 10) || 0;
 
@@ -431,14 +460,14 @@
                 scrollx.scrollbar.css(cssSize, scrollx.visible + px);
 
                 var scrollSize = scrollx.scrollbar.find(".scroll-element_size");
-                scrollSize = scrollSize[cssSize]() + parseInt(scrollSize.css(cssOffset) || 0, 10);
+                scrollSize = scrollSize[cssFullSize]() + parseInt(scrollSize.css(cssOffset) || 0, 10);
 
                 if(o.autoScrollSize){
                     scrollx.scrollbarSize = parseInt(scrollSize * AreaVisible / AreaSize, 10);
                     scrollx.scroller.css(cssSize, scrollx.scrollbarSize + px);
                 }
 
-                scrollx.scrollbarSize = parseInt(scrollx.scroller.css(cssSize), 10);
+                scrollx.scrollbarSize = scrollx.scroller[cssFullSize]();
                 scrollx.kx = ((scrollSize - scrollx.scrollbarSize) / (AreaSize - AreaVisible)) || 1;
             });
 
@@ -452,7 +481,7 @@
     /*
      * Extend jQuery as plugin
      * @param {object|string} options or command to execute
-     * @param {object|array} additional arguments as array []
+     * @param {object|array} args additional arguments as array []
      */
     $.fn.scrollbar = function(options, args){
 
@@ -467,7 +496,7 @@
 
             if(container.hasClass("scroll-wrapper")
                 || container.get(0).nodeName == "body"){
-                return;
+                return true;
             }
 
             var instance = container.data("scrollbar");
@@ -492,10 +521,16 @@
                     scrolls.push(instance);
                 }
             }
+            return true;
         });
 
         return toReturn;
     };
+
+    /**
+     * Connect default options to global object
+     */
+    $.fn.scrollbar.options = defaults;
 
     /* CHECK IF SCROLL CONTENT IS UPDATED */
     var timerCounter = 0;
@@ -507,7 +542,7 @@
             w = s.wrapper;
             x = s.scrollx;
             y = s.scrolly;
-            if(w.is(":visible") &&
+            if(w && w.is(":visible") &&
                 (c.prop("scrollWidth") != x.size
                     || c.prop("scrollHeight") != y.size
                     || w.width()  != x.visible
@@ -517,10 +552,10 @@
 
                 if(debug){
                     browser.log({
-                        "scrollHeight": c.prop("scrollHeight") + ":" + s.scrolly.size,
-                        "scrollWidth": c.prop("scrollWidth") + ":" + s.scrollx.size,
+                        "scrollHeight":  c.prop("scrollHeight") + ":" + s.scrolly.size,
+                        "scrollWidth":   c.prop("scrollWidth") + ":" + s.scrollx.size,
                         "visibleHeight": w.height() + ":" + s.scrolly.visible,
-                        "visibleWidth": w.width() + ":" + s.scrollx.visible
+                        "visibleWidth":  w.width() + ":" + s.scrollx.visible
                     }, true);
 
                     if(timerCounter++ > 100){
@@ -537,20 +572,20 @@
     function getBrowserScrollSize(){
 
         var css = {
-            "border":"none",
-            "height":"100px",
-            "margin":"0",
-            "padding":"0",
-            "width":"100px"
+            "border":  "none",
+            "height":  "100px",
+            "margin":  "0",
+            "padding": "0",
+            "width":   "100px"
         };
 
         var inner = $("<div>").css($.extend({}, css));
         var outer = $("<div>").css($.extend({
-            "background":"#F00",
-            "left":"-200px",
-            "overflow":"scroll",
-            "position":"absolute",
-            "top":"-200px"
+            "background": "#F00",
+            "left":       "-200px",
+            "overflow":   "scroll",
+            "position":   "absolute",
+            "top":        "-200px"
         }, css)).append(inner).appendTo("body")
         .scrollLeft(inner.width())
         .scrollTop(inner.height());

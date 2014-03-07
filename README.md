@@ -1,4 +1,0 @@
-dslib
-=====
-
-Dark Sky Library
