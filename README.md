@@ -17,5 +17,5 @@ Cross-browser CSS customizable scrollbar with advanced features:
 <a href="http://gromo.github.io/jquery.scrollbar/demo/simple.html">Simple</a><br/>
 <a href="http://gromo.github.io/jquery.scrollbar/demo/advanced.html">Advanced</a><br/>
 
-<h2>Documentation</h2>
-<a href="http://gromo.github.io/jquery.scrollbar/">Homepage</a>
+<h3><a href="http://gromo.github.io/jquery.scrollbar/">Documentation</a></h3>
+<h3><a href="http://gromo.github.io/jquery.scrollbar/jquery.scrollbar.zip">Download</a></h3>
