@@ -7,8 +7,8 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.1.6
- * @url https://github.com/gromo/dslib/tree/master/jquery.scrollbar
+ * @version 0.1.7
+ * @url https://github.com/gromo/jquery.scrollbar/tree/master/jquery.scrollbar
  *
  * TODO:
  *	- research on bug with 1px diff between visible/scrollable height in IE9-11
@@ -45,9 +45,9 @@
         "autoScrollSize": true,     // automatically calculate scrollsize
         "disableBodyScroll": false, // disable body scroll if mouse over container
         "duration": 200,            // scroll animate duration in ms
-        "ignoreMobile": true,      // ignore mobile devices
+        "ignoreMobile": false,      // ignore mobile devices
         "scrollStep": 30,           // scroll step for scrollbar arrows
-        "showArrows": true,         // add class to show arrows
+        "showArrows": false,        // add class to show arrows
         "type":"simple",            // [advanced|simple] scrollbar html type
 
         "scrollx": null,            // horizontal scroll element
@@ -62,7 +62,7 @@
 
         if(!browser.scroll){
             browser.scroll = getBrowserScrollSize();
-            browser.log("Init jQuery CSS Customizable Scrollbar v0.1.6");
+            browser.log("Init jQuery CSS Customizable Scrollbar v0.1.7");
         }
 
         this.container = container;
@@ -71,7 +71,7 @@
         this.scrolly = {};
 
         this.init(options);
-    }
+    };
 
     customScrollbar.prototype = {
 
@@ -90,8 +90,8 @@
                 "margin":""
             })
             .removeClass("scroll-content")
-            .removeClass("scroll-scrollx_show")
-            .removeClass("scroll-scrolly_show")
+            .removeClass("scroll-scrollx_visible")
+            .removeClass("scroll-scrolly_visible")
             .off(".scrollbar")
             .scrollLeft(scrollLeft)
             .scrollTop(scrollTop);
@@ -152,7 +152,7 @@
             }
 
             if(this.options.showArrows){
-                scrollbar.addClass("scroll-element_show-arrows");
+                scrollbar.addClass("scroll-element_arrows_visible");
             }
 
             return scrollbar.addClass("scroll-" + d);
@@ -375,7 +375,7 @@
 
             // remove classes & reset applied styles
             $.each(s, function(d, scrollx){
-                var scrollClass = "scroll-scroll" + d + "_show";
+                var scrollClass = "scroll-scroll" + d + "_visible";
                 var scrolly = (d == "x") ? s.y : s.x;
 
                 scrollx.scrollbar.hide();
@@ -399,7 +399,7 @@
 
             var updateScroll = function(d, scrollx){
 
-                var scrollClass = "scroll-scroll" + d + "_show";
+                var scrollClass = "scroll-scroll" + d + "_visible";
                 var scrolly = (d == "x") ? s.y : s.x;
                 var offset = parseInt(c.css((d == "x") ? "left" : "top"), 10) || 0;
 
@@ -449,6 +449,7 @@
             $.each(s, function(d, scrollx){
 
                 var cssOffset = (d == "x") ? "left" : "top";
+                var cssFullSize = (d == "x") ? "outerWidth" : "outerHeight";
                 var cssSize = (d == "x") ? "width" : "height";
                 var offset = parseInt(c.css(cssOffset), 10) || 0;
 
@@ -459,14 +460,14 @@
                 scrollx.scrollbar.css(cssSize, scrollx.visible + px);
 
                 var scrollSize = scrollx.scrollbar.find(".scroll-element_size");
-                scrollSize = scrollSize[cssSize]() + parseInt(scrollSize.css(cssOffset) || 0, 10);
+                scrollSize = scrollSize[cssFullSize]() + parseInt(scrollSize.css(cssOffset) || 0, 10);
 
                 if(o.autoScrollSize){
                     scrollx.scrollbarSize = parseInt(scrollSize * AreaVisible / AreaSize, 10);
                     scrollx.scroller.css(cssSize, scrollx.scrollbarSize + px);
                 }
 
-                scrollx.scrollbarSize = parseInt(scrollx.scroller.css(cssSize), 10);
+                scrollx.scrollbarSize = scrollx.scroller[cssFullSize]();
                 scrollx.kx = ((scrollSize - scrollx.scrollbarSize) / (AreaSize - AreaVisible)) || 1;
             });
 
@@ -525,6 +526,11 @@
 
         return toReturn;
     };
+
+    /**
+     * Connect default options to global object
+     */
+    $.fn.scrollbar.options = defaults;
 
     /* CHECK IF SCROLL CONTENT IS UPDATED */
     var timerCounter = 0;
