@@ -3,10 +3,16 @@
     <head>
         <title>jQuery Scrollbar</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="includes/style.css">
+        <link rel="stylesheet" href="includes/prettify/prettify.css">
 
-        <style type="text/css">
-
-        </style>
+        <script type="text/javascript" src="includes/prettify/prettify.js"></script>
+        <script type="text/javascript" src="includes/jquery.js"></script>
+        <script type="text/javascript">
+            jQuery(document).ready(function($){
+                window.prettyPrint && prettyPrint();
+            });
+        </script>
     </head>
     <body>
 
@@ -192,18 +198,17 @@
             </li>
             <li>
                 <p>
-                    <strong>Question:</strong> I have element with "min-height: 100%" and I see horizontal scrollbar.
-                    What to do?
+                    <strong>Question:</strong> I have element with <em>min-height: 100%</em> or <em>height: 100%</em>
+                    and I see horizontal scrollbar if content height is less than container height. What to do?
                 </p>
                 <p>
-                    <strong>Answer:</strong> Do not use min-height to scrollable content. Instead of this wrap
-                    scrollable content into container with "min-height: 100%".
+                    <strong>Answer:</strong> Update plugin to latest version.
                 </p>
             </li>
             <li>
                 <p>
                     <strong>Question:</strong> If content contains images, content size can be changed after images will
-                    be loaded. Should I reinit scrollbar?
+                    be loaded. Should I reinitialize scrollbar?
                 </p>
                 <p>
                     <strong>Answer:</strong> No, scrollbar detects content/container size changes automatically and
@@ -227,9 +232,11 @@
                 <p>
                     <strong>Answer:</strong> Use standard "scroll" event for container.
                     For example, you have container with class "scrollbar-macosx". Use next code to handle scroll event:
-                    jQuery('.scrollbar-macosx').not('.scroll-content').on("scroll", function(){
-                        console.log('content is scrolling');
-                    });
+<pre class="prettyprint linenums lang-js">
+jQuery('.scrollbar-macosx').not('.scroll-content').on("scroll", function(){
+    console.log('content is scrolling');
+});
+</pre>
                 </p>
             </li>
             <li>

@@ -7,7 +7,7 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.1.7
+ * @version 0.1.8
  * @url https://github.com/gromo/jquery.scrollbar/tree/master/jquery.scrollbar
  *
  * TODO:
@@ -62,7 +62,7 @@
 
         if(!browser.scroll){
             browser.scroll = getBrowserScrollSize();
-            browser.log("Init jQuery CSS Customizable Scrollbar v0.1.7");
+            browser.log("Init jQuery CSS Customizable Scrollbar v0.1.8");
         }
 
         this.container = container;
@@ -417,8 +417,8 @@
                     c.removeClass(scrollClass);
                 }
 
-                if(d == "y"){
-                    c.css("height", scrollx.isVisible ? (AreaVisible + browser.scroll.height) + px : "auto");
+                if(d == "y" && (scrollx.isVisible || scrollx.size < scrollx.visible)){
+                    c.css("height", (AreaVisible + browser.scroll.height) + px);
                 }
 
                 if(s.x.size != c.prop("scrollWidth")
