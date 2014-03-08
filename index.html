@@ -233,7 +233,7 @@
                     <strong>Answer:</strong> Use standard "scroll" event for container.
                     For example, you have container with class "scrollbar-macosx". Use next code to handle scroll event:
 <pre class="prettyprint linenums lang-js">
-jQuery('.scrollbar-macosx').not('.scroll-content').on("scroll", function(){
+jQuery('.scrollbar-macosx').not('.scroll-wrapper').on("scroll", function(){
     console.log('content is scrolling');
 });
 </pre>
