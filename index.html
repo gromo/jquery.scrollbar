@@ -77,15 +77,15 @@
         <h3>Vertical, horizontal or both scrollbars</h3>
         <p>
             Most of the scrollbar plugins allows using only vertical scrollbar, some plugins - vertical or horizontal
-            scrollbars. Only some can use both vertical and horizontal scrollbars, but they have to use scroll emulation
-            which has limitations. jQuery Scrollbar does not emulate scroll behavior and can show both vertical and
-            horizontal scrollbars together.
+            scrollbars. Only few can use both vertical and horizontal scrollbars, but they have to use scroll emulation
+            which has limitations. jQuery Scrollbar does not emulate scroll behavior and can work with both vertical
+            and horizontal scrollbars together.
         </p>
 
         <h3>Automatically reinitialize scrollbar</h3>
         <p>
             Usually scrollbar size and positions are calculated when plugin is initialized. What if content or container
-            size is changed with javascript/ajax? - You have to update plugin to recalculate scrollbar sizes, and it's
+            size is changed with javascript/ajax? - You have to update plugin to recalculate scrollbar sizes. And it's
             OK because you know when content is changed. But what to do if you don't know when it is changed? For
             example, if content contains images without height/width. These images change content size after loading.
             There are 3 obvious ways: always set image height/width (and force users to set image size for content added
@@ -110,11 +110,18 @@
         <p>
             Of course, all modern browsers are supported starting from IE7. The most problematic browser is IE, as you
             already suspect. But it is not IE7, it is IE8! Surprised? I was! IE7 works better with height/width
-            calculations than IE8. IE8 renderer is crashed when use <em>max-height</em> with <em>overflow:auto</em>. It
-            is officially logged as a <a href="https://www.google.com/#q=IE8+max+height+crash" target="_blank">bug</a>
-            in the final version of IE8 with no fix. There are also another bugs with max-height/max-width and
-            positioning. So, be careful if you are going to support IE8.
+            calculations than IE8. IE8 renderer is crashed when using <em>max-height</em> with <em>overflow:auto</em>.
+            It is officially logged as a <a href="https://www.google.com/#q=IE8+max+height+crash" target="_blank">bug</a>
+            in the final version of IE8 with no fix. There are also other bugs with max-height/max-width and positioning.
+            So, be careful if you are going to support IE8.
         </p>
+
+        <h3>Advanced features that scroll emulation plugins don't have or have to emulate</h3>
+        <ul>
+            <li>mouse middle button/touch/arrow buttons scrolling</li>
+            <li>auto content scrolling when selecting text</li>
+            <li>auto scrolling to focused element</li>
+        </ul>
 
         <h2>How to use?</h2>
         <p>
