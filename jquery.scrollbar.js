@@ -7,18 +7,20 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.1.8
+ * @version 0.1.9
  * @url https://github.com/gromo/jquery.scrollbar/tree/master/jquery.scrollbar
  *
  * TODO:
+ *	- use MutationObserver for modern browsers
  *	- research on bug with 1px diff between visible/scrollable height in IE9-11
+ *
  */
 ;
 (function($, doc, win){
 
-    // INIT FLAGS & VARIABLES
+    // Init flags & variables
     var browser = {
-        "mobile": /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent),
+        "mobile": /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(win.navigator.userAgent),
         "webkit": win.WebKitPoint ? true : false,
 
         "log": function(data, toString){
@@ -43,6 +45,7 @@
 
     var defaults = {
         "autoScrollSize": true,     // automatically calculate scrollsize
+        "autoUpdate": true,         // update scrollbar if content/container size changed
         "disableBodyScroll": false, // disable body scroll if mouse over container
         "duration": 200,            // scroll animate duration in ms
         "ignoreMobile": false,      // ignore mobile devices
@@ -61,8 +64,8 @@
     var customScrollbar = function(container, options){
 
         if(!browser.scroll){
+            browser.log("Init jQuery Scrollbar v0.1.9");
             browser.scroll = getBrowserScrollSize();
-            browser.log("Init jQuery CSS Customizable Scrollbar v0.1.8");
         }
 
         this.container = container;
@@ -183,14 +186,14 @@
                 return false;
             }
 
-            // INIT SCROLL CONTAINER
+            // init scroll container
             if(!w){
                 this.wrapper = w = c.wrap($("<div>").css({
                     "position": (c.css("position") == "absolute") ? "absolute" : "relative"
                 }).addClass("scroll-wrapper").addClass(c.attr("class"))).parent();
 
                 c.addClass("scroll-content").css({
-                    "height":"auto",
+                    "height":"",
                     "margin-bottom": browser.scroll.height * -1 + px,
                     "margin-right":  browser.scroll.width  * -1 + px
 
@@ -211,7 +214,7 @@
                     });
 
                     if(browser.mobile){
-                        w.on('touchstart.scrollbar', function(event){
+                        w.on("touchstart.scrollbar", function(event){
                             var touch = event.originalEvent.touches && event.originalEvent.touches[0] || event;
                             var originalTouch = {
                                 "pageX": touch.pageX,
@@ -237,11 +240,11 @@
                 }
             } else {
                 c.css({
-                    "height":"auto"
+                    "height":""
                 });
             }
 
-            // INIT SCROLLBARS & RECALCULATE SIZES
+            // init scrollbars & recalculate sizes
             $.each(s, function(d, scrollx){
 
                 var scrollCallback = null;
@@ -304,7 +307,7 @@
                         }
                     });
 
-                    // HANDLE ARROWS & SCROLLBAR MOUSEDOWN EVENT
+                    // handle arrows & scrollbar mousedown event
                     scrollx.scrollbar.find(".scroll-arrow, .scroll-element_inner")
                     .on("mousedown.scrollbar", function(event){
 
@@ -349,7 +352,7 @@
                         return handleMouseDown(scrollCallback, event);
                     });
 
-                    // HANDLE SCROLLBAR DRAG & DROP
+                    // handle scrollbar drag'n'drop
                     scrollx.scroller.on("mousedown.scrollbar", function(event){
 
                         if(event.which != lmb)
@@ -480,6 +483,7 @@
 
     /*
      * Extend jQuery as plugin
+     *
      * @param {object|string} options or command to execute
      * @param {object|array} args additional arguments as array []
      */
@@ -532,17 +536,20 @@
      */
     $.fn.scrollbar.options = defaults;
 
-    /* CHECK IF SCROLL CONTENT IS UPDATED */
+    /**
+     * Check if scroll content/container size is changed
+     */
     var timerCounter = 0;
     var timer = setInterval(function(){
-        var i, c, s, w, x, y;
+        var i, c, o, s, w, x, y;
         for(i=0; i<scrolls.length; i++){
             s = scrolls[i];
             c = s.container;
+            o = s.options;
             w = s.wrapper;
             x = s.scrollx;
             y = s.scrolly;
-            if(w && w.is(":visible") &&
+            if(o.autoUpdate && w && w.is(":visible") &&
                 (c.prop("scrollWidth") != x.size
                     || c.prop("scrollHeight") != y.size
                     || w.width()  != x.visible
@@ -558,8 +565,8 @@
                         "visibleWidth":  w.width() + ":" + s.scrollx.visible
                     }, true);
 
-                    if(timerCounter++ > 100){
-                        browser.log("Scroll udpates exceed 100");
+                    if(++timerCounter > 10){
+                        browser.log("Scroll updates exceed 10");
                         clearInterval(timer);
                     }
                 }
