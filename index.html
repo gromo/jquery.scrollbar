@@ -20,13 +20,13 @@
 
         Cross-browser CSS customizable scrollbar with advanced features:
         <ul>
-            <li>Easy to use</li>
+            <li>Easy to implement</li>
             <li>No fixed height or width</li>
             <li>Responsive design support</li>
             <li>CSS customizable</li>
             <li>Standard scroll behavior</li>
             <li>Vertical, horizontal or both scrollbars</li>
-            <li>Automatically reinitialize scrollbar</li>
+            <li>Automatically re-initialize scrollbar</li>
             <li>External scrollbars support</li>
             <li>Browser support: IE7+, Firefox, Opera, Chrome, Safari</li>
         </ul>
@@ -37,7 +37,7 @@
 
         <h3><a href="jquery.scrollbar.zip">Download</a></h3>
 
-        <h3>Easy to use</h3>
+        <h3>Easy to implement</h3>
         <p>
             Go to demo pages, find scrollbar that fits your needs, copy html/css/javascript and paste to your page.
             Modify CSS to change scrollbar colors/sizes. If you can't find scrollbar that fits your needs, contact to
@@ -82,7 +82,7 @@
             and horizontal scrollbars together.
         </p>
 
-        <h3>Automatically reinitialize scrollbar</h3>
+        <h3>Automatically re-initialize scrollbar</h3>
         <p>
             Usually scrollbar size and positions are calculated when plugin is initialized. What if content or container
             size is changed with javascript/ajax? - You have to update plugin to recalculate scrollbar sizes. And it's
@@ -90,7 +90,7 @@
             example, if content contains images without height/width. These images change content size after loading.
             There are 3 obvious ways: always set image height/width (and force users to set image size for content added
             with WYSIWYG editor), wait for whole page to load and then initialize scrollbars or handle content images
-            loading and then reinitialize scrollbar plugin. Annoying, isn't it?
+            loading and then re-initialize scrollbar plugin. Annoying, isn't it?
         </p>
         <p>
             jQuery Scrollbar handles content/container size changes and recalculate scrollbar sizes automatically. Just
@@ -134,6 +134,10 @@
             <li>
                 <strong>autoScrollSize</strong> [true|false] (default: true)<br/>
                 automatically calculate scrollbar size depending on container/content size
+            </li>
+            <li>
+                <strong>autoUpdate</strong> [true|false] (default: true)<br/>
+                automatically update scrollbar if container/content size is changed
             </li>
             <li>
                 <strong>disableBodyScroll</strong> [true|false] (default: false)<br/>
@@ -215,7 +219,7 @@
             <li>
                 <p>
                     <strong>Question:</strong> If content contains images, content size can be changed after images will
-                    be loaded. Should I reinitialize scrollbar?
+                    be loaded. Should I re-initialize scrollbar?
                 </p>
                 <p>
                     <strong>Answer:</strong> No, scrollbar detects content/container size changes automatically and
@@ -254,6 +258,20 @@ jQuery('.scrollbar-macosx').not('.scroll-wrapper').on("scroll", function(){
                     <strong>Answer:</strong> It's not good idea to replace standard scrollbar for whole page. But if you
                     really need it, wrap all page into container with height/width 100%, overflow: auto and apply
                     scrollbar to this container.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Question:</strong> I do not want to see horizontal scrollbar ever. What to do?
+                </p>
+                <p>
+                    <strong>Answer:</strong> Hide it with css like this :)
+<pre class="prettyprint linenums lang-css">
+.scroll-element.scroll-x {
+    display: none !important;
+}
+</pre>
+                But do not forget that even if scrollbar is hidden, content is still may be scrollable horizontally.
                 </p>
             </li>
             <li>

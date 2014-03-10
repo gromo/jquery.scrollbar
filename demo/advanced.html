@@ -133,7 +133,11 @@
             <div class="content">
                 <style type="text/css">
 
-                    .scrollbar-vista { height: 400px; width: 600px; }
+                    .scrollbar-vista {
+                        height: 400px;
+                        overflow: auto;
+                        width: 600px;
+                    }
                     .scrollbar-vista > .scroll-content img { display: block; }
 
                     /******************* WINDOWS VISTA SCROLLBAR *******************/
@@ -296,8 +300,15 @@
             <div class="content">
                 <style type="text/css">
 
-                    .scrollbar-external_wrapper { height: 450px; position: relative; }
-                    .scrollbar-external { height: 400px; width: 600px; }
+                    .scrollbar-external_wrapper {
+                        height: 450px;
+                        position: relative;
+                    }
+                    .scrollbar-external {
+                        height: 400px;
+                        overflow: auto;
+                        width: 600px;
+                    }
                     .scrollbar-external > .scroll-content img { display: block; }
 
                     /******************* EXTERNAL SCROLLBAR *******************/
