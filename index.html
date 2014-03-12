@@ -31,11 +31,9 @@
             <li>Browser support: IE7+, Firefox, Opera, Chrome, Safari</li>
         </ul>
 
-        <h2>Demo</h2>
-        <a href="demo/simple.html">Simple</a><br/>
-        <a href="demo/advanced.html">Advanced</a><br/>
-
-        <h3><a href="jquery.scrollbar.zip">Download</a></h3>
+        <h4><a href="demo/simple.html">Simple Scrollbars Demo</a></h4>
+        <h4><a href="demo/advanced.html">Advanced Scrollbars Demo</a></h4>
+        <h4><a href="jquery.scrollbar.zip">Download</a></h4>
 
         <h3>Easy to implement</h3>
         <p>
@@ -116,20 +114,14 @@
             So, be careful if you are going to support IE8.
         </p>
 
-        <h3>Advanced features that scroll emulation plugins don't have or have to emulate</h3>
+        <h4>Advanced features that standard scroll has, but scroll emulation plugins have to emulate or don't have at all</h4>
         <ul>
-            <li>mouse middle button/touch/arrow buttons scrolling</li>
+            <li>mouse middle button / touch / arrow buttons scrolling</li>
             <li>auto content scrolling when selecting text</li>
             <li>auto scrolling to focused element</li>
         </ul>
 
-        <h2>How to use?</h2>
-        <p>
-            Go to demo pages, find scrollbar that fits your needs, copy html/css/js and paste to your project. Modify
-            CSS if required to change scrollbar colors/sizes. If you can't find scrollbar that matches your needs,
-            contact author to create scrollbar and add it to the demo.
-        </p>
-        <h3>jQuery Scrollbar Options</h3>
+        <h2>jQuery Scrollbar Options</h2>
         <ul>
             <li>
                 <strong>autoScrollSize</strong> [true|false] (default: true)<br/>
@@ -160,6 +152,10 @@
                 add class to show scrollbar arrows in advanced scrollbar
             </li>
             <li>
+                <strong>stepScrolling</strong> [true|false] (default: true)<br/>
+                emulate step scrolling on mousedown over scrollbar
+            </li>
+            <li>
                 <strong>type</strong> [simple|advanced] (default: simple)<br/>
                 scrollbar HTML structure type. Is not used for custom scrollx/scrolly element
             </li>
@@ -172,12 +168,16 @@
                 custom HTML structure or element for vertical scrollbar
             </li>
             <li>
-                <strong>onInit</strong> [function] (default: null)<br/>
-                callback function when scrollbar is initialized
-            </li>
-            <li>
                 <strong>onDestroy</strong> [function] (default: null)<br/>
                 callback function when scrollbar is destroyed
+            </li>
+            <li>
+                <strong>onInit</strong> [function] (default: null)<br/>
+                callback function when scrollbar is initialized first time
+            </li>
+            <li>
+                <strong>onUpdate</strong> [function] (default: null)<br/>
+                callback function before scrollbars size calculated
             </li>
         </ul>
 

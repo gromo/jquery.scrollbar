@@ -57,14 +57,9 @@
         </script>
 
         <style type="text/css">
-            .content .demo { border: 1px solid #CCC; }
-            .content .demo > div { overflow: auto; }
-            .content .demo .permanent { min-width: 800px; }
-            .controls { padding: 0 0 10px; }
-            .controls span { cursor: pointer; padding: 2px 8px; }
-            .controls span.active { border: 1px solid #CCC; font-weight: bold; }
-            .prettyprint ol.linenums > li { list-style-type: decimal; }
-            #lorem-ipsum { display: none; }
+            .content .demo {
+                border: 1px solid #CCC;
+            }
         </style>
 
         <style type="text/css" id="css-common">
@@ -96,9 +91,18 @@
                 width: 0;
             }
 
+            .scroll-element {
+                display: none;
+            }
+
+            .scroll-element.scroll-x.scroll-scrollx_visible,
+            .scroll-element.scroll-y.scroll-scrolly_visible {
+                display: block;
+            }
+
             .scroll-element .scroll-bar,
             .scroll-element .scroll-arrow {
-                cursor: default;
+                cursor: pointer;
             }
 
 
@@ -148,7 +152,6 @@
                     {
                         background: none;
                         border: none;
-                        display: block;
                         margin: 0;
                         padding: 0;
                         position: absolute;
@@ -296,10 +299,8 @@
                     /*************** SCROLLBAR LIGHT ***************/
 
                     .scrollbar-light > .scroll-element,
-                    .scrollbar-light > .scroll-element div
-                    {
+                    .scrollbar-light > .scroll-element div {
                         border: none;
-                        display: block;
                         margin: 0;
                         overflow: hidden;
                         padding: 0;
@@ -312,6 +313,7 @@
                     }
 
                     .scrollbar-light > .scroll-element div {
+                        display: block;
                         height: 100%;
                         left: 0;
                         top: 0;
@@ -483,7 +485,6 @@
                     .scrollbar-rail > .scroll-element div
                     {
                         border: none;
-                        display: block;
                         margin: 0;
                         overflow: hidden;
                         padding: 0;
@@ -496,6 +497,7 @@
                     }
 
                     .scrollbar-rail > .scroll-element div {
+                        display: block;
                         height: 100%;
                         left: 0;
                         top: 0;
@@ -654,7 +656,6 @@
                     {
                         background: none;
                         border: none;
-                        display: block;
                         margin: 0;
                         padding: 0;
                         position: absolute;
@@ -891,7 +892,6 @@
                     .scrollbar-chrome > .scroll-element div
                     {
                         border: none;
-                        display: block;
                         margin: 0;
                         overflow: hidden;
                         padding: 0;
@@ -904,6 +904,7 @@
                     }
 
                     .scrollbar-chrome > .scroll-element div {
+                        display: block;
                         height: 100%;
                         left: 0;
                         top: 0;

@@ -56,16 +56,6 @@
             });
         </script>
 
-        <style type="text/css">
-            .content .demo > div { overflow: auto; }
-            .content .demo .permanent { min-width: 800px; }
-            .controls { padding: 0 0 10px; }
-            .controls span { cursor: pointer; padding: 2px 8px; }
-            .controls span.active { border: 1px solid #CCC; font-weight: bold; }
-            .prettyprint ol.linenums > li { list-style-type: decimal; }
-            #lorem-ipsum { display: none; }
-        </style>
-
         <style type="text/css" id="css-common">
             /*************** SCROLLBAR BASE CSS ***************/
 
@@ -93,6 +83,15 @@
             .scroll-wrapper > .scroll-content::-webkit-scrollbar {
                 height: 0;
                 width: 0;
+            }
+
+            .scroll-element {
+                display: none;
+            }
+
+            .scroll-element.scroll-x.scroll-scrollx_visible,
+            .scroll-element.scroll-y.scroll-scrolly_visible {
+                display: block;
             }
 
             .scroll-element .scroll-bar,
@@ -129,6 +128,7 @@
                 <span class="html">HTML</span>
                 <span class="css">CSS</span>
                 <span class="js">JS</span>
+                <button onclick="jQuery('.scrollbar-vista').scrollbar('destroy');">Destroy</button>
             </div>
             <div class="content">
                 <style type="text/css">
@@ -138,7 +138,9 @@
                         overflow: auto;
                         width: 600px;
                     }
-                    .scrollbar-vista > .scroll-content img { display: block; }
+                    .scrollbar-vista > .scroll-content img {
+                        display: block;
+                    }
 
                     /******************* WINDOWS VISTA SCROLLBAR *******************/
 
@@ -280,7 +282,7 @@
                 </script>
                 <div class="demo">
                     <div class="scrollbar-vista">
-                        <img src="../includes/tarzan.jpg">
+                        <img src="../includes/tarzan.jpg" height="2100" width="2800">
                     </div>
                 </div>
                 <div class="html"></div>
@@ -309,27 +311,32 @@
                         overflow: auto;
                         width: 600px;
                     }
-                    .scrollbar-external > .scroll-content img { display: block; }
+                    .scrollbar-external > .scroll-content img {
+                        display: block;
+                    }
 
                     /******************* EXTERNAL SCROLLBAR *******************/
 
-                    .external-scroll_x, .external-scroll_y {
+                    .external-scroll_x,
+                    .external-scroll_y {
                         border: solid 1px #9999fc;
                         cursor: pointer;
-                        display: block;
+                        display: none;
                         position: absolute;
                     }
 
-                    .external-scroll_x {
-                        top: 410px;
+                    .external-scroll_x.scroll-scrollx_visible {
+                        display: block;
                         height: 10px;
                         left: 0;
-                        max-width: 200px;
+                        top: 410px;
+                        width: 200px;
                     }
 
-                    .external-scroll_y {
+                    .external-scroll_y.scroll-scrolly_visible {
+                        display: block;
+                        height: 200px;
                         left: 610px;
-                        max-height: 200px;
                         top: 0;
                         width: 10px;
                     }
@@ -387,6 +394,128 @@
                                 <div class="scroll-bar"></div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="html"></div>
+                <div class="css"></div>
+                <div class="js"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2>Page Map</h2>
+            <div class="controls">
+                <span class="demo">DEMO</span>
+                <span class="html">HTML</span>
+                <span class="css">CSS</span>
+                <span class="js">JS</span>
+                <button onclick="$('.scrollbar-map img').css({'height':'2100px','width':'2800px'});">Resize</button>
+                <button onclick="$('.scrollbar-map img').css({'height':'600px','width':'800px'});">Original</button>
+            </div>
+            <div class="content">
+                <style type="text/css">
+
+                    .scrollbar-map {
+                        height: 400px;
+                        overflow: auto;
+                        width: 600px;
+                    }
+                    .scrollbar-map > .scroll-content img {
+                        display: block;
+                    }
+
+                    /******************* PAGE THUMBNAIL SCROLLBAR *******************/
+
+                    .scrollbar-map > .scroll-element_outer {
+                        display: none;
+                        height: 100px;
+                        position: absolute;
+                        right: 10px;
+                        top: 10px;
+                        width: 100px;
+                    }
+                    .scrollbar-map > .scroll-element_outer .scroll-element_size,
+                    .scrollbar-map > .scroll-element_outer .scroll-element_inner {
+                        background-color: #999;
+                        background-color: rgba(153, 153, 153, 0.4);
+                        height: 100%;
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        width: 100%;
+                    }
+                    .scrollbar-map > .scroll-element_outer .scroll-bar {
+                        background-color: #CCC;
+                        background-color: rgba(204, 204, 204, 0.5);
+                        height: 100%;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                    }
+
+                    .scrollbar-map > .scroll-element_outer.scroll-scrollx_visible,
+                    .scrollbar-map > .scroll-element_outer.scroll-scrolly_visible {
+                        display: block;
+                    }
+
+
+                </style>
+                <script type="text/javascript">
+                    /**
+                     * Get inscribed area size
+                     *
+                     * @param int oW outer width
+                     * @param int oH outer height
+                     * @param int iW inner width
+                     * @param int iH inner height
+                     * @param bool R resize if smaller
+                     */
+                    function getInscribedArea(oW, oH, iW, iH, R){
+                        if(!R && iW < oW && iH < oH){
+                            return {
+                                "h": iH,
+                                "w": iW
+                            };
+                        }
+                        if((oW / oH) > (iW / iH)){
+                            return {
+                                "h": oH,
+                                "w": Math.round(oH * iW / iH)
+                            }
+                        } else {
+                            return {
+                                "h": Math.round(oW * iH / iW),
+                                "w": oW
+                            };
+                        }
+                    }
+
+                    jQuery(document).ready(function(){
+                        jQuery('.scrollbar-map').scrollbar({
+                            "onInit": function(){
+                                this.container.find('.scroll-element_outer').appendTo(this.wrapper);
+                            },
+                            "onUpdate": function(container){
+                                var s = getInscribedArea(140, 140, this.scrollx.size, this.scrolly.size);
+                                this.scrolly.scrollbar.height(s.h);
+                                this.scrollx.scrollbar.width(s.w);
+                            },
+                            "scrollx": $('.scrollbar-map .scroll-element_outer'),
+                            "scrolly": $('.scrollbar-map .scroll-element_outer'),
+                            "stepScrolling": false
+                        });
+                    });
+                </script>
+                <div class="demo">
+                    <div class="scrollbar-map">
+                        <div class="scroll-element_outer">
+                            <div class="scroll-element_size">
+                                <div class="scroll-element_inner"></div>
+                                <div class="scroll-bar"></div>
+                            </div>
+                        </div>
+                        <img src="../includes/tarzan.jpg" height="900" width="1200">
                     </div>
                 </div>
                 <div class="html"></div>
