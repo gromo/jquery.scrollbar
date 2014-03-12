@@ -26,7 +26,16 @@
     width: 0;
 }
 
+.scroll-element {
+    display: none;
+}
+
+.scroll-element.scroll-x.scroll-scrollx_visible,
+.scroll-element.scroll-y.scroll-scrolly_visible {
+    display: block;
+}
+
 .scroll-element .scroll-bar,
 .scroll-element .scroll-arrow {
-    cursor: default;
+    cursor: pointer;
 }
