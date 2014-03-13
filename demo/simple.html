@@ -60,6 +60,12 @@
             .content .demo {
                 border: 1px solid #CCC;
             }
+
+            .content .demo .inner-content {
+                border: 1px solid #CCC;
+                max-height: 170px;
+                width: 600px;
+            }
         </style>
 
         <style type="text/css" id="css-common">
@@ -102,7 +108,7 @@
 
             .scroll-element .scroll-bar,
             .scroll-element .scroll-arrow {
-                cursor: pointer;
+                cursor: default;
             }
 
 
@@ -724,12 +730,12 @@
                     .scrollbar-dynamic > .scroll-element.scroll-x .scroll-bar {
                         bottom: 0;
                         height: 7px;
-                        min-width: 10px;
+                        min-width: 24px;
                         top: auto;
                     }
                     .scrollbar-dynamic > .scroll-element.scroll-y .scroll-bar {
                         left: auto;
-                        min-height: 10px;
+                        min-height: 24px;
                         right: 0;
                         width: 7px;
                     }
@@ -989,6 +995,271 @@
                         <p class="permanent">
                             Google Chrome scrollbar
                         </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                            scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus.
+                            Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel
+                            hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue,
+                            pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam
+                            sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
+                            ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget
+                            nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam
+                            viverra nisi, in interdum massa nibh nec erat.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                            scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus.
+                            Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel
+                            hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue,
+                            pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam
+                            sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
+                            ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget
+                            nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam
+                            viverra nisi, in interdum massa nibh nec erat.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                            scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus.
+                            Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel
+                            hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue,
+                            pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam
+                            sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
+                            ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget
+                            nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam
+                            viverra nisi, in interdum massa nibh nec erat.
+                        </p>
+                    </div>
+                </div>
+                <div class="html"></div>
+                <div class="css"></div>
+                <div class="js"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2>Simple Inner</h2>
+            <div class="controls">
+                <span class="demo">DEMO</span>
+                <span class="html">HTML</span>
+                <span class="css">CSS</span>
+                <span class="js">JS</span>
+                <button class="add-content">Add Content</button>
+                <button class="remove-content">Remove Content</button>
+            </div>
+            <div class="content">
+                <style type="text/css">
+
+                    .scrollbar-inner {
+                        max-height: 250px;
+                        overflow: auto;
+                    }
+
+                    /*************** SIMPLE INNER SCROLLBAR ***************/
+
+                    .scrollbar-inner > .scroll-element,
+                    .scrollbar-inner > .scroll-element div
+                    {
+                        border: none;
+                        margin: 0;
+                        padding: 0;
+                        position: absolute;
+                        z-index: 10;
+                    }
+
+                    .scrollbar-inner > .scroll-element div {
+                        display: block;
+                        height: 100%;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                    }
+
+                    .scrollbar-inner > .scroll-element.scroll-x {
+                        bottom: 0;
+                        height: 0;
+                        left: 0;
+                        width: 100%;
+                    }
+
+                    .scrollbar-inner > .scroll-element.scroll-y {
+                        height: 100%;
+                        right: 0;
+                        top: 0;
+                        width: 0;
+                    }
+
+                    .scrollbar-inner > .scroll-element .scroll-bar { background-color: #d9d9d9; }
+                    .scrollbar-inner > .scroll-element .scroll-bar:hover { background-color: #c2c2c2; }
+                    .scrollbar-inner > .scroll-element.scroll-draggable .scroll-bar { background-color: #919191; }
+
+
+                    /* scrollbar height/width & offset from container borders */
+
+                    .scrollbar-inner > .scroll-element.scroll-x .scroll-bar { height: 8px; min-width: 10px; top: -12px; }
+                    .scrollbar-inner > .scroll-element.scroll-y .scroll-bar { left: -12px; min-height: 10px; width: 8px; }
+
+
+                    /* update scrollbar offset if both scrolls are visible */
+
+                    .scrollbar-inner > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -16px; }
+                    .scrollbar-inner > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -16px; }
+
+                </style>
+                <script type="text/javascript">
+                    jQuery(document).ready(function(){
+                        jQuery('.scrollbar-inner').scrollbar();
+                    });
+                </script>
+                <div class="demo">
+                    <div class="scrollbar-inner">
+                        <p class="permanent">
+                            Simple inner scrollbar can be used as CSS base for custom inner scrollbars.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                            scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus.
+                            Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel
+                            hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue,
+                            pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam
+                            sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
+                            ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget
+                            nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam
+                            viverra nisi, in interdum massa nibh nec erat.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                            scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus.
+                            Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel
+                            hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue,
+                            pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam
+                            sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
+                            ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget
+                            nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam
+                            viverra nisi, in interdum massa nibh nec erat.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                            scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus.
+                            Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel
+                            hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue,
+                            pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam
+                            sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
+                            ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget
+                            nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam
+                            viverra nisi, in interdum massa nibh nec erat.
+                        </p>
+                    </div>
+                </div>
+                <div class="html"></div>
+                <div class="css"></div>
+                <div class="js"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2>Simple Outer nested scrollbars</h2>
+            <div class="controls">
+                <span class="demo">DEMO</span>
+                <span class="html">HTML</span>
+                <span class="css">CSS</span>
+                <span class="js">JS</span>
+                <button class="add-content">Add Content</button>
+                <button class="remove-content">Remove Content</button>
+            </div>
+            <div class="content">
+                <style type="text/css">
+
+                    .scrollbar-outer {
+                        max-height: 250px;
+                        overflow: auto;
+                    }
+
+                    /*************** SIMPLE OUTER SCROLLBAR ***************/
+
+                    .scrollbar-outer > .scroll-element,
+                    .scrollbar-outer > .scroll-element div
+                    {
+                        border: none;
+                        margin: 0;
+                        padding: 0;
+                        position: absolute;
+                        z-index: 10;
+                    }
+
+                    .scrollbar-outer > .scroll-element {
+                        background-color: #ffffff;
+                    }
+
+                    .scrollbar-outer > .scroll-element div {
+                        display: block;
+                        height: 100%;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                    }
+
+                    .scrollbar-outer > .scroll-element.scroll-x {
+                        bottom: 0;
+                        height: 8px;
+                        left: 0;
+                        width: 100%;
+                    }
+
+                    .scrollbar-outer > .scroll-element.scroll-y {
+                        height: 100%;
+                        right: 0;
+                        top: 0;
+                        width: 8px;
+                    }
+
+                    .scrollbar-outer > .scroll-element .scroll-bar { background-color: #d9d9d9; }
+                    .scrollbar-outer > .scroll-element .scroll-bar:hover { background-color: #c2c2c2; }
+                    .scrollbar-outer > .scroll-element.scroll-draggable .scroll-bar { background-color: #919191; }
+
+
+                    /* scrollbar height/width & offset from container borders */
+
+                    .scrollbar-outer > .scroll-content.scroll-scrolly_visible { left: -8px; margin-left: 8px; }
+                    .scrollbar-outer > .scroll-content.scroll-scrollx_visible { top:  -8px; margin-top:  8px; }
+
+                    .scrollbar-outer > .scroll-element.scroll-x .scroll-bar { min-width: 10px; }
+                    .scrollbar-outer > .scroll-element.scroll-y .scroll-bar { min-height: 10px; }
+
+
+                    /* update scrollbar offset if both scrolls are visible */
+
+                    .scrollbar-outer > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -10px; }
+                    .scrollbar-outer > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -10px; }
+
+                </style>
+                <script type="text/javascript">
+                    jQuery(document).ready(function(){
+                        jQuery('.scrollbar-outer').scrollbar();
+                    });
+                </script>
+                <div class="demo">
+                    <div class="scrollbar-outer">
+                        <p class="permanent">
+                            Simple outer scrollbar can be used as CSS base for custom outer scrollbars.
+                        </p>
+                        <div class="inner-content scrollbar-chrome">
+                            <div style="padding: 10px;">
+                            <h4>
+                                This container is an example of nested Google Chrome scrollbar with padding.
+                            </h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                                scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus.
+                                Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel
+                                hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue,
+                                pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam
+                                sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
+                                ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget
+                                nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam
+                                viverra nisi, in interdum massa nibh nec erat.
+                            </p>
+                            </div>
+                        </div>
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
                             scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus.
