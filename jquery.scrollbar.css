@@ -37,5 +37,5 @@
 
 .scroll-element .scroll-bar,
 .scroll-element .scroll-arrow {
-    cursor: pointer;
+    cursor: default;
 }
