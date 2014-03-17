@@ -722,9 +722,6 @@
                         border-radius: 7px;
                     }
 
-
-
-
                     /* scrollbar height/width & offset from container borders */
 
                     .scrollbar-dynamic > .scroll-element.scroll-x .scroll-bar {
@@ -1157,7 +1154,7 @@
         </div>
 
         <div class="container">
-            <h2>Simple Outer nested scrollbars</h2>
+            <h2>Simple Outer with nested Dynamic scrollbar</h2>
             <div class="controls">
                 <span class="demo">DEMO</span>
                 <span class="html">HTML</span>
@@ -1212,6 +1209,8 @@
                         width: 8px;
                     }
 
+                    .scrollbar-outer > .scroll-element .scroll-element_inner { background-color: #eeeeee; }
+
                     .scrollbar-outer > .scroll-element .scroll-bar { background-color: #d9d9d9; }
                     .scrollbar-outer > .scroll-element .scroll-bar:hover { background-color: #c2c2c2; }
                     .scrollbar-outer > .scroll-element.scroll-draggable .scroll-bar { background-color: #919191; }
@@ -1241,11 +1240,14 @@
                     <div class="scrollbar-outer">
                         <p class="permanent">
                             Simple outer scrollbar can be used as CSS base for custom outer scrollbars.
+                            This example shows nested scrollbars functionality + nested scrollbar styles do not
+                            interfere with parent scrollbar styles, i.e. different scrollbars can be safely used inside
+                            each other.
                         </p>
-                        <div class="inner-content scrollbar-chrome">
+                        <div class="inner-content scrollbar-dynamic">
                             <div style="padding: 10px;">
                             <h4>
-                                This container is an example of nested Google Chrome scrollbar with padding.
+                                This container is an example of nested Dynamic scrollbar with padding.
                             </h4>
                             <p>
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,

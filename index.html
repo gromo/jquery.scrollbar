@@ -185,6 +185,7 @@
         <ul>
             <li>scrollable element should not have paddings, margins, left/top values</li>
             <li>do not use max-height in IE8 - it crashes browser renderer</li>
+            <li>if change zoom level, native scrollbar may become visible</li>
         </ul>
 
         <h2>FAQ</h2>
@@ -272,6 +273,20 @@ jQuery('.scrollbar-macosx').not('.scroll-wrapper').on("scroll", function(){
 }
 </pre>
                 But do not forget that even if scrollbar is hidden, content is still may be scrollable horizontally.
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Question:</strong> When I try to get height/width of container with jQuery height/width
+                    function it gives me incorrect values.
+                </p>
+                <p>
+                    <strong>Answer:</strong> Inner scrollable content uses additional height/width & offset of scrollbar
+                    to hide it. To get correct height/width use visible container:
+<pre class="prettyprint linenums lang-js">
+jQuery('.scrollbar-macosx').not('.scroll-content').height();
+jQuery('.scrollbar-macosx').not('.scroll-content').width();
+</pre>
                 </p>
             </li>
             <li>

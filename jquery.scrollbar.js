@@ -635,7 +635,7 @@
         $(doc).on({
             "blur.scrollbar": function(){
                 $(doc).add('body').off('.scrollbar');
-                callback();
+                callback && callback();
             },
             "dragstart.scrollbar": function(event){
                 event.preventDefault();
@@ -643,7 +643,7 @@
             },
             "mouseup.scrollbar": function(){
                 $(doc).add('body').off('.scrollbar');
-                callback();
+                callback && callback();
             }
         });
         $("body").on({
