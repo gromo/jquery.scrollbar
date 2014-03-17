@@ -13,8 +13,8 @@ Cross-browser CSS customizable scrollbar with advanced features:
     <li>Browser support: IE7+, Firefox, Opera, Chrome, Safari</li>
 </ul>
 
-<h3><a href="http://gromo.github.io/jquery.scrollbar/demo/simple.html">Simple Scrollbars Demo</a></h3>
-<h3><a href="http://gromo.github.io/jquery.scrollbar/demo/advanced.html">Advanced Scrollbars Demo</a></h3>
+<h4><a href="http://gromo.github.io/jquery.scrollbar/demo/simple.html">Simple Scrollbars Demo</a></h4>
+<h4><a href="http://gromo.github.io/jquery.scrollbar/demo/advanced.html">Advanced Scrollbars Demo</a></h4>
 
-<h3><a href="http://gromo.github.io/jquery.scrollbar/">Documentation</a></h3>
-<h3><a href="http://gromo.github.io/jquery.scrollbar/jquery.scrollbar.zip">Download</a></h3>
+<h4><a href="http://gromo.github.io/jquery.scrollbar/">Documentation</a></h4>
+<h4><a href="http://gromo.github.io/jquery.scrollbar/jquery.scrollbar.zip">Download</a></h4>
