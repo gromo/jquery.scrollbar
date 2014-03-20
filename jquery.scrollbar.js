@@ -7,12 +7,10 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.2.0
+ * @version 0.2.1
  * @url https://github.com/gromo/jquery.scrollbar/
  *
  * TODO:
- *	- use MutationObserver for modern browsers
- *	- research on bug with 1px diff between visible/scrollable height in IE9-11
  *
  */
 ;
@@ -48,7 +46,7 @@
         "autoUpdate": true,         // update scrollbar if content/container size changed
         "disableBodyScroll": false, // disable body scroll if mouse over container
         "duration": 200,            // scroll animate duration in ms
-        "ignoreMobile": false,      // ignore mobile devices
+        "ignoreMobile": true,       // ignore mobile devices
         "scrollStep": 30,           // scroll step for scrollbar arrows
         "showArrows": false,        // add class to show arrows
         "stepScrolling": true,      // when scrolling to scrollbar mousedown position
@@ -126,7 +124,7 @@
                 '<div class="scroll-element_outer">' +
                 '    <div class="scroll-element_size"></div>' + // required! used for scrollbar size calculation !
                 '    <div class="scroll-element_inner-wrapper">' +
-                '        <div class="scroll-element_inner">'  + // used for handling scrollbar click
+                '        <div class="scroll-element_inner scroll-element_track">'  + // used for handling scrollbar click
                 '            <div class="scroll-element_inner-bottom"></div>' +
                 '        </div>' +
                 '    </div>' +
@@ -142,7 +140,7 @@
                 "simple":
                 '<div class="scroll-element_outer">' +
             '    <div class="scroll-element_size"></div>'  + // required! used for scrollbar size calculation !
-            '    <div class="scroll-element_inner"></div>' + // used for handling scrollbar click
+            '    <div class="scroll-element_track"></div>' + // used for handling scrollbar click
             '    <div class="scroll-bar"></div>' +
             '</div>'
             };
@@ -320,7 +318,7 @@
                     });
 
                     // handle arrows & scroll inner mousedown event
-                    scrollx.scrollbar.find(".scroll-arrow, .scroll-element_inner")
+                    scrollx.scrollbar.find(".scroll-arrow, .scroll-element_track")
                     .on("mousedown.scrollbar", function(event){
 
                         if(event.which != lmb)
@@ -598,6 +596,13 @@
     /* ADDITIONAL FUNCTIONS */
     function getBrowserScrollSize(){
 
+        if(browser.webkit){
+            return {
+                "height": 0,
+                "width": 0
+            };
+        }
+
         var css = {
             "border":  "none",
             "height":  "100px",
@@ -621,11 +626,6 @@
             "height": (outer.offset().top - inner.offset().top) || 0,
             "width": (outer.offset().left - inner.offset().left) || 0
         };
-
-        if(browser.webkit){
-            scrollSize.height = 0;
-            scrollSize.width = 0;
-        }
 
         outer.remove();
         return scrollSize;
