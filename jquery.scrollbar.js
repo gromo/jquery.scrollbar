@@ -55,7 +55,6 @@
         "scrollx": null,            // horizontal scroll element
         "scrolly": null,            // vertical scroll element
 
-
         "onDestroy": null,          // callback function on destroy,
         "onInit": null,             // callback function on first initialization
         "onUpdate": null            // callback function on init/resize (before scrollbar size calculation)
@@ -198,10 +197,16 @@
                     "height":"",
                     "margin-bottom": browser.scroll.height * -1 + px,
                     "margin-right":  browser.scroll.width  * -1 + px
-
                 }).on("scroll.scrollbar", function(){
                     s.x.isVisible && s.x.scroller.css("left", c.scrollLeft() * s.x.kx + px);
                     s.y.isVisible && s.y.scroller.css("top",  c.scrollTop()  * s.y.kx + px);
+                });
+
+                /* prevent native scrollbars to be visible on #anchor click */
+                w.on("scroll", function(e){
+                    w.scrollTop(0).scrollLeft(0);
+                    e.preventDefault();
+                    return false;
                 });
 
                 if(o.disableBodyScroll){
