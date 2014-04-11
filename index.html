@@ -294,6 +294,20 @@ jQuery('.scrollbar-macosx').not('.scroll-content').width();</pre>
                     </li>
                     <li>
                         <p>
+                            <strong>Question:</strong> How to detect DIV is scrolled to bottom?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> Use jQuery scroll event to detect scroll:
+                        <pre class="prettyprint linenums lang-js">
+jQuery('.scrollbar-macosx').not('.scroll-wrapper').on("scroll", function(){
+    if($(this).scrollTop() + $(this).height() + parseInt($(this).css('margin-bottom')) >= $(this).prop('scrollHeight')){
+        console.log('bottom');
+    }
+});</pre>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
                             <strong>Question:</strong> Can I use jQuery Scrollbar to customize textarea scrollbar?
                         </p>
                         <p>
