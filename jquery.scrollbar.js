@@ -7,7 +7,7 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.2.1
+ * @version 0.2.2
  * @url https://github.com/gromo/jquery.scrollbar/
  *
  * TODO:
@@ -118,6 +118,7 @@
             var scrollbar = this.options["scroll" + d];
             var html = {
                 "advanced":
+                '<div class="scroll-element_corner"></div>' +
                 '<div class="scroll-arrow scroll-arrow_less"></div>' +
                 '<div class="scroll-arrow scroll-arrow_more"></div>' +
                 '<div class="scroll-element_outer">' +
@@ -203,10 +204,8 @@
                 });
 
                 /* prevent native scrollbars to be visible on #anchor click */
-                w.on("scroll", function(e){
+                w.on("scroll", function(){
                     w.scrollTop(0).scrollLeft(0);
-                    e.preventDefault();
-                    return false;
                 });
 
                 if(o.disableBodyScroll){
@@ -514,7 +513,7 @@
 
         var toReturn = this;
 
-        if(options == "get")
+        if(options === "get")
             toReturn = null;
 
         this.each(function() {
@@ -533,10 +532,10 @@
                     return false;
                 }
 
-                options = (typeof options == "string" && instance[options]) ? options : "init";
-                instance[options].apply(instance, $.isArray(args) ? args : []);
+                var func = (typeof options == "string" && instance[options]) ? options : "init";
+                instance[func].apply(instance, $.isArray(args) ? args : []);
 
-                if(options == "destroy"){
+                if(options === "destroy"){
                     container.removeData("scrollbar");
                     while($.inArray(instance, scrolls) >= 0)
                         scrolls.splice($.inArray(instance, scrolls), 1);

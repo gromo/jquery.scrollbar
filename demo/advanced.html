@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="../includes/style.css" />
         <link rel="stylesheet" href="../includes/prettify/prettify.css" />
+        <link rel="stylesheet" href="../jquery.scrollbar.css" />
 
         <script src="../includes/prettify/prettify.js"></script>
         <script src="../includes/jquery.js"></script>
@@ -53,8 +54,32 @@
                 });
 
                 window.prettyPrint && prettyPrint();
+                $('.wrapper').scrollbar();
             });
         </script>
+
+        <style type="text/css">
+            .content .demo {
+                border: none;
+            }
+            .content .demo > div {
+                height: 400px;
+                max-height: none;
+                overflow: auto;
+                width: 600px;
+            }
+            .scroll-content img {
+                display: block;
+            }
+
+            label.theme {
+                cursor: pointer;
+                margin-right: 14px;
+            }
+            label.theme input {
+                margin-right: 2px;
+            }
+        </style>
 
         <style type="text/css" id="css-common">
             /*************** SCROLLBAR BASE CSS ***************/
@@ -105,422 +130,636 @@
         </style>
     </head>
     <body>
+        <div class="wrapper scrollbar-dynamic">
+            <div class="page-content">
 
-        <h1>Advanced Scrollbars</h1>
-        <a href="../">&laquo; Back to home</a>
+                <h1>Advanced Scrollbars</h1>
 
-        <p id="lorem-ipsum">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
-            scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus.
-            Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel
-            hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue,
-            pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam
-            sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
-            ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget
-            nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam
-            viverra nisi, in interdum massa nibh nec erat.
-        </p>
+                <a href="simple.html">Simple Scrollbars</a><br/>
+                <a href="../">&laquo; Back to home</a>
 
-        <div class="container">
-            <h2>Microsoft Windows Vista</h2>
-            <div class="controls">
-                <span class="demo">DEMO</span>
-                <span class="html">HTML</span>
-                <span class="css">CSS</span>
-                <span class="js">JS</span>
-                <button onclick="jQuery('.scrollbar-vista').scrollbar('destroy');">Destroy</button>
-            </div>
-            <div class="content">
-                <style type="text/css">
-
-                    .scrollbar-vista {
-                        height: 400px;
-                        overflow: auto;
-                        width: 600px;
-                    }
-                    .scrollbar-vista > .scroll-content img {
-                        display: block;
-                    }
-
-                    /******************* WINDOWS VISTA SCROLLBAR *******************/
-
-                    .scrollbar-vista > .scroll-content.scroll-scrolly_visible { left: -17px; margin-left: 17px; }
-                    .scrollbar-vista > .scroll-content.scroll-scrollx_visible { top:  -17px; margin-top:  17px; }
-
-
-                    .scrollbar-vista > .scroll-element {
-                        background-color: #fcfdff;
-                    }
-
-                    .scrollbar-vista > .scroll-element,
-                    .scrollbar-vista > .scroll-element div
-                    {
-                        border: none;
-                        margin: 0;
-                        overflow: hidden;
-                        padding: 0;
-                        position: absolute;
-                        z-index: 10;
-                    }
-
-                    .scrollbar-vista > .scroll-element .scroll-element_outer,
-                    .scrollbar-vista > .scroll-element .scroll-element_size,
-                    .scrollbar-vista > .scroll-element .scroll-element_inner-wrapper,
-                    .scrollbar-vista > .scroll-element .scroll-element_inner,
-                    .scrollbar-vista > .scroll-element .scroll-bar,
-                    .scrollbar-vista > .scroll-element .scroll-bar div
-                    {
-                        height: 100%;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                    }
-
-                    .scrollbar-vista > .scroll-element .scroll-element_outer,
-                    .scrollbar-vista > .scroll-element .scroll-element_size,
-                    .scrollbar-vista > .scroll-element .scroll-element_inner-wrapper,
-                    .scrollbar-vista > .scroll-element .scroll-bar_body
-                    {
-                        background: none !important;
-                    }
-
-
-                    .scrollbar-vista > .scroll-element.scroll-x {
-                        border-top: solid 1px #fcfdff;
-                        bottom: 0;
-                        height: 16px;
-                        left: 0;
-                        min-width: 100%;
-                        width: 100%;
-                    }
-
-                    .scrollbar-vista > .scroll-element.scroll-y {
-                        border-left: solid 1px #fcfdff;
-                        height: 100%;
-                        min-height: 100%;
-                        right: 0;
-                        top: 0;
-                        width: 16px;
-                    }
-
-                    .scrollbar-vista > .scroll-element.scroll-x div {
-                        background-image: url('skins/vista-x.png');
-                        background-repeat: repeat-x;
-                    }
-
-                    .scrollbar-vista > .scroll-element.scroll-y div {
-                        background-image: url('skins/vista-y.png');
-                        background-repeat: repeat-y;
-                    }
-
-                    .scrollbar-vista > .scroll-element.scroll-x .scroll-arrow {}
-
-                    .scrollbar-vista > .scroll-element.scroll-x .scroll-bar { min-width: 16px; background-position: 0px -34px; background-repeat: no-repeat; }
-                    .scrollbar-vista > .scroll-element.scroll-x .scroll-bar_body { left: 2px; }
-                    .scrollbar-vista > .scroll-element.scroll-x .scroll-bar_body-inner { left: -4px; background-position: 0px -17px; }
-                    .scrollbar-vista > .scroll-element.scroll-x .scroll-bar_center { left: 50%; margin-left: -6px; width: 12px; background-position: 24px -34px; }
-                    .scrollbar-vista > .scroll-element.scroll-x .scroll-bar_bottom { left: auto; right: 0; width: 2px; background-position: 37px -34px; }
-
-
-                    .scrollbar-vista > .scroll-element.scroll-y .scroll-bar { min-height: 16px; background-position: -34px 0px; background-repeat: no-repeat; }
-                    .scrollbar-vista > .scroll-element.scroll-y .scroll-bar_body { top: 2px; }
-                    .scrollbar-vista > .scroll-element.scroll-y .scroll-bar_body-inner { top: -4px; background-position: -17px 0px; }
-                    .scrollbar-vista > .scroll-element.scroll-y .scroll-bar_center { top: 50%; margin-top: -6px; height: 12px; background-position: -34px 24px; }
-                    .scrollbar-vista > .scroll-element.scroll-y .scroll-bar_bottom { top: auto; bottom: 0; height: 2px; background-position: -34px 37px; }
-
-
-
-                    /* SCROLL ARROWS */
-
-                    .scrollbar-vista > .scroll-element .scroll-arrow { display: none; }
-                    .scrollbar-vista > .scroll-element.scroll-element_arrows_visible .scroll-arrow { display: block; z-index: 12; }
-
-
-                    .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-arrow_less { height: 100%; width: 17px; background-position: 0px -51px;}
-                    .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-arrow_more { height: 100%; left: auto; right: 0; width: 17px; background-position: 17px -51px;}
-
-                    .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-element_outer { left: 17px; }
-                    .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-element_inner { left: -34px; }
-                    .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-element_size { left: -34px; }
-
-
-                    .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-arrow_less { width: 100%; height: 17px; background-position: -51px 0px;}
-                    .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-arrow_more { width: 100%; top: auto; bottom: 0; height: 17px; background-position: -51px 17px;}
-
-                    .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-element_outer { top: 17px; }
-                    .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-element_inner { top: -34px; }
-                    .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-element_size { top: -34px; }
-
-
-                    /* PROCEED OFFSET IF ANOTHER SCROLL VISIBLE */
-
-                    .scrollbar-vista > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -17px; }
-                    .scrollbar-vista > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -17px; }
-
-                    .scrollbar-vista > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_inner { left: -17px; }
-                    .scrollbar-vista > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_inner { top: -17px; }
-
-
-                    /* PROCEED OFFSET IF ARROWS & ANOTHER SCROLL */
-
-                    .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible.scroll-scrolly_visible .scroll-arrow_more { right: 17px;}
-                    .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible.scroll-scrolly_visible .scroll-element_inner { left: -51px;}
-                    .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible.scroll-scrolly_visible .scroll-element_size { left: -51px;}
-
-
-                    .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible.scroll-scrollx_visible .scroll-arrow_more { bottom: 17px;}
-                    .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible.scroll-scrollx_visible .scroll-element_inner { top: -51px;}
-                    .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible.scroll-scrollx_visible .scroll-element_size { top: -51px;}
-                </style>
-                <script type="text/javascript">
-                    jQuery(document).ready(function(){
-                        jQuery('.scrollbar-vista').scrollbar({
-                            "showArrows": true,
-                            "type": "advanced"
-                        });
-                    });
-                </script>
-                <div class="demo">
-                    <div class="scrollbar-vista">
-                        <img src="../includes/tarzan.jpg" height="2100" width="2800">
+                <div class="container">
+                    <h2>Microsoft Windows Vista</h2>
+                    <div class="controls">
+                        <span class="demo">DEMO</span>
+                        <span class="html">HTML</span>
+                        <span class="css">CSS</span>
+                        <span class="js">JS</span>
+                        <button onclick="jQuery('.scrollbar-vista').scrollbar('destroy');">Destroy</button>
                     </div>
-                </div>
-                <div class="html"></div>
-                <div class="css"></div>
-                <div class="js"></div>
-            </div>
-        </div>
+                    <div class="content">
+                        <style type="text/css">
 
-        <div class="container">
-            <h2>External</h2>
-            <div class="controls">
-                <span class="demo">DEMO</span>
-                <span class="html">HTML</span>
-                <span class="css">CSS</span>
-                <span class="js">JS</span>
-            </div>
-            <div class="content">
-                <style type="text/css">
+                            /******************* WINDOWS VISTA SCROLLBAR *******************/
 
-                    .scrollbar-external_wrapper {
-                        height: 450px;
-                        position: relative;
-                    }
-                    .scrollbar-external {
-                        height: 400px;
-                        overflow: auto;
-                        width: 600px;
-                    }
-                    .scrollbar-external > .scroll-content img {
-                        display: block;
-                    }
-
-                    /******************* EXTERNAL SCROLLBAR *******************/
-
-                    .external-scroll_x,
-                    .external-scroll_y {
-                        border: solid 1px #9999fc;
-                        cursor: pointer;
-                        display: none;
-                        position: absolute;
-                    }
-
-                    .external-scroll_x.scroll-scrollx_visible {
-                        display: block;
-                        height: 10px;
-                        left: 0;
-                        top: 410px;
-                        width: 200px;
-                    }
-
-                    .external-scroll_y.scroll-scrolly_visible {
-                        display: block;
-                        height: 200px;
-                        left: 610px;
-                        top: 0;
-                        width: 10px;
-                    }
-
-                    .external-scroll_x div,
-                    .external-scroll_y div
-                    {
-                        height: 100%;
-                        left: 0;
-                        top: 0;
-                        position: absolute;
-                        width: 100%;
-                    }
-
-                    .external-scroll_x .scroll-bar,
-                    .external-scroll_y .scroll-bar {
-                        background: #9999fc;
-                        z-index: 12;
-                    }
-
-                    .external-scroll_x .scroll-bar {
-                        width: 100px;
-                    }
-                    .external-scroll_y .scroll-bar {
-                        height: 100px;
-                    }
-                </style>
-                <script type="text/javascript">
-                    jQuery(document).ready(function(){
-                        jQuery('.scrollbar-external').scrollbar({
-                            "autoScrollSize": false,
-                            "scrollx": $('.external-scroll_x'),
-                            "scrolly": $('.external-scroll_y')
-                        });
-                    });
-                </script>
-                <div class="demo">
-                    <div class="scrollbar-external_wrapper">
-                        <div class="scrollbar-external">
-                            <img src="../includes/tarzan.jpg">
-                        </div>
-
-                        <div class="external-scroll_x">
-                            <div class="scroll-element_outer">
-                                <div class="scroll-element_size"></div>
-                                <div class="scroll-element_track"></div>
-                                <div class="scroll-bar"></div>
-                            </div>
-                        </div>
-
-                        <div class="external-scroll_y">
-                            <div class="scroll-element_outer">
-                                <div class="scroll-element_size"></div>
-                                <div class="scroll-element_track"></div>
-                                <div class="scroll-bar"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="html"></div>
-                <div class="css"></div>
-                <div class="js"></div>
-            </div>
-        </div>
-
-        <div class="container">
-            <h2>Page Map</h2>
-            <div class="controls">
-                <span class="demo">DEMO</span>
-                <span class="html">HTML</span>
-                <span class="css">CSS</span>
-                <span class="js">JS</span>
-                <button onclick="$('.scrollbar-map img').css({'height':'2100px','width':'2800px'});">Resize</button>
-                <button onclick="$('.scrollbar-map img').css({'height':'600px','width':'800px'});">Original</button>
-            </div>
-            <div class="content">
-                <style type="text/css">
-
-                    .scrollbar-map {
-                        height: 400px;
-                        overflow: auto;
-                        width: 600px;
-                    }
-                    .scrollbar-map > .scroll-content img {
-                        display: block;
-                    }
-
-                    /******************* PAGE THUMBNAIL SCROLLBAR *******************/
-
-                    .scrollbar-map > .scroll-element_outer {
-                        display: none;
-                        height: 100px;
-                        position: absolute;
-                        right: 10px;
-                        top: 10px;
-                        width: 100px;
-                    }
-                    .scrollbar-map > .scroll-element_outer .scroll-element_size,
-                    .scrollbar-map > .scroll-element_outer .scroll-element_track {
-                        background-color: #999;
-                        background-color: rgba(153, 153, 153, 0.4);
-                        height: 100%;
-                        position: absolute;
-                        right: 0;
-                        top: 0;
-                        width: 100%;
-                    }
-                    .scrollbar-map > .scroll-element_outer .scroll-bar {
-                        background-color: #CCC;
-                        background-color: rgba(204, 204, 204, 0.5);
-                        height: 100%;
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                    }
-
-                    .scrollbar-map > .scroll-element_outer.scroll-scrollx_visible,
-                    .scrollbar-map > .scroll-element_outer.scroll-scrolly_visible {
-                        display: block;
-                    }
+                            .scrollbar-vista > .scroll-content.scroll-scrolly_visible { left: -17px; margin-left: 17px; }
+                            .scrollbar-vista > .scroll-content.scroll-scrollx_visible { top:  -17px; margin-top:  17px; }
 
 
-                </style>
-                <script type="text/javascript">
-                    /**
-                     * Get inscribed area size
-                     *
-                     * @param int oW outer width
-                     * @param int oH outer height
-                     * @param int iW inner width
-                     * @param int iH inner height
-                     * @param bool R resize if smaller
-                     */
-                    function getInscribedArea(oW, oH, iW, iH, R){
-                        if(!R && iW < oW && iH < oH){
-                            return {
-                                "h": iH,
-                                "w": iW
-                            };
-                        }
-                        if((oW / oH) > (iW / iH)){
-                            return {
-                                "h": oH,
-                                "w": Math.round(oH * iW / iH)
+                            .scrollbar-vista > .scroll-element {
+                                background-color: #fcfdff;
                             }
-                        } else {
-                            return {
-                                "h": Math.round(oW * iH / iW),
-                                "w": oW
-                            };
-                        }
-                    }
 
-                    jQuery(document).ready(function(){
-                        jQuery('.scrollbar-map').scrollbar({
-                            "onInit": function(){
-                                this.container.find('.scroll-element_outer').appendTo(this.wrapper);
-                            },
-                            "onUpdate": function(container){
-                                var s = getInscribedArea(140, 140, this.scrollx.size, this.scrolly.size);
-                                this.scrolly.scrollbar.height(s.h);
-                                this.scrollx.scrollbar.width(s.w);
-                            },
-                            "scrollx": $('.scrollbar-map .scroll-element_outer'),
-                            "scrolly": $('.scrollbar-map .scroll-element_outer'),
-                            "stepScrolling": false
-                        });
-                    });
-                </script>
-                <div class="demo">
-                    <div class="scrollbar-map">
-                        <div class="scroll-element_outer">
-                            <div class="scroll-element_size">
-                                <div class="scroll-element_track"></div>
-                                <div class="scroll-bar"></div>
+                            .scrollbar-vista > .scroll-element,
+                            .scrollbar-vista > .scroll-element div
+                            {
+                                border: none;
+                                margin: 0;
+                                overflow: hidden;
+                                padding: 0;
+                                position: absolute;
+                                z-index: 10;
+                            }
+
+                            .scrollbar-vista > .scroll-element .scroll-element_outer,
+                            .scrollbar-vista > .scroll-element .scroll-element_size,
+                            .scrollbar-vista > .scroll-element .scroll-element_inner-wrapper,
+                            .scrollbar-vista > .scroll-element .scroll-element_inner,
+                            .scrollbar-vista > .scroll-element .scroll-bar,
+                            .scrollbar-vista > .scroll-element .scroll-bar div
+                            {
+                                height: 100%;
+                                left: 0;
+                                top: 0;
+                                width: 100%;
+                            }
+
+                            .scrollbar-vista > .scroll-element .scroll-element_outer,
+                            .scrollbar-vista > .scroll-element .scroll-element_size,
+                            .scrollbar-vista > .scroll-element .scroll-element_inner-wrapper,
+                            .scrollbar-vista > .scroll-element .scroll-bar_body
+                            {
+                                background: none !important;
+                            }
+
+
+                            .scrollbar-vista > .scroll-element.scroll-x {
+                                border-top: solid 1px #fcfdff;
+                                bottom: 0;
+                                height: 16px;
+                                left: 0;
+                                min-width: 100%;
+                                width: 100%;
+                            }
+
+                            .scrollbar-vista > .scroll-element.scroll-y {
+                                border-left: solid 1px #fcfdff;
+                                height: 100%;
+                                min-height: 100%;
+                                right: 0;
+                                top: 0;
+                                width: 16px;
+                            }
+
+                            .scrollbar-vista > .scroll-element.scroll-x div {
+                                background-image: url('skins/vista-x.png');
+                                background-repeat: repeat-x;
+                            }
+
+                            .scrollbar-vista > .scroll-element.scroll-y div {
+                                background-image: url('skins/vista-y.png');
+                                background-repeat: repeat-y;
+                            }
+
+                            .scrollbar-vista > .scroll-element.scroll-x .scroll-arrow {}
+
+                            .scrollbar-vista > .scroll-element.scroll-x .scroll-bar { min-width: 16px; background-position: 0px -34px; background-repeat: no-repeat; }
+                            .scrollbar-vista > .scroll-element.scroll-x .scroll-bar_body { left: 2px; }
+                            .scrollbar-vista > .scroll-element.scroll-x .scroll-bar_body-inner { left: -4px; background-position: 0px -17px; }
+                            .scrollbar-vista > .scroll-element.scroll-x .scroll-bar_center { left: 50%; margin-left: -6px; width: 12px; background-position: 24px -34px; }
+                            .scrollbar-vista > .scroll-element.scroll-x .scroll-bar_bottom { left: auto; right: 0; width: 2px; background-position: 37px -34px; }
+
+
+                            .scrollbar-vista > .scroll-element.scroll-y .scroll-bar { min-height: 16px; background-position: -34px 0px; background-repeat: no-repeat; }
+                            .scrollbar-vista > .scroll-element.scroll-y .scroll-bar_body { top: 2px; }
+                            .scrollbar-vista > .scroll-element.scroll-y .scroll-bar_body-inner { top: -4px; background-position: -17px 0px; }
+                            .scrollbar-vista > .scroll-element.scroll-y .scroll-bar_center { top: 50%; margin-top: -6px; height: 12px; background-position: -34px 24px; }
+                            .scrollbar-vista > .scroll-element.scroll-y .scroll-bar_bottom { top: auto; bottom: 0; height: 2px; background-position: -34px 37px; }
+
+
+
+                            /* SCROLL ARROWS */
+
+                            .scrollbar-vista > .scroll-element .scroll-arrow { display: none; }
+                            .scrollbar-vista > .scroll-element.scroll-element_arrows_visible .scroll-arrow { display: block; z-index: 12; }
+
+
+                            .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-arrow_less { height: 100%; width: 17px; background-position: 0px -51px;}
+                            .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-arrow_more { height: 100%; left: auto; right: 0; width: 17px; background-position: 17px -51px;}
+
+                            .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-element_outer { left: 17px; }
+                            .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-element_inner { left: -34px; }
+                            .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-element_size { left: -34px; }
+
+
+                            .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-arrow_less { width: 100%; height: 17px; background-position: -51px 0px;}
+                            .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-arrow_more { width: 100%; top: auto; bottom: 0; height: 17px; background-position: -51px 17px;}
+
+                            .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-element_outer { top: 17px; }
+                            .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-element_inner { top: -34px; }
+                            .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-element_size { top: -34px; }
+
+
+                            /* PROCEED OFFSET IF ANOTHER SCROLL VISIBLE */
+
+                            .scrollbar-vista > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -17px; }
+                            .scrollbar-vista > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -17px; }
+
+                            .scrollbar-vista > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_inner { left: -17px; }
+                            .scrollbar-vista > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_inner { top: -17px; }
+
+
+                            /* PROCEED OFFSET IF ARROWS & ANOTHER SCROLL */
+
+                            .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible.scroll-scrolly_visible .scroll-arrow_more { right: 17px;}
+                            .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible.scroll-scrolly_visible .scroll-element_inner { left: -51px;}
+                            .scrollbar-vista > .scroll-element.scroll-x.scroll-element_arrows_visible.scroll-scrolly_visible .scroll-element_size { left: -51px;}
+
+
+                            .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible.scroll-scrollx_visible .scroll-arrow_more { bottom: 17px;}
+                            .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible.scroll-scrollx_visible .scroll-element_inner { top: -51px;}
+                            .scrollbar-vista > .scroll-element.scroll-y.scroll-element_arrows_visible.scroll-scrollx_visible .scroll-element_size { top: -51px;}
+                        </style>
+                        <script type="text/javascript">
+                            jQuery(document).ready(function(){
+                                jQuery('.scrollbar-vista').scrollbar({
+                                    "showArrows": true,
+                                    "type": "advanced"
+                                });
+                            });
+                        </script>
+                        <div class="demo">
+                            <div class="scrollbar-vista">
+                                <img src="../includes/tarzan.jpg" height="2100" width="2800">
                             </div>
                         </div>
-                        <img src="../includes/tarzan.jpg" height="900" width="1200">
+                        <div class="html"></div>
+                        <div class="css"></div>
+                        <div class="js"></div>
                     </div>
                 </div>
-                <div class="html"></div>
-                <div class="css"></div>
-                <div class="js"></div>
+
+                <div class="container">
+                    <h2>External</h2>
+                    <div class="controls">
+                        <span class="demo">DEMO</span>
+                        <span class="html">HTML</span>
+                        <span class="css">CSS</span>
+                        <span class="js">JS</span>
+                    </div>
+                    <div class="content">
+                        <style type="text/css">
+
+                            .scrollbar-external_wrapper {
+                                height: 450px !important;
+                                position: relative;
+                                width: auto !important;
+                            }
+                            .scrollbar-external {
+                                height: 400px;
+                                overflow: auto;
+                                width: 600px;
+                            }
+
+                            /******************* EXTERNAL SCROLLBAR *******************/
+
+                            .external-scroll_x,
+                            .external-scroll_y {
+                                border: solid 1px #9999fc;
+                                cursor: pointer;
+                                display: none;
+                                position: absolute;
+                            }
+
+                            .external-scroll_x.scroll-scrollx_visible {
+                                display: block;
+                                height: 10px;
+                                left: 0;
+                                top: 410px;
+                                width: 200px;
+                            }
+
+                            .external-scroll_y.scroll-scrolly_visible {
+                                display: block;
+                                height: 200px;
+                                left: 610px;
+                                top: 0;
+                                width: 10px;
+                            }
+
+                            .external-scroll_x div,
+                            .external-scroll_y div
+                            {
+                                height: 100%;
+                                left: 0;
+                                top: 0;
+                                position: absolute;
+                                width: 100%;
+                            }
+
+                            .external-scroll_x .scroll-bar,
+                            .external-scroll_y .scroll-bar {
+                                background: #9999fc;
+                                z-index: 12;
+                            }
+
+                            .external-scroll_x .scroll-bar {
+                                width: 100px;
+                            }
+                            .external-scroll_y .scroll-bar {
+                                height: 100px;
+                            }
+                        </style>
+                        <script type="text/javascript">
+                            jQuery(document).ready(function(){
+                                jQuery('.scrollbar-external').scrollbar({
+                                    "autoScrollSize": false,
+                                    "scrollx": $('.external-scroll_x'),
+                                    "scrolly": $('.external-scroll_y')
+                                });
+                            });
+                        </script>
+                        <div class="demo">
+                            <div class="scrollbar-external_wrapper">
+                                <div class="scrollbar-external">
+                                    <img src="../includes/tarzan.jpg">
+                                </div>
+
+                                <div class="external-scroll_x">
+                                    <div class="scroll-element_outer">
+                                        <div class="scroll-element_size"></div>
+                                        <div class="scroll-element_track"></div>
+                                        <div class="scroll-bar"></div>
+                                    </div>
+                                </div>
+
+                                <div class="external-scroll_y">
+                                    <div class="scroll-element_outer">
+                                        <div class="scroll-element_size"></div>
+                                        <div class="scroll-element_track"></div>
+                                        <div class="scroll-bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="html"></div>
+                        <div class="css"></div>
+                        <div class="js"></div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <h2>Page Map</h2>
+                    <div class="controls">
+                        <span class="demo">DEMO</span>
+                        <span class="html">HTML</span>
+                        <span class="css">CSS</span>
+                        <span class="js">JS</span>
+                        <button onclick="$('.scrollbar-map img').css({'height':'2100px','width':'2800px'});">Resize</button>
+                        <button onclick="$('.scrollbar-map img').css({'height':'600px','width':'800px'});">Original</button>
+                    </div>
+                    <div class="content">
+                        <style type="text/css">
+
+                            /******************* PAGE THUMBNAIL SCROLLBAR *******************/
+
+                            .scrollbar-map > .scroll-element_outer {
+                                display: none;
+                                height: 100px;
+                                position: absolute;
+                                right: 10px;
+                                top: 10px;
+                                width: 100px;
+                            }
+                            .scrollbar-map > .scroll-element_outer .scroll-element_size,
+                            .scrollbar-map > .scroll-element_outer .scroll-element_track {
+                                background-color: #999;
+                                background-color: rgba(153, 153, 153, 0.4);
+                                height: 100%;
+                                position: absolute;
+                                right: 0;
+                                top: 0;
+                                width: 100%;
+                            }
+                            .scrollbar-map > .scroll-element_outer .scroll-bar {
+                                background-color: #CCC;
+                                background-color: rgba(204, 204, 204, 0.5);
+                                height: 100%;
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                width: 100%;
+                            }
+
+                            .scrollbar-map > .scroll-element_outer.scroll-scrollx_visible,
+                            .scrollbar-map > .scroll-element_outer.scroll-scrolly_visible {
+                                display: block;
+                            }
+
+
+                        </style>
+                        <script type="text/javascript">
+                            /**
+                             * Get inscribed area size
+                             *
+                             * @param int oW outer width
+                             * @param int oH outer height
+                             * @param int iW inner width
+                             * @param int iH inner height
+                             * @param bool R resize if smaller
+                             */
+                            function getInscribedArea(oW, oH, iW, iH, R){
+                                if(!R && iW < oW && iH < oH){
+                                    return {
+                                        "h": iH,
+                                        "w": iW
+                                    };
+                                }
+                                if((oW / oH) > (iW / iH)){
+                                    return {
+                                        "h": oH,
+                                        "w": Math.round(oH * iW / iH)
+                                    }
+                                } else {
+                                    return {
+                                        "h": Math.round(oW * iH / iW),
+                                        "w": oW
+                                    };
+                                }
+                            }
+
+                            jQuery(document).ready(function(){
+                                jQuery('.scrollbar-map').scrollbar({
+                                    "onInit": function(){
+                                        this.container.find('.scroll-element_outer').appendTo(this.wrapper);
+                                    },
+                                    "onUpdate": function(container){
+                                        var s = getInscribedArea(140, 140, this.scrollx.size, this.scrolly.size);
+                                        this.scrolly.scrollbar.height(s.h);
+                                        this.scrollx.scrollbar.width(s.w);
+                                    },
+                                    "scrollx": $('.scrollbar-map .scroll-element_outer'),
+                                    "scrolly": $('.scrollbar-map .scroll-element_outer'),
+                                    "stepScrolling": false
+                                });
+                            });
+                        </script>
+                        <div class="demo">
+                            <div class="scrollbar-map">
+                                <div class="scroll-element_outer">
+                                    <div class="scroll-element_size">
+                                        <div class="scroll-element_track"></div>
+                                        <div class="scroll-bar"></div>
+                                    </div>
+                                </div>
+                                <img src="../includes/tarzan.jpg" height="900" width="1200">
+                            </div>
+                        </div>
+                        <div class="html"></div>
+                        <div class="css"></div>
+                        <div class="js"></div>
+                    </div>
+                </div>
+
+
+                <div class="container">
+                    <h2>Janos Scrollbars</h2>
+                    <p>Janos Scrollbars use design from
+                        <a href="http://users.atw.hu/nokiss/formstyle.html" target="_blank">Janos custom form elements</a></p>
+                    <div class="controls">
+                        <span class="demo">DEMO</span>
+                        <span class="html">HTML</span>
+                        <span class="css">CSS</span>
+                        <span class="js">JS</span>
+                    </div>
+                    <div>
+                        <label class="theme"><input type="radio" name="janos-theme" value="theme-blue" checked="checked">Blue</label>
+                        <label class="theme"><input type="radio" name="janos-theme" value="theme-woods">Woods</label>
+                        <label class="theme"><input type="radio" name="janos-theme" value="theme-paint4">Paint 4</label>
+                        <label class="theme"><input type="radio" name="janos-theme" value="theme-palace3">Palace 3</label>
+                        <label class="theme"><input type="radio" name="janos-theme" value="theme-dark">Dark</label>
+                        <label class="theme"><input type="radio" name="janos-theme" value="theme-sprites">Sprites</label>
+                        <script type="text/javascript">
+                            jQuery(function($){
+                                var currentTheme = 'theme-blue';
+                                $('input:radio[name="janos-theme"]').on('change', function(){
+                                    $('.scrollbar-janos').removeClass(currentTheme);
+                                    currentTheme = $(this).val();
+                                    $('.scrollbar-janos').addClass(currentTheme);
+                                }).eq(0).prop('checked', true).change();
+                            });
+                        </script>
+                    </div>
+                    <div class="content">
+                        <style type="text/css">
+
+                            .scrollbar-janos.theme-blue > .scroll-element,
+                            .scrollbar-janos.theme-blue > .scroll-element .scroll-bar,
+                            .scrollbar-janos.theme-blue > .scroll-element .scroll-element_corner,
+                            .scrollbar-janos.theme-blue > .scroll-element .scroll-element_track
+                            { background-color: #66CCEE; }
+
+                            .scrollbar-janos.theme-woods > .scroll-element,
+                            .scrollbar-janos.theme-woods > .scroll-element .scroll-bar,
+                            .scrollbar-janos.theme-woods > .scroll-element .scroll-element_corner,
+                            .scrollbar-janos.theme-woods > .scroll-element .scroll-element_track
+                            { background-color: #5F7C7F; }
+
+                            .scrollbar-janos.theme-paint4 > .scroll-element,
+                            .scrollbar-janos.theme-paint4 > .scroll-element .scroll-bar,
+                            .scrollbar-janos.theme-paint4 > .scroll-element .scroll-element_corner,
+                            .scrollbar-janos.theme-paint4 > .scroll-element .scroll-element_track
+                            { background-color: #5566AA; }
+
+                            .scrollbar-janos.theme-palace3 > .scroll-element,
+                            .scrollbar-janos.theme-palace3 > .scroll-element .scroll-bar,
+                            .scrollbar-janos.theme-palace3 > .scroll-element .scroll-element_corner,
+                            .scrollbar-janos.theme-palace3 > .scroll-element .scroll-element_track
+                            { background-color: #028B54; }
+
+                            .scrollbar-janos.theme-dark > .scroll-element,
+                            .scrollbar-janos.theme-dark > .scroll-element .scroll-bar,
+                            .scrollbar-janos.theme-dark > .scroll-element .scroll-element_corner,
+                            .scrollbar-janos.theme-dark > .scroll-element .scroll-element_track
+                            { background-color: #999999; }
+
+                            .scrollbar-janos.theme-sprites > .scroll-element,
+                            .scrollbar-janos.theme-sprites > .scroll-element .scroll-bar,
+                            .scrollbar-janos.theme-sprites > .scroll-element .scroll-element_corner,
+                            .scrollbar-janos.theme-sprites > .scroll-element .scroll-element_track
+                            { background-color: #BBBBBB; }
+
+
+                            /******************* JANOS SCROLLBAR *******************/
+
+                            .scrollbar-janos > .scroll-element,
+                            .scrollbar-janos > .scroll-element div
+                            {
+                                border: none;
+                                margin: 0;
+                                overflow: hidden;
+                                padding: 0;
+                                position: absolute;
+                                z-index: 10;
+                            }
+
+                            .scrollbar-janos > .scroll-element div {
+                                background-color: transparent;
+                                display: block;
+                                height: 100%;
+                                left: 0;
+                                top: 0;
+                                width: 100%;
+                            }
+
+                            .scrollbar-janos > .scroll-element.scroll-x {
+                                border-top: 1px solid #AAAAAA;
+                                bottom: 0;
+                                height: 16px;
+                                left: 0;
+                                min-width: 100%;
+                                width: 100%;
+                            }
+
+                            .scrollbar-janos > .scroll-element.scroll-y {
+                                border-left: 1px solid #AAAAAA;
+                                height: 100%;
+                                min-height: 100%;
+                                right: 0;
+                                top: 0;
+                                width: 16px;
+                            }
+
+                            .scrollbar-janos > .scroll-element .scroll-element_corner {
+                                display: none;
+                            }
+
+                            .scrollbar-janos > .scroll-element.scroll-x,
+                            .scrollbar-janos > .scroll-element.scroll-x .scroll-bar {
+                                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAPCAYAAADd/14OAAAAS0lEQVR42qzQywkAIAxEQQPpvwn7E/EDESXREt7BHPY0sEvE3XMCpyJiwIW+mBR2Civa+BVGhOuLQt/TaHWncFBoFC4KN4WHwCvAAHI/GzHvcCTCAAAAAElFTkSuQmCC);
+                                background-repeat: repeat-x;
+                            }
+                            .scrollbar-janos > .scroll-element.scroll-x .scroll-bar {
+                                box-shadow: 0 1px 2px, 0 -1px 1px rgba(255, 255, 255, 0.8);
+                            }
+                            .scrollbar-janos > .scroll-element.scroll-y,
+                            .scrollbar-janos > .scroll-element.scroll-y .scroll-bar {
+                                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAKCAYAAABrGwT5AAAAAXNSR0IArs4c6QAAAEtJREFUKM/ty00Kg0AAQ+Ev3v8W3k/8qWipzLiYFrqR7osPsknyUkrpk2xYsWDCWGsdMCaZ3/0DO5544eg08pVWJJ/tkp+HW/4L+QSzjxQbWJrRJQAAAABJRU5ErkJggg==);
+                                background-repeat: repeat-y;
+                            }
+                            .scrollbar-janos > .scroll-element.scroll-y .scroll-bar {
+                                box-shadow: 0 1px 2px, 0 -1px 1px rgba(255, 255, 255, 0.8);
+                            }
+
+                            .scrollbar-janos > .scroll-element.scroll-x .scroll-element_track {
+                                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAQCAYAAAAvf+5AAAAAXklEQVR42mJkYGBIZcAO/iPR/1iAxG8CisAYpPAnsQp/EGE1XoUoiklS+J0BPwArJmQiA7FWoyj8hUXiH7oArnBE9ghc4S9irf5NrMI/xFr9hwgTwQr/4TMJBgACDABrOConte5OAgAAAABJRU5ErkJggg==);
+                                background-repeat: repeat-x;
+                            }
+                            .scrollbar-janos > .scroll-element.scroll-y .scroll-element_track {
+                                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAKCAYAAAC9vt6cAAAAAXNSR0IArs4c6QAAAFNJREFUKM/FzksKgDAMBNDX3NT7X8BaC25clBKw4sKBgYTMJwUbGurAfWLFcbPhREcPBEpC05ztqXkUPyKS5LJqHj9YaU11sdgarw+LKF8D/B9wAWL/DzbaLOVxAAAAAElFTkSuQmCC);
+                                background-repeat: repeat-y;
+                            }
+                            .scrollbar-janos > .scroll-element.scroll-x .scroll-bar .scroll-bar_body {
+                                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAHCAYAAADAp4fuAAAAMklEQVR42mL4DwRnz579zwAEMDYTiLN7924GGACxmRiwAEoFV6xYwSAvLw/mwNgAAQYAEz0X3c1VmrwAAAAASUVORK5CYII=);
+                            }
+                            .scrollbar-janos > .scroll-element.scroll-y .scroll-bar .scroll-bar_body {
+                                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAFCAYAAACJmvbYAAAAAXNSR0IArs4c6QAAAChJREFUCNdj/P///38GLGDFihUMLOfOnWPYvXs3hqS8vDwDXsBItrEA28oV4/a4edAAAAAASUVORK5CYII=);
+                            }
+                            .scrollbar-janos > .scroll-element.scroll-x .scroll-arrow_less {
+                                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAj0lEQVR42mJgwA4EgVgbRP///58BhJmwKFIwNTW1AEpGANlSMEEWNFOkNm/ebObj42MHZLMDsSi6QpApmqdOnbICspWxuQWkUPTYsWOOlpaWMFOwAiYGIgFI4WsrK6v9ZmZmq4Dsu4RMfHD69OkTjIyMK7Zs2bIbyP9JjC0gj3kCg6cZFJawcGQgNsABAgwAc40zrttfic8AAAAASUVORK5CYII=);
+                                box-shadow: 0 1px 2px, 0 -1px 1px rgba(255, 255, 255, 0.8);
+                            }
+                            .scrollbar-janos > .scroll-element.scroll-x .scroll-arrow_more {
+                                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAh0lEQVR42mL4//8/AwgDgSAQa0NpDMCExJYCaogwNTW1ALIVMFQimegApJcB8fzNmzcnopvOhMUWdh8fH1d007EphAHlU6dOhR07dswRyBbFpxAFsOCRu2tmZnbs9OnT14Hs19gU/tyyZcshX1/fU0D2MyB+j+5rbSDdDPSAJ6HgwRvgAAEGAC2sRKFV1v+TAAAAAElFTkSuQmCC);
+                            }
+                            .scrollbar-janos > .scroll-element.scroll-y .scroll-arrow_less {
+                                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAjklEQVR42mJgwASiUIwCGNH4CseOHXMEMaysrPYDqQdYDGIQNDU19fz///98EAaxQWLYTNQGKogA0spQ/l1GRsYVQPoqiMMEs3Lz5s1mSIpAQBkqpgAzEWSlxalTp8KAbHY05/w0MzNbdfr06ROMWKxEB2AnMEIdLIUtSKDgNRA/YwSaxkAMYGIgEgAEGADQpyzNaQf+BAAAAABJRU5ErkJggg==);
+                                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+                            }
+                            .scrollbar-janos > .scroll-element.scroll-y .scroll-arrow_more {
+                                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAg0lEQVR42mL8//8/AzGAiYFIwAjEgkAsBcSiONS8BuJnLCBFQOsjgLQyDoV3GRkZV4CsfmZmZnYMSP/EougnVO4ZSOH706dPX9+yZcshdFUgMZAcSA0jkrg2mhPAVgLpq+i+RnYC3EpkXyMDhWPHjjmCGFZWVvuB1AN8QSaKLagAAgwAkYkwicybOCoAAAAASUVORK5CYII=);
+                            }
+
+                            .scrollbar-janos > .scroll-element .scroll-arrow,
+                            .scrollbar-janos > .scroll-element .scroll-bar_body {
+                                background-position: center;
+                                background-repeat: no-repeat;
+                            }
+
+                            .scrollbar-janos > .scroll-content.scroll-scrolly_visible { left: -17px; margin-left: 17px; }
+                            .scrollbar-janos > .scroll-content.scroll-scrollx_visible { top:  -17px; margin-top:  17px; }
+
+                            /* scrollbar arrows */
+
+                            .scrollbar-janos > .scroll-element .scroll-arrow { display: none; }
+                            .scrollbar-janos > .scroll-element.scroll-element_arrows_visible .scroll-arrow { display: block; z-index: 12; }
+
+                            .scrollbar-janos > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-arrow_less { height: 100%; width: 16px;}
+                            .scrollbar-janos > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-arrow_more { height: 100%; left: auto; right: 0; width: 16px;}
+
+                            .scrollbar-janos > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-element_outer { left: 16px; }
+                            .scrollbar-janos > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-element_track { left: -32px; }
+                            .scrollbar-janos > .scroll-element.scroll-x.scroll-element_arrows_visible .scroll-element_size { left: -33px; }
+
+                            .scrollbar-janos > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-arrow_less { width: 100%; height: 16px;}
+                            .scrollbar-janos > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-arrow_more { width: 100%; top: auto; bottom: 0; height: 16px;}
+
+                            .scrollbar-janos > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-element_outer { top: 16px; }
+                            .scrollbar-janos > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-element_track { top: -32px; }
+                            .scrollbar-janos > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-element_size { top: -33px; }
+
+                            /* if another scrollbar is visible */
+
+                            .scrollbar-janos > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -17px; }
+                            .scrollbar-janos > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -17px; }
+
+                            .scrollbar-janos > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_inner { left: -17px; }
+                            .scrollbar-janos > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_inner { top: -17px; }
+
+                            /* if arrows & another scrollbar are visible */
+
+                            .scrollbar-janos > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_corner,
+                            .scrollbar-janos > .scroll-element.scroll-y.scroll-element_arrows_visible.scroll-scrollx_visible .scroll-element_corner {
+                                border-top: 1px solid #AAAAAA;
+                                bottom: 0;
+                                display: block;
+                                height: 16px;
+                                left: auto;
+                                right: 0;
+                                top: auto;
+                                width: 16px;
+                                z-index: 13;
+                            }
+
+                            .scrollbar-janos > .scroll-element.scroll-x.scroll-element_arrows_visible.scroll-scrolly_visible .scroll-arrow_more { right: 17px;}
+                            .scrollbar-janos > .scroll-element.scroll-x.scroll-element_arrows_visible.scroll-scrolly_visible .scroll-element_track { left: -50px;}
+                            .scrollbar-janos > .scroll-element.scroll-x.scroll-element_arrows_visible.scroll-scrolly_visible .scroll-element_size { left: -51px;}
+
+
+                            .scrollbar-janos > .scroll-element.scroll-y.scroll-element_arrows_visible.scroll-scrollx_visible .scroll-arrow_more { bottom: 17px;}
+                            .scrollbar-janos > .scroll-element.scroll-y.scroll-element_arrows_visible.scroll-scrollx_visible .scroll-element_track { top: -50px;}
+                            .scrollbar-janos > .scroll-element.scroll-y.scroll-element_arrows_visible.scroll-scrollx_visible .scroll-element_size { top: -51px;}
+
+
+                        </style>
+                        <script type="text/javascript">
+                            jQuery(document).ready(function(){
+                                jQuery('.scrollbar-janos').scrollbar({
+                                    "showArrows": true,
+                                    "type": "advanced"
+                                });
+                            });
+                        </script>
+                        <div class="demo">
+                            <div class="scrollbar-janos theme-blue">
+                                <img src="../includes/tarzan.jpg" height="2100" width="2800">
+                            </div>
+                        </div>
+                        <div class="html"></div>
+                        <div class="css"></div>
+                        <div class="js"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

@@ -424,13 +424,27 @@ th {
 
 /* General
    ========================================================================== */
+html, body {
+    height: 100%;
+    width: 100%;
+}
 body {
-	max-width: 1600px;
 	background: #fff;
-	margin: 0 auto;
-	padding: 25px;
 	font: 14px/1.55 Helvetica, sans-serif;
 	color: #393938;
+}
+.wrapper {
+    height: 100%;
+    overflow: auto;
+    width: 100%;
+}
+.wrapper.scrollbar-dynamic {
+    max-height: none;
+}
+.page-content {
+    margin: 0 auto;
+    max-width: 1600px;
+    padding: 25px;
 }
 .content .demo {
 	padding: 25px;
@@ -462,7 +476,22 @@ h6 {
 
 /** Custom page styles **/
 
+.content {
+    max-width: 1200px;
+}
+
+.content .demo {
+    border: 1px solid #CCC;
+}
+
+.content .demo .inner-content {
+    border: 1px solid #CCC;
+    max-height: 170px;
+    width: 600px;
+}
+
 .content .demo > div {
+    max-height: 250px;
     overflow: auto;
 }
 .content .demo .permanent {
@@ -475,8 +504,9 @@ h6 {
     cursor: pointer; padding: 2px 8px;
 }
 .controls span.active {
-    border: 1px solid #CCC;
-    font-weight: bold;
+    background: #4698CE;
+    color: #fff;
+    cursor: default;
 }
 .prettyprint ol.linenums > li {
     list-style-type: decimal;
