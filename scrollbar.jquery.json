@@ -6,7 +6,7 @@
         "scroll",
         "scrollbar"
     ],
-    "version": "0.2.2",
+    "version": "0.2.3",
     "author": {
         "name": "Yuriy Khabarov",
         "email": "13real008@gmail.com"
@@ -23,7 +23,7 @@
     ],
     "homepage": "http://gromo.github.io/jquery.scrollbar/",
     "download": "http://gromo.github.io/jquery.scrollbar/jquery.scrollbar.zip",
-    "demo": "http://gromo.github.io/jquery.scrollbar/demo/simple.html",
+    "demo": "http://gromo.github.io/jquery.scrollbar/demo/basic.html",
     "dependencies": {
         "jquery": ">=1.7"
     }

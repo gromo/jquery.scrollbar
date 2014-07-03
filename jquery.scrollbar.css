@@ -29,6 +29,9 @@
 .scroll-element {
     display: none;
 }
+.scroll-element, .scroll-element div {
+    box-sizing: content-box;
+}
 
 .scroll-element.scroll-x.scroll-scrollx_visible,
 .scroll-element.scroll-y.scroll-scrolly_visible {
