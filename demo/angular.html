@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>jQuery Scrollbar as AngularJS directive</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../includes/style.css" />
+        <link rel="stylesheet" href="../includes/prettify/prettify.css" />
+        <link rel="stylesheet" href="../jquery.scrollbar.css" />
+        <style type="text/css">
+            * {
+                box-sizing: border-box;
+            }
+            .content .demo > div {
+                max-height: none;
+            }
+        </style>
+
+        <script src="../includes/prettify/prettify.js"></script>
+        <script src="../includes/jquery.js"></script>
+        <script src="../includes/angular.js"></script>
+        <script src="../jquery.scrollbar.js"></script>
+    </head>
+    <body>
+        <div class="wrapper scrollbar-dynamic">
+            <div class="page-content">
+
+                <h1>jQuery Scrollbar as AngularJS directive</h1>
+
+                <a href="basic.html">Basic Scrollbars Demo</a><br/>
+                <a href="advanced.html">Advanced Scrollbars Demo</a><br/>
+                <a href="../">&laquo; Back to home</a>
+
+                <p id="lorem-ipsum">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                    scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus.
+                    Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel
+                    hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue,
+                    pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam
+                    sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
+                    ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget
+                    nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam
+                    viverra nisi, in interdum massa nibh nec erat.
+                </p>
+
+                <div class="container">
+                    <h2></h2>
+                    <div class="controls">
+                        <span class="demo">DEMO</span>
+                        <span class="html">HTML</span>
+                        <span class="css">CSS</span>
+                        <span class="js">JS</span>
+                        <button class="add-content">Add Content</button>
+                        <button class="remove-content">Remove Content</button>
+                    </div>
+                    <div class="content">
+                        <style type="text/css">
+                            .scrollbar-dynamic {
+                                max-height: 300px;
+                                overflow: auto;
+                            }
+                        </style>
+                        <script type="text/javascript">
+                            var demoApp = angular.module('demoApp', ['jQueryScrollbar']);
+                            demoApp.controller('SimpleController', function($scope){
+                                $scope.jqueryScrollbarOptions = {
+                                    "type": "simpble",
+                                    "onScroll":function(y, x){
+                                        if(y.scroll == y.maxScroll){
+                                            alert('Scrolled to bottom');
+                                        }
+                                    }
+                                };
+                            });
+                        </script>
+                        <div class="demo">
+                            <div data-ng-app="demoApp">
+                                <div data-ng-controller="SimpleController">
+                                    <div class="scrollbar-dynamic" data-jquery-scrollbar="jqueryScrollbarOptions">
+                                        <p class="permanent">
+                                            Using jQuery scrollbar as Angular.JS directive is simple. Just include jquery.scrollbar.js
+                                            file after jQuery and Angular. jQuery Scrollbar automatically creates Angular.JS module
+                                            <em>jQueryScrollbar</em> with directive <em>jqueryScrollbar</em>.<br/>
+                                            <i>* Please note that Angular.JS does not work with IE 7.</i>
+                                        </p>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                                            scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus.
+                                            Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel
+                                            hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue,
+                                            pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam
+                                            sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
+                                            ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget
+                                            nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam
+                                            viverra nisi, in interdum massa nibh nec erat.
+                                        </p>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a,
+                                            scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus.
+                                            Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel
+                                            hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue,
+                                            pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam
+                                            sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
+                                            ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget
+                                            nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam
+                                            viverra nisi, in interdum massa nibh nec erat.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="html"></div>
+                        <div class="css"></div>
+                        <div class="js"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function getAlignedText(text){
+                text = (text || '').split('\n');
+                while(text.length > 0 && $.trim(text[0]) == ''){
+                    text.shift();
+                }
+                var tabs = (text[0] || '').replace(/^(\s+).+$/, '$1');
+                for(var i=0; i<text.length; i++){
+                    text[i] = text[i].replace(tabs, '');
+                }
+                if(text.length > 0 && text[text.length - 1].match(/^\s*$/)){
+                    text.pop();
+                }
+                return text.join('\n');
+            }
+
+            $('.container').each(function(){
+
+                var content =  $(this).find('.content');
+                var controls = $(this).find('.controls');
+
+                $('<pre></pre>').addClass('prettyprint linenums lang-html').text(getAlignedText(content.find('.demo').html())).appendTo(content.find('.html'));
+                $('<pre></pre>').addClass('prettyprint linenums lang-css').text(getAlignedText($('#css-common').html()) + "\n" + getAlignedText(content.find('style').html())).appendTo(content.find('.css'));
+                $('<pre></pre>').addClass('prettyprint linenums lang-js').text(getAlignedText(content.find('script').html())).appendTo(content.find('.js'));
+
+                controls.on('click', 'span', function(){
+                    content.find('.' + $(this).removeClass('active').attr('class')).show().siblings('div').hide();
+                    $(this).addClass('active').siblings('span').removeClass('active');
+                });
+                controls.find('.demo').click();
+            });
+
+            $('.container').on('click', '.add-content', function(){
+                $('#lorem-ipsum').clone().removeAttr('id').appendTo($(this).closest('.container').find('.scroll-content'));
+                return false;
+            });
+            $('.container').on('click', '.remove-content', function(){
+                $(this).closest('.container').find('.scroll-content').find('p').not('.permanent').last().remove();
+                return false;
+            });
+
+            window.prettyPrint && prettyPrint();
+            $('.wrapper').scrollbar();
+        </script>
+    </body>
+</html>

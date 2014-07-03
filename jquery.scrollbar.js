@@ -7,7 +7,7 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.2.2
+ * @version 0.2.3
  * @url https://github.com/gromo/jquery.scrollbar/
  *
  * TODO:
@@ -16,12 +16,18 @@
 ;
 (function($, doc, win){
 
-    // Init flags & variables
+    // init flags & variables
+    var debug = false;
+    var lmb = 1, px = "px";
+
     var browser = {
+        "data": {},
         "mobile": /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(win.navigator.userAgent),
+        "scroll": null,
+        "scrolls": [],
         "webkit": win.WebKitPoint ? true : false,
 
-        "log": function(data, toString){
+        "log": debug ? function(data, toString){
             var output = data;
             if(toString && typeof data != "string"){
                 output = [];
@@ -32,14 +38,13 @@
             }
             if(win.console && win.console.log){
                 win.console.log(output);
+            } else {
+                alert(output);
             }
-        },
-        "scroll": null
-    };
-    var debug = false;
-    var lmb = 1, px = "px";
-    var scrolls = [];
+        } : function(){
 
+        }
+    };
 
     var defaults = {
         "autoScrollSize": true,     // automatically calculate scrollsize
@@ -57,6 +62,7 @@
 
         "onDestroy": null,          // callback function on destroy,
         "onInit": null,             // callback function on first initialization
+        "onScroll": null,           // callback function on content scrolling
         "onUpdate": null            // callback function on init/resize (before scrollbar size calculation)
     };
 
@@ -64,12 +70,25 @@
     var customScrollbar = function(container, options){
 
         if(!browser.scroll){
-            debug && browser.log("Init jQuery Scrollbar v0.2.1");
+            browser.log("Init jQuery Scrollbar v0.2.3");
             browser.scroll = getBrowserScrollSize();
+            updateScrollbars();
+
+            $(win).resize(function(){
+                var forceUpdate = false;
+                if(browser.scroll && (browser.scroll.height || browser.scroll.width)){
+                    var scroll = getBrowserScrollSize();
+                    if(scroll.height != browser.scroll.height || scroll.width != browser.scroll.width){
+                        browser.scroll = scroll;
+                        forceUpdate = true; // handle page zoom
+                    }
+                }
+                updateScrollbars(forceUpdate);
+            });
         }
 
         this.container = container;
-        this.options = $.extend({}, defaults);
+        this.options = $.extend({}, defaults, win.jQueryScrollbarOptions || {});
         this.scrollTo = null;
         this.scrollx = {};
         this.scrolly = {};
@@ -171,7 +190,7 @@
             var S = this;
 
             var c = this.container;
-            var o = $.extend(this.options, options);
+            var o = $.extend(this.options, options || {});
             var s = {
                 "x": this.scrollx,
                 "y": this.scrolly
@@ -198,7 +217,21 @@
                     "height":"",
                     "margin-bottom": browser.scroll.height * -1 + px,
                     "margin-right":  browser.scroll.width  * -1 + px
-                }).on("scroll.scrollbar", function(){
+                })
+                .on("scroll.scrollbar", function(event){
+                    if($.isFunction(o.onScroll)){
+                        o.onScroll.call(this, {
+                            "maxScroll": s.y.maxScrollOffset,
+                            "scroll": c.scrollTop(),
+                            "size": s.y.size,
+                            "visible": s.y.visible
+                        }, {
+                            "maxScroll": s.x.maxScrollOffset,
+                            "scroll": c.scrollLeft(),
+                            "size": s.x.size,
+                            "visible": s.x.visible
+                        });
+                    }
                     s.x.isVisible && s.x.scroller.css("left", c.scrollLeft() * s.x.kx + px);
                     s.y.isVisible && s.y.scroller.css("top",  c.scrollTop()  * s.y.kx + px);
                 });
@@ -248,7 +281,9 @@
                     o.onInit.apply(this, [c]);
             } else {
                 c.css({
-                    "height":""
+                    "height":"",
+                    "margin-bottom": browser.scroll.height * -1 + px,
+                    "margin-right":  browser.scroll.width  * -1 + px
                 });
             }
 
@@ -497,6 +532,7 @@
 
                 scrollx.scrollbarSize = scrollx.scroller[cssFullSize]();
                 scrollx.kx = ((scrollSize - scrollx.scrollbarSize) / (AreaSize - AreaVisible)) || 1;
+                scrollx.maxScrollOffset = AreaSize - AreaVisible;
             });
 
             c.scrollLeft(initScroll.scrollLeft).scrollTop(initScroll.scrollTop).trigger("scroll");
@@ -537,14 +573,14 @@
 
                 if(options === "destroy"){
                     container.removeData("scrollbar");
-                    while($.inArray(instance, scrolls) >= 0)
-                        scrolls.splice($.inArray(instance, scrolls), 1);
+                    while($.inArray(instance, browser.scrolls) >= 0)
+                        browser.scrolls.splice($.inArray(instance, browser.scrolls), 1);
                 }
             } else {
                 if(typeof options != "string"){
                     instance = new customScrollbar(container, options);
                     container.data("scrollbar", instance);
-                    scrolls.push(instance);
+                    browser.scrolls.push(instance);
                 }
             }
             return true;
@@ -559,24 +595,48 @@
     $.fn.scrollbar.options = defaults;
 
     /**
+     * Extend AngularJS as UI directive
+     *
+     *
+     */
+    if(win.angular){
+        (function(angular){
+            var app = angular.module('jQueryScrollbar', []);
+            app.directive('jqueryScrollbar', function(){
+                return {
+                    "link": function(scope, element){
+                        element.scrollbar(scope.options).on('$destroy', function(){
+                            element.scrollbar('destroy');
+                        });
+                    },
+                    "restring": "A",
+                    "scope": {
+                        "options": "=jqueryScrollbar"
+                    }
+                };
+            });
+        })(win.angular);
+    }
+
+    /**
      * Check if scroll content/container size is changed
      */
-    var timerCounter = 0;
-    var timer = setInterval(function(){
+    var timer = 0, timerCounter = 0;
+    var updateScrollbars = function(force){
         var i, c, o, s, w, x, y;
-        for(i=0; i<scrolls.length; i++){
-            s = scrolls[i];
+        for( i = 0; i < browser.scrolls.length; i++){
+            s = browser.scrolls[i];
             c = s.container;
             o = s.options;
             w = s.wrapper;
             x = s.scrollx;
             y = s.scrolly;
-            if(o.autoUpdate && w && w.is(":visible") &&
+            if(force || (o.autoUpdate && w && w.is(":visible") &&
                 (c.prop("scrollWidth") != x.size
                     || c.prop("scrollHeight") != y.size
                     || w.width()  != x.visible
                     || w.height() != y.visible
-                    )){
+                    ))){
                 s.init();
 
                 if(debug){
@@ -586,16 +646,18 @@
                         "visibleHeight": w.height() + ":" + s.scrolly.visible,
                         "visibleWidth":  w.width() + ":" + s.scrollx.visible
                     }, true);
-
-                    if(++timerCounter > 10){
-                        browser.log("Scroll updates exceed 10");
-                        clearInterval(timer);
-                    }
+                    timerCounter++;
                 }
             }
         }
-    }, 300);
-
+        if(debug && timerCounter > 10){
+            browser.log("Scroll updates exceed 10");
+            updateScrollbars = function(){};
+        } else {
+            clearTimeout(timer);
+            timer = setTimeout(updateScrollbars, 300);
+        }
+    };
 
     /* ADDITIONAL FUNCTIONS */
     function getBrowserScrollSize(){
@@ -607,32 +669,30 @@
             };
         }
 
-        var css = {
-            "border":  "none",
-            "height":  "100px",
-            "margin":  "0",
-            "padding": "0",
-            "width":   "100px"
+        if(!browser.data.outer){
+            var css = {
+                "border":  "none",
+                "box-sizing": "content-box",
+                "height":  "200px",
+                "margin":  "0",
+                "padding": "0",
+                "width":   "200px"
+            };
+            browser.data.inner = $("<div>").css($.extend({}, css));
+            browser.data.outer = $("<div>").css($.extend({
+                "left":       "-1000px",
+                "overflow":   "scroll",
+                "position":   "absolute",
+                "top":        "-1000px"
+            }, css)).append(browser.data.inner).appendTo("body");
+        }
+
+        browser.data.outer.scrollLeft(1000).scrollTop(1000);
+
+        return {
+            "height": Math.ceil((browser.data.outer.offset().top - browser.data.inner.offset().top) || 0),
+            "width": Math.ceil((browser.data.outer.offset().left - browser.data.inner.offset().left) || 0)
         };
-
-        var inner = $("<div>").css($.extend({}, css));
-        var outer = $("<div>").css($.extend({
-            "background": "#F00",
-            "left":       "-200px",
-            "overflow":   "scroll",
-            "position":   "absolute",
-            "top":        "-200px"
-        }, css)).append(inner).appendTo("body")
-        .scrollLeft(inner.width())
-        .scrollTop(inner.height());
-
-        var scrollSize = {
-            "height": (outer.offset().top - inner.offset().top) || 0,
-            "width": (outer.offset().left - inner.offset().left) || 0
-        };
-
-        outer.remove();
-        return scrollSize;
     }
 
     function handleMouseDown(callback, event){

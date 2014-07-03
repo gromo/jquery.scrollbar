@@ -34,10 +34,12 @@
                     <li>Automatically re-initialize scrollbar</li>
                     <li>External scrollbars support</li>
                     <li>Browser support: IE7+, Firefox, Opera, Chrome, Safari</li>
+                    <li>jQuery Scrollbar as Angular.JS directive</li>
                 </ul>
 
-                <h4><a href="demo/simple.html">Simple Scrollbars Demo</a></h4>
+                <h4><a href="demo/basic.html">Basic Scrollbars Demo</a></h4>
                 <h4><a href="demo/advanced.html">Advanced Scrollbars Demo</a></h4>
+                <h4><a href="demo/angular.html">jQuery Scrollbars as Angular.JS directive</a></h4>
                 <h4><a href="jquery.scrollbar.zip">Download</a></h4>
 
                 <h3>Easy to implement</h3>
@@ -119,6 +121,13 @@
                     So, be careful if you are going to support IE8.
                 </p>
 
+                <h3>jQuery Scrollbar as Angular.JS directive</h3>
+                <p>
+                    Now you can easily use jQuery Scrollbar with Angular.JS as directive. Just include module <em>jQueryScrollbar</em>
+                    as dependency in your module, and you can use jQuery Scrollbar on your container with attribute
+                    <em>data-jquery-scrollbar</em>. <a href="demo/angular.html">jQuery Scrollbar as Angular.JS directive</a>.
+                </p>
+
                 <h4>Advanced features that standard scroll has, but scroll emulation plugins have to emulate or don't have at all</h4>
                 <ul>
                     <li>mouse middle button / touch / arrow buttons scrolling</li>
@@ -181,6 +190,10 @@
                         callback function when scrollbar is initialized first time
                     </li>
                     <li>
+                        <strong>onScroll</strong> [function] (default: null)<br/>
+                        callback function when cotnainer is scrolled
+                    </li>
+                    <li>
                         <strong>onUpdate</strong> [function] (default: null)<br/>
                         callback function before scrollbars size calculated
                     </li>
@@ -190,7 +203,7 @@
                 <ul>
                     <li>scrollable element should not have paddings, margins, left/top values</li>
                     <li>do not use max-height in IE8 - it crashes browser renderer</li>
-                    <li>if change zoom level, native scrollbar may become visible</li>
+                    <li><strike>if change zoom level, native scrollbar may become visible</strike> - fixed</li>
                 </ul>
 
                 <h2>FAQ</h2>
@@ -211,15 +224,6 @@
                         </p>
                         <p>
                             <strong>Answer:</strong> Wrap scrollable content into container with padding.
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <strong>Question:</strong> I have element with <em>min-height: 100%</em> or <em>height: 100%</em>
-                            and I see horizontal scrollbar if content height is less than container height. What to do?
-                        </p>
-                        <p>
-                            <strong>Answer:</strong> Update plugin to latest version.
                         </p>
                     </li>
                     <li>
@@ -248,8 +252,9 @@ jQuery('.scrollbar-macosx').not('.scroll-content').scrollTop(50);</pre>
                             <strong>Question:</strong> I want to know when content is scrolled. Is there any callback for this?
                         </p>
                         <p>
-                            <strong>Answer:</strong> Use standard "scroll" event for container.
-                            For example, you have container with class "scrollbar-macosx". Use next code to handle scroll event:
+                            <strong>Answer:</strong> Yes, you can use "onScroll" callback (look at Angular.JS example),
+                            or use standard "scroll" event for container. For example, you have container with class
+                            "scrollbar-macosx". Use next code to handle scroll event:
                         <pre class="prettyprint linenums lang-js">
 jQuery('.scrollbar-macosx').not('.scroll-wrapper').on("scroll", function(){
     console.log('content is scrolling');
@@ -297,11 +302,14 @@ jQuery('.scrollbar-macosx').not('.scroll-content').width();</pre>
                             <strong>Question:</strong> How to detect DIV is scrolled to bottom?
                         </p>
                         <p>
-                            <strong>Answer:</strong> Use jQuery scroll event to detect scroll:
+                            <strong>Answer:</strong> You can make calculations using jQuery "scroll" event or you can use
+                            "onScroll" callback function that provides information about container's sizes &amp; offset:
                         <pre class="prettyprint linenums lang-js">
-jQuery('.scrollbar-macosx').not('.scroll-wrapper').on("scroll", function(){
-    if($(this).scrollTop() + $(this).height() + parseInt($(this).css('margin-bottom')) >= $(this).prop('scrollHeight')){
-        console.log('bottom');
+jQuery('.scrollbar-dynamic').scrollbar({
+    "onScroll": function(y, x){
+        if(y.scroll == y.maxScroll){
+            console.log('Scrolled to bottom');
+        }
     }
 });</pre>
                         </p>
