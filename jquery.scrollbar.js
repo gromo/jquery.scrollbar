@@ -15,6 +15,7 @@
  */
 ;
 (function($, doc, win){
+    'use strict';
 
     // init flags & variables
     var debug = false;
@@ -220,7 +221,7 @@
                 })
                 .on("scroll.scrollbar", function(event){
                     if($.isFunction(o.onScroll)){
-                        o.onScroll.call(this, {
+                        o.onScroll.call(S, {
                             "maxScroll": s.y.maxScrollOffset,
                             "scroll": c.scrollTop(),
                             "size": s.y.size,
@@ -609,7 +610,7 @@
                             element.scrollbar('destroy');
                         });
                     },
-                    "restring": "A",
+                    "restring": "AC",
                     "scope": {
                         "options": "=jqueryScrollbar"
                     }
