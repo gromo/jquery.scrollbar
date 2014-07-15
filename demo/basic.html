@@ -89,6 +89,9 @@
             .scroll-element {
                 display: none;
             }
+            .scroll-element, .scroll-element div {
+                box-sizing: content-box;
+            }
 
             .scroll-element.scroll-x.scroll-scrollx_visible,
             .scroll-element.scroll-y.scroll-scrolly_visible {
@@ -98,6 +101,32 @@
             .scroll-element .scroll-bar,
             .scroll-element .scroll-arrow {
                 cursor: default;
+            }
+
+            .scroll-textarea {
+                border: 1px solid #cccccc;
+                border-top-color: #999999;
+            }
+            .scroll-textarea > .scroll-content {
+                overflow: hidden !important;
+            }
+            .scroll-textarea > .scroll-content > textarea {
+                border: none !important;
+                box-sizing: border-box;
+                height: 100% !important;
+                margin: 0;
+                max-height: none !important;
+                max-width: none !important;
+                overflow: scroll !important;
+                outline: none;
+                padding: 2px;
+                position: relative !important;
+                top: 0;
+                width: 100% !important;
+            }
+            .scroll-textarea > .scroll-content > textarea::-webkit-scrollbar {
+                height: 0;
+                width: 0;
             }
 
 
@@ -1297,6 +1326,40 @@
                                     viverra nisi, in interdum massa nibh nec erat.
                                 </p>
                             </div>
+                        </div>
+                        <div class="html"></div>
+                        <div class="css"></div>
+                        <div class="js"></div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <h2>Textarea Scrollbar (IE8+)</h2>
+                    <div class="controls">
+                        <span class="demo">DEMO</span>
+                        <span class="html">HTML</span>
+                        <span class="css">CSS</span>
+                        <span class="js">JS</span>
+                    </div>
+                    <div class="content">
+                        <style type="text/css">
+
+                            /*************** TEXTAREA STYLES ***************/
+
+                            .textarea-scrollbar {
+                                height: 250px;
+                                width: 500px;
+                            }
+                        </style>
+                        <script type="text/javascript">
+                            jQuery(document).ready(function(){
+                                jQuery('.textarea-scrollbar').scrollbar();
+                            });
+                        </script>
+                        <div class="demo">
+                            <textarea class="textarea-scrollbar scrollbar-outer">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.</textarea>
                         </div>
                         <div class="html"></div>
                         <div class="css"></div>

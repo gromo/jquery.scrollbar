@@ -113,6 +113,9 @@
             .scroll-element {
                 display: none;
             }
+            .scroll-element, .scroll-element div {
+                box-sizing: content-box;
+            }
 
             .scroll-element.scroll-x.scroll-scrollx_visible,
             .scroll-element.scroll-y.scroll-scrolly_visible {
@@ -122,6 +125,32 @@
             .scroll-element .scroll-bar,
             .scroll-element .scroll-arrow {
                 cursor: default;
+            }
+
+            .scroll-textarea {
+                border: 1px solid #cccccc;
+                border-top-color: #999999;
+            }
+            .scroll-textarea > .scroll-content {
+                overflow: hidden !important;
+            }
+            .scroll-textarea > .scroll-content > textarea {
+                border: none !important;
+                box-sizing: border-box;
+                height: 100% !important;
+                margin: 0;
+                max-height: none !important;
+                max-width: none !important;
+                overflow: scroll !important;
+                outline: none;
+                padding: 2px;
+                position: relative !important;
+                top: 0;
+                width: 100% !important;
+            }
+            .scroll-textarea > .scroll-content > textarea::-webkit-scrollbar {
+                height: 0;
+                width: 0;
             }
 
 

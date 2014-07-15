@@ -7,10 +7,8 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.2.3
+ * @version 0.2.4
  * @url https://github.com/gromo/jquery.scrollbar/
- *
- * TODO:
  *
  */
 ;
@@ -50,6 +48,7 @@
     var defaults = {
         "autoScrollSize": true,     // automatically calculate scrollsize
         "autoUpdate": true,         // update scrollbar if content/container size changed
+        "debug": false,             // debug mode
         "disableBodyScroll": false, // disable body scroll if mouse over container
         "duration": 200,            // scroll animate duration in ms
         "ignoreMobile": true,       // ignore mobile devices
@@ -71,7 +70,7 @@
     var customScrollbar = function(container, options){
 
         if(!browser.scroll){
-            browser.log("Init jQuery Scrollbar v0.2.3");
+            browser.log("Init jQuery Scrollbar v0.2.4");
             browser.scroll = getBrowserScrollSize();
             updateScrollbars();
 
@@ -191,6 +190,7 @@
             var S = this;
 
             var c = this.container;
+            var cw = this.containerWrapper || c;
             var o = $.extend(this.options, options || {});
             var s = {
                 "x": this.scrollx,
@@ -210,16 +210,22 @@
 
             // init scroll container
             if(!w){
-                this.wrapper = w = c.wrap($("<div>").css({
-                    "position": (c.css("position") == "absolute") ? "absolute" : "relative"
-                }).addClass("scroll-wrapper").addClass(c.attr("class"))).parent();
+                this.wrapper = w = $('<div>').addClass('scroll-wrapper').addClass(c.attr('class'))
+                .css('position', c.css('position') == 'absolute' ? 'absolute' : 'relative')
+                .insertBefore(c).append(c);
 
-                c.addClass("scroll-content").css({
+                if(c.is('textarea')){
+                    this.containerWrapper = cw = $('<div>').insertBefore(c).append(c);
+                    w.addClass('scroll-textarea');
+                }
+
+                cw.addClass("scroll-content").css({
                     "height":"",
                     "margin-bottom": browser.scroll.height * -1 + px,
                     "margin-right":  browser.scroll.width  * -1 + px
-                })
-                .on("scroll.scrollbar", function(event){
+                });
+
+                c.on("scroll.scrollbar", function(event){
                     if($.isFunction(o.onScroll)){
                         o.onScroll.call(S, {
                             "maxScroll": s.y.maxScrollOffset,
@@ -281,7 +287,7 @@
                 if($.isFunction(o.onInit))
                     o.onInit.apply(this, [c]);
             } else {
-                c.css({
+                cw.css({
                     "height":"",
                     "margin-bottom": browser.scroll.height * -1 + px,
                     "margin-right":  browser.scroll.width  * -1 + px
@@ -445,7 +451,7 @@
 
                 scrollx.scrollbar.removeClass(scrollClass);
                 scrolly.scrollbar.removeClass(scrollClass);
-                c.removeClass(scrollClass);
+                cw.removeClass(scrollClass);
             });
 
             // calculate init sizes
@@ -475,15 +481,15 @@
                 if(scrollx.isVisible){
                     scrollx.scrollbar.addClass(scrollClass);
                     scrolly.scrollbar.addClass(scrollClass);
-                    c.addClass(scrollClass);
+                    cw.addClass(scrollClass);
                 } else {
                     scrollx.scrollbar.removeClass(scrollClass);
                     scrolly.scrollbar.removeClass(scrollClass);
-                    c.removeClass(scrollClass);
+                    cw.removeClass(scrollClass);
                 }
 
                 if(d == "y" && (scrollx.isVisible || scrollx.size < scrollx.visible)){
-                    c.css("height", (AreaVisible + browser.scroll.height) + px);
+                    cw.css("height", (AreaVisible + browser.scroll.height) + px);
                 }
 
                 if(s.x.size != c.prop("scrollWidth")
