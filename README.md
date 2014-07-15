@@ -12,6 +12,7 @@ Cross-browser CSS customizable scrollbar with advanced features:
     <li>External scrollbars support</li>
     <li>Browser support: IE7+, Firefox, Opera, Chrome, Safari</li>
     <li>jQuery Scrollbar as Angular.JS directive</li>
+    <li>Textarea scrollbar</li>
 </ul>
 
 <h4><a href="http://gromo.github.io/jquery.scrollbar/demo/basic.html">Basic Scrollbars Demo</a></h4>
