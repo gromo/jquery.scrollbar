@@ -21,6 +21,7 @@
 
     var browser = {
         "data": {},
+        "macosx": win.navigator.platform.toLowerCase().indexOf('mac') !== -1,
         "mobile": /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(win.navigator.userAgent),
         "scroll": null,
         "scrolls": [],
@@ -158,10 +159,10 @@
 
                 "simple":
                 '<div class="scroll-element_outer">' +
-            '    <div class="scroll-element_size"></div>'  + // required! used for scrollbar size calculation !
-            '    <div class="scroll-element_track"></div>' + // used for handling scrollbar click
-            '    <div class="scroll-bar"></div>' +
-            '</div>'
+                '    <div class="scroll-element_size"></div>'  + // required! used for scrollbar size calculation !
+                '    <div class="scroll-element_track"></div>' + // used for handling scrollbar click
+                '    <div class="scroll-bar"></div>' +
+                '</div>'
             };
             var type = html[this.options.type] ? this.options.type : "advanced";
 
@@ -204,7 +205,8 @@
             };
 
             // ignore mobile
-            if(browser.mobile && o.ignoreMobile){
+            if((browser.mobile && o.ignoreMobile)
+                    || (browser.macosx && !browser.webkit)){
                 return false;
             }
 
