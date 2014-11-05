@@ -19,25 +19,25 @@
     var debug = false;
     var lmb = 1, px = "px";
 
-	// do scrollbars displace content
-	function hasOverlayScrollBars() {
-		// Create the measurement node
-		var scrollDiv = $("<div></div>").css({
-			width: "100px",
-			height: "100px",
-			overflow: "scroll",
-			position: "absolute",
-			top: "-9999px"
-		})[0];
-
-		// Get the scroll bar width
-		document.body.appendChild(scrollDiv);
-		var scrollBarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-
-		// Delete the measurement div
-		document.body.removeChild(scrollDiv);
-		return !scrollBarWidth;
-	}
+    // do scrollbars displace content
+    function hasOverlayScrollBars() {
+        // Create the measurement node
+        var scrollDiv = $("<div></div>").css({
+            width: "100px",
+            height: "100px",
+            overflow: "scroll",
+            position: "absolute",
+            top: "-9999px"
+        })[0];
+        
+        // Get the scroll bar width
+        document.body.appendChild(scrollDiv);
+        var scrollBarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+        
+        // Delete the measurement div
+        document.body.removeChild(scrollDiv);
+        return !scrollBarWidth;
+    }
 
     var browser = {
         "data": {},
@@ -66,30 +66,6 @@
         }
     };
     
-     // do scrollbars displace content
-    function hasOverlayScrollBars() {
-    	// Create the measurement node
-    	var scrollDiv = $("<div></div>").css({
-    		width: "100px",
-    		height: "100px",
-    		overflow: "scroll",
-    		position: "absolute",
-    		top: "-9999px"
-    	})[0];
-    
-    	// Get the scroll bar width
-    	document.body.appendChild(scrollDiv);
-    	var scrollBarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-    
-    	// Delete the measurement div
-    	document.body.removeChild(scrollDiv);
-    	scrollBarsMeasured = true;
-    	scrollBarsOverlay = !scrollBarWidth;
-    	return scrollBarsOverlay;
-    }
-
-    var scrollbarsOverlay = hasOverlayScrollBars();
-
     var defaults = {
         "autoScrollSize": true,     // automatically calculate scrollsize
         "autoUpdate": true,         // update scrollbar if content/container size changed
