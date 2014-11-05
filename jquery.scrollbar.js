@@ -19,13 +19,33 @@
     var debug = false;
     var lmb = 1, px = "px";
 
+	// do scrollbars displace content
+	function hasOverlayScrollBars() {
+		// Create the measurement node
+		var scrollDiv = $("<div></div>").css({
+			width: "100px",
+			height: "100px",
+			overflow: "scroll",
+			position: "absolute",
+			top: "-9999px"
+		})[0];
+
+		// Get the scroll bar width
+		document.body.appendChild(scrollDiv);
+		var scrollBarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+
+		// Delete the measurement div
+		document.body.removeChild(scrollDiv);
+		return !scrollBarWidth;
+	}
+
     var browser = {
         "data": {},
-        "macosx": win.navigator.platform.toLowerCase().indexOf('mac') !== -1,
         "mobile": /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(win.navigator.userAgent),
         "scroll": null,
         "scrolls": [],
         "webkit": win.WebKitPoint ? true : false,
+		"scrollBarsOverlay": hasOverlayScrollBars(),
 
         "log": debug ? function(data, toString){
             var output = data;
@@ -45,6 +65,30 @@
 
         }
     };
+    
+     // do scrollbars displace content
+    function hasOverlayScrollBars() {
+    	// Create the measurement node
+    	var scrollDiv = $("<div></div>").css({
+    		width: "100px",
+    		height: "100px",
+    		overflow: "scroll",
+    		position: "absolute",
+    		top: "-9999px"
+    	})[0];
+    
+    	// Get the scroll bar width
+    	document.body.appendChild(scrollDiv);
+    	var scrollBarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+    
+    	// Delete the measurement div
+    	document.body.removeChild(scrollDiv);
+    	scrollBarsMeasured = true;
+    	scrollBarsOverlay = !scrollBarWidth;
+    	return scrollBarsOverlay;
+    }
+
+    var scrollbarsOverlay = hasOverlayScrollBars();
 
     var defaults = {
         "autoScrollSize": true,     // automatically calculate scrollsize
@@ -586,7 +630,7 @@
                         browser.scrolls.splice($.inArray(instance, browser.scrolls), 1);
                 }
             } else {
-                if(typeof options != "string"){
+                if(typeof options != "string" && !(options && options.allowOverlayBars && browser.scrollBarsOverlay)){
                     instance = new customScrollbar(container, options);
                     container.data("scrollbar", instance);
                     browser.scrolls.push(instance);
