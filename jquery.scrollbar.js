@@ -7,7 +7,7 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.2.4
+ * @version 0.2.5
  * @url https://github.com/gromo/jquery.scrollbar/
  *
  */
@@ -23,9 +23,10 @@
         "data": {},
         "macosx": win.navigator.platform.toLowerCase().indexOf('mac') !== -1,
         "mobile": /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(win.navigator.userAgent),
+        "overlay": null,
         "scroll": null,
         "scrolls": [],
-        "webkit": win.WebKitPoint ? true : false,
+        "webkit": /WebKit/.test(win.navigator.userAgent),
 
         "log": debug ? function(data, toString){
             var output = data;
@@ -53,6 +54,7 @@
         "disableBodyScroll": false, // disable body scroll if mouse over container
         "duration": 200,            // scroll animate duration in ms
         "ignoreMobile": true,       // ignore mobile devices
+        "ignoreOverlay": true,      // ignore browsers with overlay scrollbars (mobile, MacOS)
         "scrollStep": 30,           // scroll step for scrollbar arrows
         "showArrows": false,        // add class to show arrows
         "stepScrolling": true,      // when scrolling to scrollbar mousedown position
@@ -71,7 +73,8 @@
     var customScrollbar = function(container, options){
 
         if(!browser.scroll){
-            browser.log("Init jQuery Scrollbar v0.2.4");
+            browser.log("Init jQuery Scrollbar v0.2.5");
+            browser.overlay = isScrollOverlaysContent();
             browser.scroll = getBrowserScrollSize();
             updateScrollbars();
 
@@ -204,9 +207,11 @@
                 "scrollTop": c.scrollTop()
             };
 
-            // ignore mobile
-            if((browser.mobile && o.ignoreMobile)
-                    || (browser.macosx && !browser.webkit)){
+            // do not init if in ignorable browser
+            if ((browser.mobile && o.ignoreMobile)
+                    || (browser.overlay && o.ignoreOverlay)
+                    || (browser.macosx && !browser.webkit) // still required to ignore nonWebKit browsers on Mac
+                    ) {
                 return false;
             }
 
@@ -669,9 +674,15 @@
     };
 
     /* ADDITIONAL FUNCTIONS */
-    function getBrowserScrollSize(){
+    /**
+     * Get native browser scrollbar size (height/width)
+     *
+     * @param {Boolean} actual size or CSS size, default - CSS size
+     * @returns {Object} with height, width
+     */
+    function getBrowserScrollSize(actualSize){
 
-        if(browser.webkit){
+        if(browser.webkit && !actualSize){
             return {
                 "height": 0,
                 "width": 0
@@ -727,6 +738,16 @@
         });
         event && event.preventDefault();
         return false;
+    }
+
+    /**
+     * Check if native browser scrollbars overlay content
+     *
+     * @returns {Boolean}
+     */
+    function isScrollOverlaysContent(){
+        var scrollSize = getBrowserScrollSize(true);
+        return !(scrollSize.height || scrollSize.width);
     }
 
     function isVerticalScroll(event){
