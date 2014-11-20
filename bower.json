@@ -3,7 +3,7 @@
   "version": "0.2.5",
   "main": [
     "./jquery.scrollbar.js",
-    "./jquery.scrollbar.css",
+    "./jquery.scrollbar.css"
   ],
   "dependencies": {
     "jquery": ">=1.7"
