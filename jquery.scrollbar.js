@@ -7,7 +7,7 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.2.5
+ * @version 0.2.6
  * @url https://github.com/gromo/jquery.scrollbar/
  *
  */
@@ -73,7 +73,7 @@
     var customScrollbar = function(container, options){
 
         if(!browser.scroll){
-            browser.log("Init jQuery Scrollbar v0.2.5");
+            browser.log("Init jQuery Scrollbar v0.2.6");
             browser.overlay = isScrollOverlaysContent();
             browser.scroll = getBrowserScrollSize();
             updateScrollbars();
