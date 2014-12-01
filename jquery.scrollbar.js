@@ -21,6 +21,7 @@
 
     var browser = {
         "data": {},
+        "netscape": !(window.mozInnerScreenX == null),
         "macosx": win.navigator.platform.toLowerCase().indexOf('mac') !== -1,
         "mobile": /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(win.navigator.userAgent),
         "overlay": null,
@@ -210,7 +211,7 @@
             // do not init if in ignorable browser
             if ((browser.mobile && o.ignoreMobile)
                     || (browser.overlay && o.ignoreOverlay)
-                    || (browser.macosx && !browser.webkit) // still required to ignore nonWebKit browsers on Mac
+                    || (browser.macosx && !browser.webkit && !browser.netscape) // still required to ignore nonWebKit browsers on Mac
                     ) {
                 return false;
             }
