@@ -14,6 +14,7 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
+    api.versionsFrom(['METEOR@0.9.0', 'METEOR@1.0']);
     api.use('jquery', where);
     api.addFiles(['jquery.scrollbar.js', 'jquery.scrollbar.css'], where);
 });
