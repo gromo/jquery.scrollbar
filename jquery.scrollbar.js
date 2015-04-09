@@ -16,14 +16,14 @@
 ;(function(root, factory){
     if(typeof define === 'function' && define.amd){
         // AMD. Register as an anonymous module.
-        define(['jquery', 'angular'], factory);
+        define(['jquery'], factory);
     } else {
-        factory(root.jQuery, root.angular, root, root.document);
+        factory(root.jQuery, root, root.document);
     }
-}(this, function($, angular, doc, win){
+}(this, function($, win, doc){
     'use strict';
 
-    if(doc === undefined || win === undefined){
+    if(win === undefined || doc === undefined){
         win = window;
         doc = win.document;
     }
@@ -754,8 +754,9 @@
      * and expose a provider for override default config
      *
      */
-    if(angular){
-        angular.module('jQueryScrollbar', [])
+    if(win.angular){
+        (function(angular){
+            angular.module('jQueryScrollbar', [])
             .provider('jQueryScrollbar', function(){
                 var defaultOptions = defaults;
 
@@ -770,12 +771,12 @@
                     }
                 };
             })
-            .directive('jqueryScrollbar', function(jQueryScrollbar){
+            .directive('jqueryScrollbar', function(jQueryScrollbar, $parse){
                 return {
                     "restrict": "AC",
                     "link": function(scope, element, attrs){
 
-                        var model   = $parse(attrs.ngMyDirective),
+                        var model   = $parse(attrs.jqueryScrollbar),
                             options = model(scope);
 
                         element.scrollbar(options || jQueryScrollbar.options)
@@ -785,7 +786,7 @@
                     }
                 };
             });
+        })(win.angular)
     }
-
 
 }));
