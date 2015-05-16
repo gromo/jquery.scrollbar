@@ -1,0 +1,25 @@
+{
+  "name": "jquery.scrollbar",
+  "version": "0.2.7",
+  "description": "Cross-browser CSS customizable scrollbar",
+  "main": "jquery.scrollbar.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gromo/jquery.scrollbar.git"
+  },
+  "keywords": [
+    "jquery",
+    "scrollbar",
+    "angular",
+    "textarea"
+  ],
+  "author": "Yuriy Khabarov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gromo/jquery.scrollbar/issues"
+  },
+  "homepage": "https://github.com/gromo/jquery.scrollbar"
+}
