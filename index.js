@@ -1,3 +1,3 @@
 require('./jquery.scrollbar');
-module.exports = 'jQueryScrollbar');
+module.exports = 'jQueryScrollbar';
 
