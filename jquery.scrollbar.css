@@ -9,10 +9,10 @@
 .scroll-wrapper > .scroll-content {
     border: none !important;
     box-sizing: content-box !important;
-    height: auto;
+    height: auto !important;
     left: 0;
     margin: 0;
-    max-height: none !important;
+    max-height: none;
     max-width: none !important;
     overflow: scroll !important;
     padding: 0;
