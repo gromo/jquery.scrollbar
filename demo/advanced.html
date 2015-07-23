@@ -59,14 +59,15 @@
         </script>
 
         <script type="text/javascript">
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            if(window.location.href.match(/gromo.github.io/i)){
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-            ga('create', 'UA-52878040-1', 'auto');
-            ga('send', 'pageview');
-
+                ga('create', 'UA-52878040-1', 'auto');
+                ga('send', 'pageview');
+            }
         </script>
 
         <style type="text/css">
@@ -107,7 +108,7 @@
                 height: auto;
                 left: 0;
                 margin: 0;
-                max-height: none !important;
+                max-height: none;
                 max-width: none !important;
                 overflow: scroll !important;
                 padding: 0;
@@ -176,7 +177,7 @@
                 <h1>Advanced Scrollbars</h1>
 
                 <a href="basic.html">Basic Scrollbars Demo</a><br/>
-                <a href="advanced.html">jQuery Scrollbars as Angular.JS directive</a><br/>
+                <a href="angular.html">jQuery Scrollbars as Angular.JS directive</a><br/>
                 <a href="../">&laquo; Back to home</a>
 
                 <div class="container">
@@ -325,7 +326,8 @@
                             jQuery(document).ready(function(){
                                 jQuery('.scrollbar-vista').scrollbar({
                                     "showArrows": true,
-                                    "type": "advanced"
+                                    "scrollx": "advanced",
+                                    "scrolly": "advanced"
                                 });
                             });
                         </script>
@@ -538,8 +540,8 @@
                                     },
                                     "onUpdate": function(container){
                                         var s = getInscribedArea(140, 140, this.scrollx.size, this.scrolly.size);
-                                        this.scrolly.scrollbar.height(s.h);
-                                        this.scrollx.scrollbar.width(s.w);
+                                        this.scrolly.scroll.height(s.h);
+                                        this.scrollx.scroll.width(s.w);
                                     },
                                     "scrollx": $('.scrollbar-map .scroll-element_outer'),
                                     "scrolly": $('.scrollbar-map .scroll-element_outer'),
@@ -789,7 +791,8 @@
                             jQuery(document).ready(function(){
                                 jQuery('.scrollbar-janos').scrollbar({
                                     "showArrows": true,
-                                    "type": "advanced"
+                                    "scrollx": "advanced",
+                                    "scrolly": "advanced"
                                 });
                             });
                         </script>

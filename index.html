@@ -18,13 +18,15 @@
         </script>
 
         <script type="text/javascript">
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            if(window.location.href.match(/gromo.github.io/i)){
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-            ga('create', 'UA-52878040-1', 'auto');
-            ga('send', 'pageview');
+                ga('create', 'UA-52878040-1', 'auto');
+                ga('send', 'pageview');
+            }
         </script>
     </head>
     <body>
@@ -191,16 +193,12 @@
                         emulate step scrolling on mousedown over scrollbar
                     </li>
                     <li>
-                        <strong>type</strong> [simple|advanced] (default: simple)<br/>
-                        scrollbar HTML structure type. Is not used for custom scrollx/scrolly element
+                        <strong>scrollx</strong> [string|element] (default: simple)<br/>
+                        <i>simple</i>, <i>advanced</i>, HTML or jQuery element for horizontal scrollbar
                     </li>
                     <li>
-                        <strong>scrollx</strong> [string|element] (default: null)<br/>
-                        custom HTML structure or element for horizontal scrollbar
-                    </li>
-                    <li>
-                        <strong>scrolly</strong> [string|element] (default: null)<br/>
-                        custom HTML structure or element for vertical scrollbar
+                        <strong>scrolly</strong> [string|element] (default: simple)<br/>
+                        <i>simple</i>, <i>advanced</i>, HTML or jQuery element for vertical scrollbar
                     </li>
                     <li>
                         <strong>onDestroy</strong> [function] (default: null)<br/>
@@ -357,7 +355,7 @@ jQuery('.scrollbar-dynamic').scrollbar({
                             <strong>Question:</strong> I have a question / want to report an issue. How can I contact author?
                         </p>
                         <p>
-                            <strong>Answer:</strong> Please email me to 13real008 at gmail.com
+                            <strong>Answer:</strong> Please email me to <a href="mailto:13real008@gmail.com">13real008@gmail.com</a>
                         </p>
                     </li>
                 </ol>
