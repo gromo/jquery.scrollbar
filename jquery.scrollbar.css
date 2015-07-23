@@ -9,7 +9,7 @@
 .scroll-wrapper > .scroll-content {
     border: none !important;
     box-sizing: content-box !important;
-    height: auto !important;
+    height: auto;
     left: 0;
     margin: 0;
     max-height: none;
