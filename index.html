@@ -172,11 +172,11 @@
                         scroll speed duration when mouse is over scrollbar (scroll emulating mode)
                     </li>
                     <li>
-                        <strong>ignoreMobile</strong> [true|false] (default: true)<br/>
+                        <strong>ignoreMobile</strong> [true|false] (default: false)<br/>
                         do not initialize custom scrollbars on mobile devices
                     </li>
                     <li>
-                        <strong>ignoreOverlay</strong> [true|false] (default: true)<br/>
+                        <strong>ignoreOverlay</strong> [true|false] (default: false)<br/>
                         do not initialize custom scrollbars in browsers when native scrollbars
                         overlay content (Mac OS, mobile devices, etc...)
                     </li>
@@ -222,7 +222,7 @@
                 <ul>
                     <li>scrollable element should not have paddings, margins, left/top values</li>
                     <li>do not use max-height in IE8 - it crashes browser renderer</li>
-                    <li><strike>if change zoom level, native scrollbar may become visible</strike> - fixed</li>
+                    <li>custom scroll is not initialized in Firefix under MacOS because of bug with hiding native overlay scrollbar</li>
                 </ul>
 
                 <h2>FAQ</h2>
