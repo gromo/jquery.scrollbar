@@ -2,7 +2,7 @@
   "name": "jquery.scrollbar",
   "version": "0.2.8",
   "description": "Cross-browser CSS customizable scrollbar",
-  "main": "jquery.scrollbar.min.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
