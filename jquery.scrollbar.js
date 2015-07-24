@@ -69,7 +69,7 @@
     };
 
 
-    var CustomScrollbar = function (container) {
+    var BaseScrollbar = function (container) {
 
         if (!browser.scroll) {
             browser.overlay = isScrollOverlaysContent();
@@ -100,7 +100,7 @@
         browser.scrolls.add(this);
     };
 
-    CustomScrollbar.prototype = {
+    BaseScrollbar.prototype = {
 
         destroy: function () {
 
@@ -420,57 +420,13 @@
                 });
             });
 
+            // update scrollbar visibility/dimensions
+            this._updateScroll('x', this.scrollx);
+            this._updateScroll('y', this.scrolly);
 
-            var updateScroll = function (d, scrollx) {
-
-                var scrollClass = 'scroll-scroll' + d + '_visible';
-                var scrolly = (d === 'x') ? s.y : s.x;
-                var offset = parseInt(c.css((d === 'x') ? 'left' : 'top'), 10) || 0;
-
-                var AreaSize = scrollx.size;
-                var AreaVisible = scrollx.visible + offset;
-
-                scrollx.isVisible = (AreaSize - AreaVisible) > 1; // bug in IE9/11 with 1px diff
-                if (scrollx.isVisible) {
-                    scrollx.scroll.addClass(scrollClass);
-                    scrolly.scroll.addClass(scrollClass);
-                    cw.addClass(scrollClass);
-                } else {
-                    scrollx.scroll.removeClass(scrollClass);
-                    scrolly.scroll.removeClass(scrollClass);
-                    cw.removeClass(scrollClass);
-                }
-
-                if (d === 'y' && (scrollx.isVisible || scrollx.size < scrollx.visible)) {
-                    cw.css('max-height', (AreaVisible + browser.scroll.height) + 'px');
-                    c.is('textarea') && cw.css('height', cw.css('max-height'));
-                }
-
-                if (s.x.size != c.prop('scrollWidth')
-                    || s.y.size != c.prop('scrollHeight')
-                    || s.x.visible != w.width()
-                    || s.y.visible != w.height()
-                    || s.x.offset != (parseInt(c.css('left'), 10) || 0)
-                    || s.y.offset != (parseInt(c.css('top'), 10) || 0)
-                    ) {
-                    $.each(s, function (d, scrollx) {
-                        $.extend(scrollx, (d === 'x') ? {
-                            "offset": parseInt(c.css('left'), 10) || 0,
-                            "size": c.prop('scrollWidth'),
-                            "visible": w.width()
-                        } : {
-                            "offset": parseInt(c.css('top'), 10) || 0,
-                            "size": c.prop('scrollHeight'),
-                            "visible": w.height()
-                        });
-                    });
-                    updateScroll(d === 'x' ? 'y' : 'x', scrolly);
-                }
-            };
-            $.each(s, updateScroll);
-
-            if ($.isFunction(o.onUpdate))
+            if ($.isFunction(o.onUpdate)){
                 o.onUpdate.apply(this, [c]);
+            }
 
             // calculate scroll size
             $.each(s, function (d, scrollx) {
@@ -580,8 +536,68 @@
 
             event && event.preventDefault();
             return false;
+        },
+
+        _updateScroll: function (d, scrollx) {
+
+            var container = this.container,
+                containerWrapper = this.containerWrapper || container,
+                scrollClass = 'scroll-scroll' + d + '_visible',
+                scrolly = (d === 'x') ? this.scrolly : this.scrollx,
+                offset = parseInt(this.container.css((d === 'x') ? 'left' : 'top'), 10) || 0,
+                wrapper = this.wrapper;
+
+            var AreaSize = scrollx.size;
+            var AreaVisible = scrollx.visible + offset;
+
+            scrollx.isVisible = (AreaSize - AreaVisible) > 1; // bug in IE9/11 with 1px diff
+            if (scrollx.isVisible) {
+                scrollx.scroll.addClass(scrollClass);
+                scrolly.scroll.addClass(scrollClass);
+                containerWrapper.addClass(scrollClass);
+            } else {
+                scrollx.scroll.removeClass(scrollClass);
+                scrolly.scroll.removeClass(scrollClass);
+                containerWrapper.removeClass(scrollClass);
+            }
+
+            if (d === 'y') {
+                if(container.is('textarea') || AreaSize < AreaVisible){
+                    containerWrapper.css({
+                        "height": (AreaVisible + browser.scroll.height) + 'px',
+                        "max-height": "none"
+                    });
+                } else {
+                    containerWrapper.css({
+                        //"height": "auto", // do not reset height value: issue with height:100%!
+                        "max-height": (AreaVisible + browser.scroll.height) + 'px'
+                    });
+                }
+            }
+
+            if (scrollx.size != container.prop('scrollWidth')
+                || scrolly.size != container.prop('scrollHeight')
+                || scrollx.visible != wrapper.width()
+                || scrolly.visible != wrapper.height()
+                || scrollx.offset != (parseInt(container.css('left'), 10) || 0)
+                || scrolly.offset != (parseInt(container.css('top'), 10) || 0)
+                ) {
+                $.extend(this.scrollx, {
+                    "offset": parseInt(container.css('left'), 10) || 0,
+                    "size": container.prop('scrollWidth'),
+                    "visible": wrapper.width()
+                });
+                $.extend(this.scrolly, {
+                    "offset": parseInt(container.css('top'), 10) || 0,
+                    "size": this.container.prop('scrollHeight'),
+                    "visible": wrapper.height()
+                });
+                this._updateScroll(d === 'x' ? 'y' : 'x', scrolly);
+            }
         }
     };
+
+    var CustomScrollbar = BaseScrollbar;
 
     /*
      * Extend jQuery as plugin
