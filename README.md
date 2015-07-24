@@ -21,3 +21,6 @@ Cross-browser CSS customizable scrollbar with advanced features:
 
 <h4><a href="http://gromo.github.io/jquery.scrollbar/">Documentation</a></h4>
 <h4><a href="http://gromo.github.io/jquery.scrollbar/jquery.scrollbar.zip">Download</a></h4>
+
+Please note that CSS was updated in version 0.2.8. 
+Please update section /*************** SCROLLBAR BASE CSS ***************/ in your CSS file.
