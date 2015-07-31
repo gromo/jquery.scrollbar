@@ -27,9 +27,9 @@
             name: 'scrollbar',
             updateTimer: 0
         },
-        isWebkit: 'WebkitAppearance' in document.documentElement.style,
-        isMac: navigator.platform.toLowerCase().indexOf('mac') !== -1,
-        isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent),
+        isWebkit: /webkit/i.test(navigator.userAgent) && !/edge\/\d+/i.test(navigator.userAgent),
+        isMac: /mac/i.test(navigator.platform),
+        isMobile: /android|webos|iphone|ipad|ipod|blackberry/i.test(navigator.userAgent),
         isOverlay: null,
         scroll: null,
         scrolls: []
