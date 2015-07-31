@@ -34,7 +34,7 @@
         overlay: null,
         scroll: null,
         scrolls: [],
-        webkit: /WebKit/.test(navigator.userAgent)
+        webkit: 'WebkitAppearance' in document.documentElement.style
     };
 
     browser.scrolls.add = function (instance) {
