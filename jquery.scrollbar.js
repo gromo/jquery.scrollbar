@@ -29,12 +29,12 @@
             index: 0,
             name: 'scrollbar'
         },
-        macosx: navigator.platform.toLowerCase().indexOf('mac') !== -1,
-        mobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent),
+        macosx: /mac/i.test(navigator.platform),
+        mobile: /android|webos|iphone|ipad|ipod|blackberry/i.test(navigator.userAgent),
         overlay: null,
         scroll: null,
         scrolls: [],
-        webkit: 'WebkitAppearance' in document.documentElement.style
+        webkit: /webkit/i.test(navigator.userAgent) && !/edge\/\d+/i.test(navigator.userAgent)
     };
 
     browser.scrolls.add = function (instance) {
