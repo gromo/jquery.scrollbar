@@ -1,66 +1,66 @@
-v0.3.0 beta
-Code refactoring to support class-based structure
+<h4>v0.3.0 beta</h4>
+Code refactoring to support class-based structure<br>
 
-v0.2.8 (20150723)
-Add Meteor/Node modules support
-Fix bug when removed content does not update element's height
-Fix bug with textarea in non-webkit browsers
-Update webkit-based browser detection to ignore Microsoft Edge browser
+<h4>v0.2.8 (20150723)</h4>
+Add Meteor/Node modules support<br>
+Fix bug when removed content does not update element's height<br>
+Fix bug with textarea in non-webkit browsers<br>
+Update webkit-based browser detection to ignore Microsoft Edge browser<br>
 
-v0.2.7 (20150122)
-Small fixes
+<h4>v0.2.7 (20150122)</h4>
+Small fixes<br>
 
-v0.2.6 (20141124)
-Re-register plugin in jQuery plugins repository
+<h4>v0.2.6 (20141124)</h4>
+Re-register plugin in jQuery plugins repository<br>
 
-v0.2.5 (20141119)
-Add option ignoreOverlay
-Fix webkit-based browser detection
-Ignore Firefox in Mac OS (cannot hide native scrollbars)
+<h4>v0.2.5 (20141119)</h4>
+Add option ignoreOverlay<br>
+Fix webkit-based browser detection<br>
+Ignore Firefox in Mac OS (cannot hide native scrollbars)<br>
 
-v0.2.4 (20140715)
-Add textarea support
+<h4>v0.2.4 (20140715)</h4>
+Add textarea support<br>
 
-v0.2.3 (20140703)
-Default options can be overwritten via default global object
-Fix bug with visible native scrollbars when page is zoomed
-Add onScroll callback
-Add Angular.JS directive
+<h4>v0.2.3 (20140703)</h4>
+Default options can be overwritten via default global object<br>
+Fix bug with visible native scrollbars when page is zoomed<br>
+Add onScroll callback<br>
+Add Angular.JS directive<br>
 
-v0.2.2 (20140411)
-Fix default options issue with multiple scrollbars initialization
+<h4>v0.2.2 (20140411)</h4>
+Fix default options issue with multiple scrollbars initialization<br>
 
-v0.2.1 (20140323)
-Update CSS classes for custom scroll elements
-Set option ignoreMobile to true by default
-Small CSS/JS fixes
+<h4>v0.2.1 (20140323)</h4>
+Update CSS classes for custom scroll elements<br>
+Set option ignoreMobile to true by default<br>
+Small CSS/JS fixes<br>
 
-v0.2.0 (20140312)
-Add onUpdate callback
-Manage scrollbar visibility via CSS classes
+<h4>v0.2.0 (20140312)</h4>
+Add onUpdate callback<br>
+Manage scrollbar visibility via CSS classes<br>
 
-v0.1.9 (20140310)
-Fix bug with inner div height 100%
-Add option autoUpdate
+<h4>v0.1.9 (20140310)</h4>
+Fix bug with inner div height 100%<br>
+Add option autoUpdate<br>
 
-v0.1.8 (20140308)
-Fix bug with visible horizontal scrollbar if content height is less than container height
+<h4>v0.1.8 (20140308)</h4>
+Fix bug with visible horizontal scrollbar if content height is less than container height<br>
 
-v0.1.7 (20140307)
-Add hack for IE9-11 with 1px diff between visible and scrollable height
-Fix bug with second-time plugin initialization
-Remove warnings from IDE
+<h4>v0.1.7 (20140307)</h4>
+Add hack for IE9-11 with 1px diff between visible and scrollable height<br>
+Fix bug with second-time plugin initialization<br>
+Remove warnings from IDE<br>
 
-v0.1.4 (20130430)
-Add horizontal scrollbar handler
-Add option disableBodyScroll
+<h4>v0.1.4 (20130430)</h4>
+Add horizontal scrollbar handler<br>
+Add option disableBodyScroll<br>
 
-v0.1.3 (20130423)
-Improve scroll simulation
-Fix webkit bug with text selection
+<h4>v0.1.3 (20130423)</h4>
+Improve scroll simulation<br>
+Fix webkit bug with text selection<br>
 
-v0.1.2 (20130422)
-Handle mousedown instead of click on scrollbar track/arrows
+<h4>v0.1.2 (20130422)</h4>
+Handle mousedown instead of click on scrollbar track/arrows<br>
 
-v0.0.2 (20130413)
-First beta version 
+<h4>v0.0.2 (20130413)</h4>
+First version<br>
