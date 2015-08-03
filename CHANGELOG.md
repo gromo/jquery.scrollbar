@@ -1,4 +1,4 @@
-<h4>v0.3.0 beta</h4>
+<h4>v0.3.0 beta (not stable)</h4>
 Code refactoring to support class-based structure<br>
 
 <h4>v0.2.8 (20150723)</h4>
