@@ -3,6 +3,7 @@ Add Meteor/Node modules support<br>
 Fix bug when removed content does not update element's height<br>
 Fix bug with textarea in non-webkit browsers<br>
 Update webkit-based browser detection to ignore Microsoft Edge browser<br>
+Change default values for ignoreMobile/ignoreOverlay to false<br/>
 
 <h4>v0.2.7 (20150122)</h4>
 Small fixes<br>
@@ -11,7 +12,7 @@ Small fixes<br>
 Re-register plugin in jQuery plugins repository<br>
 
 <h4>v0.2.5 (20141119)</h4>
-Add option ignoreOverlay<br>
+Add option ignoreOverlay with default value true<br>
 Fix webkit-based browser detection<br>
 Ignore Firefox in Mac OS (cannot hide native scrollbars)<br>
 
