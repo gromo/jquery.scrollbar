@@ -223,6 +223,7 @@
                     <li>scrollable element should not have paddings, margins, left/top values</li>
                     <li>do not use max-height in IE8 - it crashes browser renderer</li>
                     <li>custom scroll is not initialized in Firefix under MacOS because of bug with hiding native overlay scrollbar</li>
+					<li>custom scroll works incorrectly if container children's height is set in percents of parent (issue #57)</li>
                 </ul>
 
                 <h2>FAQ</h2>
@@ -263,7 +264,7 @@
                             <strong>Answer:</strong> Use standard jQuery scrollTop/scrollLeft functions to the container.
                             For example, you have container with class "scrollbar-macosx". Use next code to scroll 50px from top:
                         <pre class="prettyprint linenums lang-js">
-jQuery('.scrollbar-macosx').not('.scroll-content').scrollTop(50);</pre>
+jQuery('.scrollbar-macosx').scrollTop(50);</pre>
                         </p>
                     </li>
                     <li>
@@ -360,7 +361,7 @@ jQuery('.scrollbar-dynamic').scrollbar({
                     </li>
                 </ol>
 
-                <h5>
+                <h5 style="display:none;">
                     <a href="https://docs.google.com/spreadsheet/ccc?key=0Ao4HbHsCLP0YdEhnZVh1WGZSbXloekZiNWlaNElnTnc&usp=sharing"
                        target="_blank">Compare with other popular scrollbars</a>
                 </h5>
