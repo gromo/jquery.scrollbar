@@ -763,7 +763,7 @@
                         }
                     };
                 })
-                .directive('jqueryScrollbar', function (jQueryScrollbar, $parse) {
+                .directive('jqueryScrollbar', ['jQueryScrollbar', '$parse', function (jQueryScrollbar, $parse) {
                     return {
                         "restrict": "AC",
                         "link": function (scope, element, attrs) {
@@ -775,7 +775,7 @@
                                 });
                         }
                     };
-                });
+                }]);
         })(window.angular);
     }
 }));
