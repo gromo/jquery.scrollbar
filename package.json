@@ -1,6 +1,6 @@
 {
   "name": "jquery.scrollbar",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Cross-browser CSS customizable scrollbar",
   "main": "index.js",
   "scripts": {

@@ -1,3 +1,6 @@
+<h4>v0.2.9 (20151022)</h4>
+Increase version to update bower repository
+
 <h4>v0.2.8 (20150723)</h4>
 Add Meteor/Node modules support<br>
 Fix bug when removed content does not update element's height<br>
