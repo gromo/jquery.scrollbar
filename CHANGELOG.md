@@ -1,3 +1,6 @@
+<h4>v0.2.10 (20151216)</h4>
+Increase version to update bower repository
+
 <h4>v0.2.9 (20151022)</h4>
 Increase version to update bower repository
 
