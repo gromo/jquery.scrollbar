@@ -63,6 +63,7 @@
         "scrolly": null,            // vertical scroll element
 
         "onDestroy": null,          // callback function on destroy,
+        "onFallback": null,         // callback function if scrollbar is not initialized
         "onInit": null,             // callback function on first initialization
         "onScroll": null,           // callback function on content scrolling
         "onUpdate": null            // callback function on init/resize (before scrollbar size calculation)
@@ -157,13 +158,16 @@
                 || (browser.overlay && o.ignoreOverlay)
                 || (browser.macosx && !browser.webkit) // still required to ignore nonWebKit browsers on Mac
                 ) {
+                if ($.isFunction(o.onFallback)){
+                    o.onFallback.apply(this, [c]);
+                }
                 return false;
             }
 
             // init scroll container
             if (!w) {
                 this.wrapper = w = $('<div>').addClass('scroll-wrapper').addClass(c.attr('class'))
-                    .css('position', c.css('position') == 'absolute' ? 'absolute' : 'relative')
+                    .css('position', c.css('position') === 'absolute' ? 'absolute' : 'relative')
                     .insertBefore(c).append(c);
 
                 if (c.is('textarea')) {
