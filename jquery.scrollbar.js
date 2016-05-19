@@ -277,6 +277,10 @@
                         scrollx.scroll.addClass('scroll-element_arrows_visible');
                     }
 
+                    scrollx._setScrollToValue = function(val) {
+                        scrollToValue = val;
+                    };
+
                     scrollx.mousewheel = function (event) {
 
                         if (!scrollx.isVisible || (d === 'x' && isVerticalScroll(event))) {
@@ -399,6 +403,7 @@
                         }, event);
                     });
                 }
+                scrollx._setScrollToValue(initScroll[scrollOffset]);
             });
 
             // remove classes & reset applied styles
