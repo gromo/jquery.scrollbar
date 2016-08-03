@@ -1,3 +1,6 @@
+<h4>v0.2.11 (20160803)</h4>
+Fix bug with Mozilla FireFox
+
 <h4>v0.2.10 (20151216)</h4>
 Increase version to update bower repository
 

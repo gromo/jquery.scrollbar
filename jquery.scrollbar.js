@@ -7,7 +7,7 @@
  * If you found bug, please contact me via email <13real008@gmail.com>
  *
  * @author Yuriy Khabarov aka Gromo
- * @version 0.2.10
+ * @version 0.2.11
  * @url https://github.com/gromo/jquery.scrollbar/
  *
  */
@@ -289,6 +289,15 @@
 
                         var delta = event.originalEvent.wheelDelta * -1 || event.originalEvent.detail;
                         var maxScrollValue = scrollx.size - scrollx.visible - scrollx.offset;
+
+                        // fix new mozilla
+                        if (!delta) {
+                            if (d === 'x' && !!event.originalEvent.deltaX) {
+                                delta = event.originalEvent.deltaX * 40;
+                            } else if (d === 'y' && !!event.originalEvent.deltaY) {
+                                delta = event.originalEvent.deltaY * 40;
+                            }
+                        }
 
                         if ((delta > 0 && scrollToValue < maxScrollValue) || (delta < 0 && scrollToValue > 0)) {
                             scrollToValue = scrollToValue + delta;
