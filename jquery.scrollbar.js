@@ -31,6 +31,7 @@
         },
         firefox: /firefox/i.test(navigator.userAgent),
         macosx: /mac/i.test(navigator.platform),
+        msedge: /edge\/\d+/i.test(navigator.userAgent),
         msie: /(msie|trident)/i.test(navigator.userAgent),
         mobile: /android|webos|iphone|ipad|ipod|blackberry/i.test(navigator.userAgent),
         overlay: null,
@@ -195,10 +196,13 @@
                     var scrollLeft = c.scrollLeft();
                     var scrollTop = c.scrollTop();
                     if (o.isRtl) {
+                        // webkit   0:100
+                        // ie/edge  100:0
+                        // firefox -100:0
                         switch (true) {
                             case browser.firefox:
                                 scrollLeft = Math.abs(scrollLeft);
-                            case browser.msie:
+                            case browser.msedge || browser.msie:
                                 scrollLeft = c[0].scrollWidth - c[0].clientWidth - scrollLeft;
                                 break;
                         }
@@ -371,9 +375,20 @@
                                 scrollForward = $(this).hasClass("scroll-arrow_more") ? 1 : -1;
                                 scrollStep = o.scrollStep * scrollForward;
                                 scrollToValue = scrollForward > 0 ? data.maxScrollValue : 0;
+                                if (o.isRtl) {
+                                    switch(true){
+                                        case browser.firefox:
+                                            scrollToValue = scrollForward > 0 ? 0: data.maxScrollValue * -1;
+                                            break;
+                                        case browser.msie || browser.msedge:
+                                            break;
+                                    }
+                                }
                             } else {
                                 scrollForward = (data.eventOffset > (data.scrollbarOffset + data.scrollbarSize) ? 1
                                     : (data.eventOffset < data.scrollbarOffset ? -1 : 0));
+                                if(d === 'x' && o.isRtl && (browser.msie || browser.msedge))
+                                    scrollForward = scrollForward * -1;
                                 scrollStep = Math.round(scrollx.visible * 0.75) * scrollForward;
                                 scrollToValue = (data.eventOffset - data.scrollbarOffset -
                                     (o.stepScrolling ? (scrollForward == 1 ? data.scrollbarSize : 0)
@@ -420,7 +435,7 @@
 
                         $(document).on('mousemove' + namespace, function (event) {
                             var diff = parseInt((event[(d === 'x') ? 'pageX' : 'pageY'] - eventPosition) / scrollx.kx, 10);
-                            if (d === 'x' && o.isRtl && browser.msie)
+                            if (d === 'x' && o.isRtl && (browser.msie || browser.msedge))
                                 diff = diff * -1;
                             c[scrollOffset](initOffset + diff);
                         });
