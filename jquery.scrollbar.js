@@ -129,8 +129,8 @@
                 .scrollLeft(scrollLeft)
                 .scrollTop(scrollTop);
 
-            this.scrollx.scroll.removeClass('scroll-scrollx_visible').find('div').andSelf().off(this.namespace);
-            this.scrolly.scroll.removeClass('scroll-scrolly_visible').find('div').andSelf().off(this.namespace);
+            this.scrollx.scroll.removeClass('scroll-scrollx_visible').find('div').addBack().off(this.namespace);
+            this.scrolly.scroll.removeClass('scroll-scrolly_visible').find('div').addBack().off(this.namespace);
 
             this.wrapper.remove();
 
