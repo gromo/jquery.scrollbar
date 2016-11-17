@@ -197,6 +197,14 @@
                 c.on('scroll' + namespace, function (event) {
                     var scrollLeft = c.scrollLeft();
                     var scrollTop = c.scrollTop();
+                    
+                    // in case of hidden overflow:
+                    // IE should not include margin (added for the native scrollbar, which is hidden) in scrollTop
+                    if ((browser.msedge || browser.msie) && c.css('overflow-x') === 'hidden') {
+                      var marginBottom = parseInt(c.css('margin-bottom'));
+                      scrollTop = scrollTop - marginBottom;
+                    }
+                    
                     if (o.isRtl) {
                         // webkit   0:100
                         // ie/edge  100:0
