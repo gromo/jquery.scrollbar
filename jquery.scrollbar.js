@@ -196,14 +196,7 @@
 
                 c.on('scroll' + namespace, function (event) {
                     var scrollLeft = c.scrollLeft();
-                    var scrollTop = c.scrollTop();
-                    
-                    // in case of hidden overflow:
-                    // IE should not include margin (added for the native scrollbar, which is hidden) in scrollTop
-                    if ((browser.msedge || browser.msie) && c.css('overflow-x') === 'hidden') {
-                      var marginBottom = parseInt(c.css('margin-bottom'));
-                      scrollTop = scrollTop - marginBottom;
-                    }
+                    var scrollTop = c.scrollTop();                                        
                     
                     if (o.isRtl) {
                         // webkit   0:100
@@ -626,10 +619,17 @@
                         "max-height": "none"
                     });
                 } else {
+                  if ((browser.msedge || browser.msie) && container.css('overflow-x') === 'hidden') {
+                    // do not add scroll.height if it is hidden
                     containerWrapper.css({
-                        //"height": "auto", // do not reset height value: issue with height:100%!
-                        "max-height": (AreaVisible + browser.scroll.height) + 'px'
+                      "max-height": AreaVisible + 'px'
                     });
+                  } else {
+                    containerWrapper.css({
+                      //"height": "auto", // do not reset height value: issue with height:100%!
+                      "max-height": (AreaVisible + browser.scroll.height) + 'px'
+                    });
+                  }
                 }
             }
 
