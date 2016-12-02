@@ -239,7 +239,11 @@
                     };
                     w.on('MozMousePixelScroll' + namespace, handleMouseScroll);
                     w.on('mousewheel' + namespace, handleMouseScroll);
-
+                    c.on('mouseenter' + namespace, function(){
+                        s.x.scroll.trigger('mouseenter');
+                        s.y.scroll.trigger('mouseenter');
+                    });
+					
                     if (browser.mobile) {
                         w.on('touchstart' + namespace, function (event) {
                             var touch = event.originalEvent.touches && event.originalEvent.touches[0] || event;
@@ -448,6 +452,7 @@
                         }, event);
                     });
                 }
+                setTimeout(scrollx.scroll.trigger.bind(scrollx.scroll, 'mouseenter'), 0);
             });
 
             // remove classes & reset applied styles
