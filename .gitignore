@@ -3,3 +3,5 @@
 node_modules
 nbproject
 .idea/
+index.html
+bower_components

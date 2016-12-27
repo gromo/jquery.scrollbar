@@ -506,6 +506,9 @@
 
             c.scrollLeft(initScroll.scrollLeft).scrollTop(initScroll.scrollTop).trigger('scroll');
         },
+        centerX: function () {
+            this.container.scrollLeft((this.container[0].scrollWidth - this.container[0].clientWidth) / 2);
+        },
         /**
          * Get scrollx/scrolly object
          *
