@@ -197,7 +197,8 @@
 
                 c.on('scroll' + namespace, function (event) {
                     var scrollLeft = c.scrollLeft();
-                    var scrollTop = c.scrollTop();
+                    var scrollTop = c.scrollTop();                                        
+                    
                     if (o.isRtl) {
                         // webkit   0:100
                         // ie/edge  100:0
@@ -619,10 +620,17 @@
                         "max-height": "none"
                     });
                 } else {
+                  if ((browser.msedge || browser.msie) && container.css('overflow-x') === 'hidden') {
+                    // do not add scroll.height if it is hidden
                     containerWrapper.css({
-                        //"height": "auto", // do not reset height value: issue with height:100%!
-                        "max-height": (AreaVisible + browser.scroll.height) + 'px'
+                      "max-height": AreaVisible + 'px'
                     });
+                  } else {
+                    containerWrapper.css({
+                      //"height": "auto", // do not reset height value: issue with height:100%!
+                      "max-height": (AreaVisible + browser.scroll.height) + 'px'
+                    });
+                  }
                 }
             }
 
